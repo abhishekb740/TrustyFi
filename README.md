@@ -5,11 +5,10 @@
    git clone https://github.com/abhishekb740/Trustify.git
    cd trustify
    ```
-   
 2. Install dependencies:
-  ```bash
-   pnpm install
-```
+   ```bash
+   pnpm i
+   ```
 
 3. Run the Next.js development server:
    ```bash
