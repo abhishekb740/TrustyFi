@@ -1,7 +1,9 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import { IoIosSearch } from "react-icons/io";
+import { useMetamask } from "@/hooks/useMetamask";
+import { useEffect } from "react";
 
 const Protocols = [
     {
@@ -34,7 +36,8 @@ const Protocols = [
         image: "eigen.png",
         description: "Algoritmic, autonomous interest rate protocol",
     }
-]
+
+];
 
 const Topics = [
     {
@@ -69,12 +72,29 @@ const Topics = [
         name: 'Derivatives',
         icon: 'star.png'
     }
-]
+];
 
-export default function Hero() {
+type Props = {
+    setShowWallet: (showWallet: boolean) => void;
+    showWallet: boolean;
+};
+
+export default function Hero({ setShowWallet, showWallet }: Props) {
+    
+    const { wallet, connectMetamask, isConnecting, hasProvider, connected } = useMetamask();
+
+    useEffect(() => {
+        if (connected) {
+            setShowWallet(false);
+        }
+    },[connected])
+    
     return (
-        <main className="flex flex-col justify-center items-center pt-20">
-            <div className="flex flex-col items-center gap-6">
+        <main className="relative flex flex-col justify-center items-center pt-20">
+            {showWallet && (
+                <div className="fixed inset-0 bg-black opacity-50 z-40" onClick={() => setShowWallet(false)}></div>
+            )}
+            <div className={`flex flex-col items-center gap-6 ${showWallet ? 'z-30' : ''}`}>
                 <div className="flex flex-col items-center gap-2">
                     <div className="text-xl">LET'S MAKE DEFI MORE</div>
                     <div className="flex flex-col items-center">
@@ -95,7 +115,7 @@ export default function Hero() {
                     </div>
                 </div>
             </div>
-            <div className="w-full">
+            <div className={`w-full ${showWallet ? 'z-30' : ''}`}>
                 <div className="mt-16 overflow-hidden">
                     <div className="flex flex-row animate-marquee gap-10">
                         {
@@ -115,14 +135,14 @@ export default function Hero() {
                     </div>
                 </div>
             </div>
-            <div className="w-full mt-8">
+            <div className={`w-full mt-8 ${showWallet ? 'z-30' : ''}`}>
                 <div className="flex flex-row justify-end pr-12">
                     <button>
                         See all Categories
                     </button>
                 </div>
             </div>
-            <div className="flex flex-col justify-center items-center w-full gap-12">
+            <div className={`flex flex-col justify-center items-center w-full gap-12 ${showWallet ? 'z-30' : ''}`}>
                 <div className="text-4xl font-bold">
                     POPULAR WEB3 PRODUCTS
                 </div>
@@ -161,52 +181,32 @@ export default function Hero() {
                     }
                 </div>
             </div>
-            <div className="flex flex-col mt-16 gap-16 justify-center items-center">
-                <div className="text-4xl font-bold">
-                    HOW TRUSTIFY WORKS
-                </div>
-                <div className="flex flex-col gap-12 items-center justify-center">
-                    <div className="flex flex-row border border-[#B2F1A8] p-4 rounded-md max-w-[50%] gap-4">
-                        <div className="w-full flex justify-center items-center">
-                            <Image className="object-contain" src="/orb1.png" width={200} height={200} alt="Orb" />
+            {
+                showWallet && (
+                    <div className='fixed bg-[#B2F1A8] w-[25rem] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-50 text-black p-4 rounded-lg'>
+                        <div className="text-2xl font-bold">
+                            CONNECT WALLET
                         </div>
-                        <div className="flex flex-col gap-4 justify-center">
-                            <div>
-                                Find your favorite protocol
+                        <div className="flex flex-col justify-center items-center w-full mt-12 gap-6">
+                            <button onClick={connectMetamask} className="flex flex-row justify-center items-center gap-6 rounded-full border border-black p-2 min-w-56">
+                                <Image src="/metamask.png" width={30} height={30} alt="Metamask Logo" />
+                                <div className="font-bold">
+                                    Metamask
+                                </div>
+                            </button>
+                            <div className="text-sm p-2">
+                                This wallet becomes your primary connected address. If you own an ENS domain, we'll make that username. You can change this later though!
                             </div>
-                            <div>
-                                Search for your favorite protocol on our platform and check its page to see what other users think about it. Can't find the protocol you're looking for? Send us an email at info@trustyfi.io to suggest it, and we will contact them to bring it to our platform.
+                            <div className="text-sm p-2">
+                                This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply
                             </div>
-                        </div>
-                    </div>
-                    <div className="flex flex-row border border-[#B2F1A8] p-4 rounded-md max-w-[50%] gap-4">
-                        <div className="w-full flex justify-center items-center">
-                            <Image className="object-contain" src="/orb2.png" width={200} height={200} alt="Orb" />
-                        </div>
-                        <div className="flex flex-col gap-4 justify-center">
-                            <div>
-                                Find your favorite protocol
-                            </div>
-                            <div>
-                                Search for your favorite protocol on our platform and check its page to see what other users think about it. Can't find the protocol you're looking for? Send us an email at info@trustyfi.io to suggest it, and we will contact them to bring it to our platform.
-                            </div>
+                            <button className="text-sm font-bold p-2" onClick={() => (setShowWallet(false))}>
+                                Cancel
+                            </button>
                         </div>
                     </div>
-                    <div className="flex flex-row border border-[#B2F1A8] p-4 rounded-md max-w-[50%] gap-4">
-                        <div className="w-full flex justify-center items-center">
-                            <Image className="object-contain" src="/orb3.png" width={200} height={200} alt="Orb" />
-                        </div>
-                        <div className="flex flex-col gap-4 justify-center">
-                            <div>
-                                Find your favorite protocol
-                            </div>
-                            <div>
-                                Search for your favorite protocol on our platform and check its page to see what other users think about it. Can't find the protocol you're looking for? Send us an email at info@trustyfi.io to suggest it, and we will contact them to bring it to our platform.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                )
+            }
         </main>
-    )
+    );
 }
