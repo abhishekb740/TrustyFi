@@ -12,7 +12,7 @@ export default function Home() {
         <div
           className="absolute inset-0 bg-cover bg-center z-1"
           style={{
-            // backgroundImage: "url('/background.png')",
+            backgroundImage: "url('/background.png')",
           }}
         ></div>
         <div className="relative rounded-lg">
