@@ -3,7 +3,7 @@
 1. Clone the repository:
    ```bash
    git clone https://github.com/abhishekb740/Trustify.git
-   cd Trustify
+   cd TrustyFi
    ```
 2. Install dependencies:
    ```bash
