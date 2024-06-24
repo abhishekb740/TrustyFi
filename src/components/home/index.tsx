@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { IoIosSearch } from "react-icons/io";
-import { useMetamask } from "@/hooks/useMetamask";
+import { useMetaMask } from "@/hooks/useMetamask";
 import { useEffect } from "react";
 
 const Protocols = [
@@ -81,7 +81,7 @@ type Props = {
 
 export default function Hero({ setShowWallet, showWallet }: Props) {
     
-    const { wallet, connectMetamask, isConnecting, hasProvider, connected } = useMetamask();
+    const { wallet, connectMetamask, isConnecting, hasProvider, connected } = useMetaMask();
 
     useEffect(() => {
         if (connected) {

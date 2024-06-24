@@ -1,83 +1,162 @@
 "use client"
+import {
+    useState,
+    useEffect,
+    createContext,
+    PropsWithChildren,
+    useContext,
+    useCallback,
+} from "react";
 
-import { useState, useEffect, useContext, useCallback, createContext } from 'react';
-import { formatBalance } from '@/utils/utils';
 import detectEthereumProvider from "@metamask/detect-provider";
+import { formatBalance } from "@/utils/utils";
 
-const disConnectedState = {
-    accounts: "",
-    balance: "",
-    chainId: ""
+interface WalletState {
+    accounts: any[];
+    balance: string;
+    chainId: string;
 }
 
-const MetamaskContext = createContext({});
+interface MetaMaskContextData {
+    wallet: WalletState;
+    hasProvider: boolean | null;
+    error: boolean;
+    errorMessage: string;
+    isConnecting: boolean;
+    connectMetaMask: () => void;
+    clearError: () => void;
+}
 
-export const MetamaskContextProvider = ({ children }: { children: React.ReactNode }) => {
-    const [hasProvider, setHasProvider] = useState(false);
+const disconnectedState: WalletState = {
+    accounts: [],
+    balance: "",
+    chainId: "",
+};
+
+const MetaMaskContext = createContext<MetaMaskContextData>(
+    {} as MetaMaskContextData
+);
+
+export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
+    const [hasProvider, setHasProvider] = useState<boolean | null>(null);
+
     const [isConnecting, setIsConnecting] = useState(false);
-    const [wallet, setWallet] = useState(disConnectedState);
-    const [connected, setConnected] = useState(false);
 
-    const updateWalletAndAccounts = useCallback(async () => {
-        try {
-            const accounts = await (window as any).ethereum?.request({ method: "eth_requestAccounts" }) as string[];
-            if (accounts.length === 0) {
-                setWallet(disConnectedState);
-                return;
-            }
+    const [errorMessage, setErrorMessage] = useState("");
+    const clearError = () => setErrorMessage("");
 
-            const balance = formatBalance(await (window as any).ethereum?.request({
-                method: 'eth_getBalance', params: [accounts[0], "latest"]
-            }));
+    const [wallet, setWallet] = useState(disconnectedState);
+    // useCallback ensures that you don't uselessly recreate the _updateWallet function on every render.
+    const _updateWallet = useCallback(async (providedAccounts?: any) => {
+        const accounts =
+            providedAccounts ||
+            (await window.ethereum.request({ method: "eth_accounts" }));
 
-            const chainId = await (window as any).ethereum?.request({ method: 'eth_chainId' });
-            if (chainId !== "0xaa36a7") {
-                await (window as any).ethereum?.request({
-                    method: 'wallet_switchEthereumChain',
-                    params: [{ chainId: '0xaa36a7' }]
-                });
-            }
-            setConnected(true);
-            setWallet({ accounts: accounts[0], balance, chainId });
-        } catch (error) {
-            console.error("Error updating wallet and accounts:", error);
+        if (accounts.length === 0) {
+            // If there are no accounts, then the user is disconnected.
+            setWallet(disconnectedState);
+            return;
         }
+
+        const balance = formatBalance(
+            await window.ethereum.request({
+                method: "eth_getBalance",
+                params: [accounts[0], "latest"],
+            })
+        );
+        const chainId = await window.ethereum.request({
+            method: "eth_chainId",
+        });
+
+        console.log(chainId);
+        
+
+        // Please switch to Sepolia chainId if not equal to Sepolia chainId 
+        if(chainId !== '0xaa36a7') {
+            await window.ethereum.request({
+                method: "wallet_switchEthereumChain",
+                params: [{ chainId: '0xaa36a7' }],
+            });
+        }
+
+        setWallet({ accounts, balance, chainId });
     }, []);
 
-    const connectMetamask = async () => {
-        setIsConnecting(true);
-        try{
-            if(connected){
-                console.log("Connected already");
-                return;
-            }
-            const provider = await detectEthereumProvider({silent: true});
+    const updateWalletAndAccounts = useCallback(
+        () => _updateWallet(),
+        [_updateWallet]
+    );
+    const updateWallet = useCallback(
+        (accounts: any) => _updateWallet(accounts),
+        [_updateWallet]
+    );
+
+    /**
+     * This logic checks if MetaMask is installed. If it is, some event handlers are set up to update
+     * the wallet state when MetaMask changes. The function returned by useEffect is used as a
+     * "cleanup"; it removes the event handlers whenever the MetaMaskProvider is unmounted.
+     */
+    useEffect(() => {
+        const getProvider = async () => {
+            const provider = await detectEthereumProvider({ silent: true });
             setHasProvider(Boolean(provider));
-            if(provider){
+
+            if (provider) {
                 updateWalletAndAccounts();
-                (window as any).ethereum?.on('accountsChanged', updateWalletAndAccounts);
-                (window as any).ethereum?.on('chainChanged', updateWalletAndAccounts);
+                window.ethereum.on("accountsChanged", updateWallet);
+                window.ethereum.on("chainChanged", updateWalletAndAccounts);
             }
-        } catch(err) {
-            console.error("Error connecting to Metamask:", err);
+        };
+
+        getProvider();
+
+        return () => {
+            window.ethereum?.removeListener("accountsChanged", updateWallet);
+            window.ethereum?.removeListener(
+                "chainChanged",
+                updateWalletAndAccounts
+            );
+        };
+    }, [updateWallet, updateWalletAndAccounts]);
+
+    const connectMetaMask = async () => {
+        setIsConnecting(true);
+
+        try {
+            const accounts = await window.ethereum.request({
+                method: "eth_requestAccounts",
+            });
+            clearError();
+            updateWallet(accounts);
+        } catch (err: any) {
+            setErrorMessage(err.message);
         }
-        finally {
-            setIsConnecting(false);
-        }
-    }
+        setIsConnecting(false);
+    };
 
     return (
-        <MetamaskContext.Provider value={{ wallet, connectMetamask, isConnecting, hasProvider, connected }}>
+        <MetaMaskContext.Provider
+            value={{
+                wallet,
+                hasProvider,
+                error: !!errorMessage,
+                errorMessage,
+                isConnecting,
+                connectMetaMask,
+                clearError,
+            }}
+        >
             {children}
-        </MetamaskContext.Provider>
-    )
-}
+        </MetaMaskContext.Provider>
+    );
+};
 
-export const useMetamask = () => {
-    const context = useContext(MetamaskContext);
-    if(!context){
-        throw new Error("UseMetamask must be used within MetamaskContextProvider");
+export const useMetaMask = () => {
+    const context = useContext(MetaMaskContext);
+    if (context === undefined) {
+        throw new Error(
+            "useMetaMask must be used within a MetaMaskContextProvider"
+        );
     }
     return context;
-}
-
+};

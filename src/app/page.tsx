@@ -1,13 +1,14 @@
 "use client"
 import { Footer, Hero, Hero2, Navbar } from "@/components";
-import { useState } from "react";
+import { useContext } from "react";
+import WalletContext from "@/contexts/WalletConnect";
 
 export default function Home() {
-  const [showWallet, setShowWallet] = useState(false);
+
+  const { showWallet, setShowWallet } = useContext(WalletContext);
 
   return (
     <div className="relative min-h-screen">
-      <Navbar setShowWallet={setShowWallet} showWallet={showWallet} />
       <div className="relative">
         <div
           className="absolute inset-0 bg-cover bg-center z-1"
