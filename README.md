@@ -2,8 +2,8 @@
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/abhishekb740/Trustify.git
-   cd Trustify
+   git clone https://github.com/abhishekb740/TrustyFi.git
+   cd TrustyFi
    ```
 2. Install dependencies:
    ```bash
