@@ -1,11 +1,11 @@
 "use client"
-import { Footer, Hero, Hero2, Navbar } from "@/components";
+import { Hero, Hero2, Navbar } from "@/components";
 import { useContext } from "react";
 import WalletContext from "@/contexts/WalletConnect";
 
 export default function Home() {
 
-  const { showWallet, setShowWallet } = useContext(WalletContext);
+  const { showWallet, setShowWallet } = useContext(WalletContext) || { showWallet: false, setShowWallet: () => {} };
 
   return (
     <div className="relative min-h-screen">
@@ -21,7 +21,6 @@ export default function Home() {
         </div>
       </div>
       <Hero2 />
-      <Footer />
     </div>
   );
 }

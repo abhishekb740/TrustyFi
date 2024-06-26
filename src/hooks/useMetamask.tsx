@@ -23,8 +23,9 @@ interface MetaMaskContextData {
     error: boolean;
     errorMessage: string;
     isConnecting: boolean;
-    connectMetaMask: () => void;
+    connectMetamask: () => void;
     clearError: () => void;
+    connected: boolean;
 }
 
 const disconnectedState: WalletState = {
@@ -142,8 +143,9 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
                 error: !!errorMessage,
                 errorMessage,
                 isConnecting,
-                connectMetaMask,
+                connectMetamask: connectMetaMask,
                 clearError,
+                connected: wallet.accounts.length > 0,
             }}
         >
             {children}

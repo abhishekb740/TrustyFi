@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { MetaMaskContextProvider } from "@/hooks/useMetamask";
-import ClientLayout from "@/components/ClientLayout";
+import ClientLayout from "@/components/clientLayout";
 
 const inter = Inter({ subsets: ["latin"] });
 

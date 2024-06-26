@@ -1,9 +1,11 @@
 "use client";
-import { Navbar } from "@/components";
+import { Footer, Navbar } from "@/components";
 import { useState } from "react";
 import WalletContext from "@/contexts/WalletConnect";
 
-const ClientLayout = ({ children }) => {
+import { ReactNode } from "react";
+
+const ClientLayout = ({ children }: { children: ReactNode }) => {
   const [showWallet, setShowWallet] = useState(false);
 
   return (
@@ -11,6 +13,7 @@ const ClientLayout = ({ children }) => {
       <WalletContext.Provider value={{ showWallet, setShowWallet}}>
         <Navbar setShowWallet={setShowWallet} showWallet={showWallet} />
         <div className="relative min-h-screen">{children}</div>
+        <Footer />
       </WalletContext.Provider>
     </>
   );
