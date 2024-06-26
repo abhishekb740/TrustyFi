@@ -40,7 +40,7 @@ export default function Profile({ params }: Props) {
             <div className="flex flex-col pt-8 justify-center items-center gap-8">
                 <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4  w-1/2">
                     <div className="flex flex-row items-center gap-2 border-b-[1px] border-b-[#B2F1A8] pb-4">
-                        <img className="bg-white rounded-lg" src="/profile.png" height={40} width={40} alt="profile logo" />
+                        <Image className="bg-white rounded-lg" src="/profile.png" height={40} width={40} alt="profile logo" />
                         <div className="text-lg">
                             Alberto
                         </div>

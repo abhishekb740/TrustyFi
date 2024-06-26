@@ -4,75 +4,7 @@ import Image from "next/image";
 import { IoIosSearch } from "react-icons/io";
 import { useMetaMask } from "@/hooks/useMetamask";
 import { useEffect } from "react";
-
-const Protocols = [
-    {
-        name: "Uniswap",
-        image: "uniswap.png",
-        description: "Algoritmic, autonomous interest rate protocol",
-    },
-    {
-        name: "Aave",
-        image: "aave.png",
-        description: "Algoritmic, autonomous interest rate protocol",
-    },
-    {
-        name: "Curve",
-        image: "curve.png",
-        description: "Algoritmic, autonomous interest rate protocol",
-    },
-    {
-        name: "Lido Finance",
-        image: "lido.png",
-        description: "Algoritmic, autonomous interest rate protocol",
-    },
-    {
-        name: "Compound Finance",
-        image: "compound.png",
-        description: "Algoritmic, autonomous interest rate protocol",
-    },
-    {
-        name: "EigenLayer",
-        image: "eigen.png",
-        description: "Algoritmic, autonomous interest rate protocol",
-    }
-
-];
-
-const Topics = [
-    {
-        name: "Yield Farming",
-        icon: "star.png"
-    },
-    {
-        name: "LaunchPads",
-        icon: "star.png"
-    },
-    {
-        name: "DEX",
-        icon: "star.png"
-    },
-    {
-        name: "AMM",
-        icon: "star.png"
-    },
-    {
-        name: "RWA",
-        icon: "star.png"
-    },
-    {
-        name: "AI",
-        icon: "star.png"
-    },
-    {
-        name: "NFT Marketplace",
-        icon: "star.png"
-    },
-    {
-        name: "Derivatives",
-        icon: "star.png"
-    }
-];
+import { Protocols, Topics } from "@/utils/utils";
 
 type Props = {
     setShowWallet: (showWallet: boolean) => void;
@@ -80,15 +12,15 @@ type Props = {
 };
 
 export default function Hero({ setShowWallet, showWallet }: Props) {
-    
+
     const { wallet, connectMetamask, isConnecting, hasProvider, connected } = useMetaMask();
 
     useEffect(() => {
         if (connected) {
             setShowWallet(false);
         }
-    },[connected])
-    
+    }, [connected])
+
     return (
         <main className="relative flex flex-col justify-center items-center pt-20">
             {showWallet && (
