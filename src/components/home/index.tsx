@@ -42,35 +42,35 @@ const Protocols = [
 const Topics = [
     {
         name: "Yield Farming",
-        icon: 'star.png'
+        icon: "star.png"
     },
     {
         name: "LaunchPads",
-        icon: 'star.png'
+        icon: "star.png"
     },
     {
         name: "DEX",
-        icon: 'star.png'
+        icon: "star.png"
     },
     {
-        name: 'AMM',
-        icon: 'star.png'
+        name: "AMM",
+        icon: "star.png"
     },
     {
-        name: 'RWA',
-        icon: 'star.png'
+        name: "RWA",
+        icon: "star.png"
     },
     {
-        name: 'AI',
-        icon: 'star.png'
+        name: "AI",
+        icon: "star.png"
     },
     {
-        name: 'NFT Marketplace',
-        icon: 'star.png'
+        name: "NFT Marketplace",
+        icon: "star.png"
     },
     {
-        name: 'Derivatives',
-        icon: 'star.png'
+        name: "Derivatives",
+        icon: "star.png"
     }
 ];
 
@@ -96,7 +96,7 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
             )}
             <div className={`flex flex-col items-center gap-6 ${showWallet ? 'z-30' : ''}`}>
                 <div className="flex flex-col items-center gap-2">
-                    <div className="text-xl">LET'S MAKE DEFI MORE</div>
+                    <div className="text-xl">LET&apos;S MAKE DEFI MORE</div>
                     <div className="flex flex-col items-center">
                         <div className="text-7xl">VERIFIED REVIEWS</div>
                         <div className="text-7xl">FOR EVERY <span className="text-[#B2F1A8]"> DEFI PROTOCOLS </span> </div>
@@ -195,7 +195,7 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
                                 </div>
                             </button>
                             <div className="text-sm p-2">
-                                This wallet becomes your primary connected address. If you own an ENS domain, we'll make that username. You can change this later though!
+                                This wallet becomes your primary connected address. If you own an ENS domain, we&apos;ll make that username. You can change this later though!
                             </div>
                             <div className="text-sm p-2">
                                 This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply

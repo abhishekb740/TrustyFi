@@ -17,7 +17,7 @@ export default function Home2() {
                                 Find your favorite protocol
                             </div>
                             <div>
-                                Search for your favorite protocol on our platform and check its page to see what other users think about it. Can't find the protocol you're looking for? Send us an email at info@trustyfi.io to suggest it, and we will contact them to bring it to our platform.
+                                Search for your favorite protocol on our platform and check its page to see what other users think about it. Can&apos;t find the protocol you&apos;re looking for? Send us an email at info@trustyfi.io to suggest it, and we will contact them to bring it to our platform.
                             </div>
                         </div>
                     </div>
@@ -30,7 +30,7 @@ export default function Home2() {
                                 Find your favorite protocol
                             </div>
                             <div>
-                                Search for your favorite protocol on our platform and check its page to see what other users think about it. Can't find the protocol you're looking for? Send us an email at info@trustyfi.io to suggest it, and we will contact them to bring it to our platform.
+                                Search for your favorite protocol on our platform and check its page to see what other users think about it. Can&apos;t find the protocol you&apos;re looking for? Send us an email at info@trustyfi.io to suggest it, and we will contact them to bring it to our platform.
                             </div>
                         </div>
                     </div>
@@ -43,7 +43,7 @@ export default function Home2() {
                                 Find your favorite protocol
                             </div>
                             <div>
-                                Search for your favorite protocol on our platform and check its page to see what other users think about it. Can't find the protocol you're looking for? Send us an email at info@trustyfi.io to suggest it, and we will contact them to bring it to our platform.
+                                Search for your favorite protocol on our platform and check its page to see what other users think about it. Can&apos;t find the protocol you&apos;re looking for? Send us an email at info@trustyfi.io to suggest it, and we will contact them to bring it to our platform.
                             </div>
                         </div>
                     </div>
