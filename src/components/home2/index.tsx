@@ -2,10 +2,10 @@ import Image from "next/image";
 
 export default function Home2() {
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col" style={{fontFamily: 'Montserrat'}}>
             <div className="flex flex-col mt-16 gap-16 justify-center items-center">
-                <div className="text-4xl font-bold">
-                    HOW TRUSTIFY WORKS
+                <div className="text-6xl font-bold"  style={{fontFamily: 'Druk Trial'}}>
+                    HOW TRUSTYFI WORKS
                 </div>
                 <div className="flex flex-col gap-12 items-center justify-center">
                     <div className="flex flex-row border border-[#B2F1A8] p-4 rounded-md max-w-[50%] gap-4">

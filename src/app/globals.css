@@ -7,3 +7,17 @@ body {
   background-color: #1E1E1E;
   color: white;
 }
+
+@font-face {
+  font-family: 'Druk Trial';
+  src: url('/fonts/druk-trial/Druk-Bold-Trial.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/montserrat/Montserrat-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}

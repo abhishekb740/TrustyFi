@@ -22,20 +22,20 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
     }, [connected])
 
     return (
-        <main className="relative flex flex-col justify-center items-center pt-20">
+        <main className="relative flex flex-col justify-center items-center pt-20" style={{fontFamily: 'Montserrat'}}>
             {showWallet && (
                 <div className="fixed inset-0 bg-black opacity-50 z-40" onClick={() => setShowWallet(false)}></div>
             )}
             <div className={`flex flex-col items-center gap-6 ${showWallet ? 'z-30' : ''}`}>
                 <div className="flex flex-col items-center gap-2">
-                    <div className="text-xl">LET&apos;S MAKE DEFI MORE</div>
-                    <div className="flex flex-col items-center">
-                        <div className="text-7xl">VERIFIED REVIEWS</div>
-                        <div className="text-7xl">FOR EVERY <span className="text-[#B2F1A8]"> DEFI PROTOCOLS </span> </div>
+                    <div className="text-md">LET&apos;S MAKE DEFI MORE TRUSTED</div>
+                    <div className="flex flex-col items-center text-8xl" style={{fontFamily: 'Druk Trial'}}>
+                        <div className="">VERIFIED REVIEWS</div>
+                        <div className="">FOR EVERY <span className="text-[#B2F1A8]"> DEFI PROTOCOLS </span> </div>
                     </div>
                 </div>
                 <div className="flex flex-col items-center gap-10">
-                    <div className="text-2xl">
+                    <div className="text-lg">
                         The first Web3 review platform that pays users for verified reviews
                     </div>
                     <div className="flex flex-row w-3/4 rounded-3xl py-1 px-5 items-center justify-center bg-white border shadow-[0_0_20px_#B2F1A8]">
@@ -75,7 +75,7 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
                 </div>
             </div>
             <div className={`flex flex-col justify-center items-center w-full gap-12 ${showWallet ? 'z-30' : ''}`}>
-                <div className="text-4xl font-bold">
+                <div className="text-6xl font-bold" style={{fontFamily: 'Druk Trial'}}>
                     POPULAR WEB3 PRODUCTS
                 </div>
                 <div className="grid grid-cols-1 gap-8 xl:grid-cols-3 md:grid-cols-2">
