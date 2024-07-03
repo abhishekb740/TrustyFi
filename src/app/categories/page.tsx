@@ -1,8 +1,11 @@
+"use client"
 import { Topics } from "@/utils/utils";
 import { IoIosSearch } from "react-icons/io";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Categories() {
+    const router = useRouter();
     return (
         <div className="flex flex-col items-center min-h-screen w-full">
             <div className="flex flex-col w-full items-center mt-16">
@@ -115,7 +118,7 @@ export default function Categories() {
                 </div>
                 <div className="flex flex-col w-[50%] gap-12">
                     <div className="flex flex-col gap-4 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg p-8">
-                        <div className="flex flex-row gap-6">
+                        <div className="flex flex-row gap-6 hover:cursor-pointer"  onClick={() => router.push(`/protocol/${'uniswap'}`)}>
                             <Image src="/uniswap.png" alt="uniswap logo" width={100} height={100} className="bg-white rounded-lg" />
                             <div className="flex flex-col gap-2">
                                 <div className="text-2xl">Uniswap</div>
