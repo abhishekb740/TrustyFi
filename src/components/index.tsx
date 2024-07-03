@@ -4,6 +4,7 @@ import Hero2 from "./home2";
 import Footer from "./footer";
 import Reviews from "./protocol/reviews";
 import WriteReview from "./protocol/writeReview";
+import StarRating from "./starRating";
 
 export {
     Hero, 
@@ -11,5 +12,6 @@ export {
     Hero2,
     Footer,
     Reviews,
-    WriteReview
+    WriteReview,
+    StarRating 
 }

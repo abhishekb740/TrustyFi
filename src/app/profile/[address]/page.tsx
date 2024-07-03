@@ -11,7 +11,7 @@ type Props = {
 export default function Profile({ params }: Props) {
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen" style={{fontFamily: 'Montserrat'}}>
             <div className="flex flex-row justify-evenly items-center p-8 border-b-[1px] border-b-[#B2F1A8]">
                 <div className="flex flex-row items-center gap-8">
                     <img className="bg-white rounded-lg" src="/profile.png" height={120} width={120} alt="profile logo" />
@@ -21,7 +21,7 @@ export default function Profile({ params }: Props) {
                 </div>
                 <div className="flex flex-row gap-12">
                     <div className="flex flex-col items-center gap-6">
-                        <div className="text-2xl">
+                        <div className="text-4xl" style={{fontFamily: 'Druk Trial'}}>
                             REVIEWS
                         </div>
                         <div className="text-2xl">
@@ -29,7 +29,7 @@ export default function Profile({ params }: Props) {
                         </div>
                     </div>
                     <div className="flex flex-col items-center gap-6">
-                        <div className="text-2xl">
+                        <div className="text-4xl" style={{fontFamily: 'Druk Trial'}}>
                             AVERAGE SCORE
                         </div>
                         <div className="text-2xl">

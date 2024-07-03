@@ -21,3 +21,7 @@ body {
   font-weight: normal;
   font-style: normal;
 }
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}

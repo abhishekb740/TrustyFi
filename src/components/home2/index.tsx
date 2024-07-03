@@ -4,7 +4,7 @@ export default function Home2() {
     return (
         <div className="flex flex-col" style={{fontFamily: 'Montserrat'}}>
             <div className="flex flex-col mt-16 gap-16 justify-center items-center">
-                <div className="text-6xl font-bold"  style={{fontFamily: 'Druk Trial'}}>
+                <div className="text-6xl font-bold" style={{fontFamily: 'Druk Trial'}}>
                     HOW TRUSTYFI WORKS
                 </div>
                 <div className="flex flex-col gap-12 items-center justify-center">

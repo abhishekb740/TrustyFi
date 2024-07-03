@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 export default function Categories() {
     const router = useRouter();
     return (
-        <div className="flex flex-col items-center min-h-screen w-full">
+        <div className="flex flex-col items-center min-h-screen w-full" style={{fontFamily: 'Montserrat'}}>
             <div className="flex flex-col w-full items-center mt-16">
                 <div className="flex flex-row w-1/2 rounded-3xl py-1 px-5 items-center justify-center bg-white border shadow-[0_0_20px_#B2F1A8]">
                     <input
@@ -40,7 +40,7 @@ export default function Categories() {
                     <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4 gap-3">
                         <div className="flex flex-col gap-2">
                             <div className="text-3xl font-bold">
-                                Company Data
+                                COMPANY DATA
                             </div>
                             <div>
                                 Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.

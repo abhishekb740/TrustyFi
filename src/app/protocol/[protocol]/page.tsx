@@ -12,7 +12,7 @@ type Props = {
 export default function Protocol({ params }: Props) {
     const [writeReview, setWriteReview] = useState(false);
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col" style={{fontFamily: 'Montserrat'}}>
             <div className='flex flex-row items-center py-20 justify-evenly border-b-[1px] border-[#B2F1A8]'>
                 <div className="flex flex-row gap-6">
                     <Image src="/uniswap.png" alt="uniswap logo" width={100} height={100} className="bg-white rounded-lg" />

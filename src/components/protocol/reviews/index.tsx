@@ -245,7 +245,7 @@ export default function Reviews() {
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-col w-[40%]'>
+                <div className='flex flex-col w-[40%] gap-12'>
                     <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4 gap-12 items-center">
                         <div className="flex flex-col gap-2 items-center">
                             <div className="text-3xl font-bold">
