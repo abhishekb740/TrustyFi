@@ -51,32 +51,32 @@ export const Topics = [
 export const Protocols = [
     {
         name: "Uniswap",
-        image: "uniswap.png",
+        image: "Uniswap.png",
         description: "Algoritmic, autonomous interest rate protocol",
     },
     {
         name: "Aave",
-        image: "aave.png",
+        image: "Aave.png",
         description: "Algoritmic, autonomous interest rate protocol",
     },
     {
         name: "Curve",
-        image: "curve.png",
+        image: "Curve.png",
         description: "Algoritmic, autonomous interest rate protocol",
     },
     {
         name: "Lido Finance",
-        image: "lido.png",
+        image: "Lido.png",
         description: "Algoritmic, autonomous interest rate protocol",
     },
     {
         name: "Compound Finance",
-        image: "compound.png",
+        image: "Compound.png",
         description: "Algoritmic, autonomous interest rate protocol",
     },
     {
         name: "EigenLayer",
-        image: "eigen.png",
+        image: "Eigen.png",
         description: "Algoritmic, autonomous interest rate protocol",
     }
 
