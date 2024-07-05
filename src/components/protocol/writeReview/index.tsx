@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {StarRating} from '@/components';
+import { fetchProtocolsAndCategories } from '@/app/_actions/queries';
 
 export default function WriteReviews() {
     const [review, setReview] = useState('');
@@ -8,9 +9,10 @@ export default function WriteReviews() {
     const [rating, setRating] = useState(0);
     const today = new Date().toISOString().split('T')[0];
 
-    const handleSubmit = () => {
-        // Handle form submission
-        console.log({ review, title, date, rating });
+    const handleSubmit = async() => {
+        const res = await fetchProtocolsAndCategories();
+        console.log(res);
+
     };
 
     return (

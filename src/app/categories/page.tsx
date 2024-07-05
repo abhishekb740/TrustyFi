@@ -3,11 +3,25 @@ import { Topics } from "@/utils/utils";
 import { IoIosSearch } from "react-icons/io";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { fetchProtocolsAndCategories } from '@/app/_actions/queries';
+import { useState, useEffect } from 'react';
 
 export default function Categories() {
+
+    const [protocols, setProtocols] = useState<Protocol[]>([]);
+
+    useEffect(() => {
+        const getProtocolsAndCategories = async () => {
+            const res = await fetchProtocolsAndCategories();
+            console.log(res);
+            setProtocols(res);
+        }
+        getProtocolsAndCategories();
+    }, [])
+
     const router = useRouter();
     return (
-        <div className="flex flex-col items-center min-h-screen w-full" style={{fontFamily: 'Montserrat'}}>
+        <div className="flex flex-col items-center min-h-screen w-full" style={{ fontFamily: 'Montserrat' }}>
             <div className="flex flex-col w-full items-center mt-16">
                 <div className="flex flex-row w-1/2 rounded-3xl py-1 px-5 items-center justify-center bg-white border shadow-[0_0_20px_#B2F1A8]">
                     <input
@@ -117,342 +131,60 @@ export default function Categories() {
                     </div>
                 </div>
                 <div className="flex flex-col w-[50%] gap-12">
-                    <div className="flex flex-col gap-4 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg p-8">
-                        <div className="flex flex-row gap-6 hover:cursor-pointer"  onClick={() => router.push(`/protocol/${'uniswap'}`)}>
-                            <Image src="/uniswap.png" alt="uniswap logo" width={100} height={100} className="bg-white rounded-lg" />
-                            <div className="flex flex-col gap-2">
-                                <div className="text-2xl">Uniswap</div>
-                                <div className='flex flex-row gap-1'>
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <div>
-                                        4.9 | (32 reviews)
+                    {protocols.map((protocol, index) => {
+                        return (
+                            <div key={index} className="flex flex-col gap-4 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg p-8">
+                                <div className="flex flex-row gap-6 hover:cursor-pointer" onClick={() => router.push(`/protocol/${'uniswap'}`)}>
+                                    <Image src={`/protocols/${protocol.protocol_name}.png`} alt="uniswap logo" width={100} height={100} className="bg-white rounded-lg" />
+                                    <div className="flex flex-col gap-2">
+                                        <div className="text-2xl">{protocol.protocol_name}</div>
+                                        <div className='flex flex-row gap-1'>
+                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                            <div>
+                                                4.9 | (32 reviews)
+                                            </div>
+                                        </div>
+                                        <div>
+                                            Algoritmic, autonomous interest rate protocol
+                                        </div>
                                     </div>
                                 </div>
-                                <div>
-                                    Algoritmic, autonomous interest rate protocol
+                                <div className="border-b-[1px] border-b-[#B2F1A8] ">
                                 </div>
-                            </div>
-                        </div>
-                        <div className="border-b-[1px] border-b-[#B2F1A8] ">
-                        </div>
-                        <div className="flex flex-row justify-between">
-                            <div className="flex flex-row gap-6">
-                                <Image src="/envelope-solid.png" height={10} width={20} alt="envelope logo" />
-                                <Image src="/globe-solid.png" height={10} width={20} alt="globe logo" />
-                                <Image src="/phone-solid.png" height={10} width={20} alt="phone logo" />
-                            </div>
-                            <div className="flex flex-row gap-4">
-                                <div className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
-                                    <div>
-                                        <Image src={`/star.png`} width={20} height={20} alt={`star Logo`} />
+                                <div className="flex flex-row justify-between">
+                                    <div className="flex flex-row gap-6 items-center">
+                                        <div>
+                                            <Image src="/envelope-solid.png" height={10} width={20} alt="envelope logo" />
+                                        </div>
+                                        <div>
+                                            <Image src="/globe-solid.png" height={10} width={20} alt="globe logo" />
+                                        </div>
+                                        <div>
+                                            <Image src="/phone-solid.png" height={10} width={20} alt="phone logo" />
+                                        </div>
                                     </div>
-                                    <div>
-                                        Derivatives
-                                    </div>
-                                </div>
-                                <div className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
-                                    <div>
-                                        <Image src={`/star.png`} width={20} height={20} alt={`star Logo`} />
-                                    </div>
-                                    <div>
-                                        Yield Farming
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-4 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg p-8">
-                        <div className="flex flex-row gap-6">
-                            <Image src="/uniswap.png" alt="uniswap logo" width={100} height={100} className="bg-white rounded-lg" />
-                            <div className="flex flex-col gap-2">
-                                <div className="text-2xl">Uniswap</div>
-                                <div className='flex flex-row gap-1'>
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <div>
-                                        4.9 | (32 reviews)
-                                    </div>
-                                </div>
-                                <div>
-                                    Algoritmic, autonomous interest rate protocol
-                                </div>
-                            </div>
-                        </div>
-                        <div className="border-b-[1px] border-b-[#B2F1A8] ">
-                        </div>
-                        <div className="flex flex-row justify-between">
-                            <div className="flex flex-row gap-6">
-                                <Image src="/envelope-solid.png" height={10} width={20} alt="envelope logo" />
-                                <Image src="/globe-solid.png" height={10} width={20} alt="globe logo" />
-                                <Image src="/phone-solid.png" height={10} width={20} alt="phone logo" />
-                            </div>
-                            <div className="flex flex-row gap-4">
-                                <div className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
-                                    <div>
-                                        <Image src={`/star.png`} width={20} height={20} alt={`star Logo`} />
-                                    </div>
-                                    <div>
-                                        Derivatives
-                                    </div>
-                                </div>
-                                <div className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
-                                    <div>
-                                        <Image src={`/star.png`} width={20} height={20} alt={`star Logo`} />
-                                    </div>
-                                    <div>
-                                        Yield Farming
+                                    <div className="flex flex-row gap-4">
+                                        {protocol.ProtocolCategories.map((category, index) => {
+                                            return (
+                                                <div key={index} className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
+                                                    <div>
+                                                        <Image src={`/star.png`} width={20} height={20} alt={`star Logo`} />
+                                                    </div>
+                                                    <div>
+                                                        {category.Categories.category_name}
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-4 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg p-8">
-                        <div className="flex flex-row gap-6">
-                            <Image src="/uniswap.png" alt="uniswap logo" width={100} height={100} className="bg-white rounded-lg" />
-                            <div className="flex flex-col gap-2">
-                                <div className="text-2xl">Uniswap</div>
-                                <div className='flex flex-row gap-1'>
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <div>
-                                        4.9 | (32 reviews)
-                                    </div>
-                                </div>
-                                <div>
-                                    Algoritmic, autonomous interest rate protocol
-                                </div>
-                            </div>
-                        </div>
-                        <div className="border-b-[1px] border-b-[#B2F1A8] ">
-                        </div>
-                        <div className="flex flex-row justify-between">
-                            <div className="flex flex-row gap-6">
-                                <Image src="/envelope-solid.png" height={10} width={20} alt="envelope logo" />
-                                <Image src="/globe-solid.png" height={10} width={20} alt="globe logo" />
-                                <Image src="/phone-solid.png" height={10} width={20} alt="phone logo" />
-                            </div>
-                            <div className="flex flex-row gap-4">
-                                <div className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
-                                    <div>
-                                        <Image src={`/star.png`} width={20} height={20} alt={`star Logo`} />
-                                    </div>
-                                    <div>
-                                        Derivatives
-                                    </div>
-                                </div>
-                                <div className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
-                                    <div>
-                                        <Image src={`/star.png`} width={20} height={20} alt={`star Logo`} />
-                                    </div>
-                                    <div>
-                                        Yield Farming
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-4 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg p-8">
-                        <div className="flex flex-row gap-6">
-                            <Image src="/uniswap.png" alt="uniswap logo" width={100} height={100} className="bg-white rounded-lg" />
-                            <div className="flex flex-col gap-2">
-                                <div className="text-2xl">Uniswap</div>
-                                <div className='flex flex-row gap-1'>
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <div>
-                                        4.9 | (32 reviews)
-                                    </div>
-                                </div>
-                                <div>
-                                    Algoritmic, autonomous interest rate protocol
-                                </div>
-                            </div>
-                        </div>
-                        <div className="border-b-[1px] border-b-[#B2F1A8] ">
-                        </div>
-                        <div className="flex flex-row justify-between">
-                            <div className="flex flex-row gap-6">
-                                <Image src="/envelope-solid.png" height={10} width={20} alt="envelope logo" />
-                                <Image src="/globe-solid.png" height={10} width={20} alt="globe logo" />
-                                <Image src="/phone-solid.png" height={10} width={20} alt="phone logo" />
-                            </div>
-                            <div className="flex flex-row gap-4">
-                                <div className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
-                                    <div>
-                                        <Image src={`/star.png`} width={20} height={20} alt={`star Logo`} />
-                                    </div>
-                                    <div>
-                                        Derivatives
-                                    </div>
-                                </div>
-                                <div className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
-                                    <div>
-                                        <Image src={`/star.png`} width={20} height={20} alt={`star Logo`} />
-                                    </div>
-                                    <div>
-                                        Yield Farming
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-4 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg p-8">
-                        <div className="flex flex-row gap-6">
-                            <Image src="/uniswap.png" alt="uniswap logo" width={100} height={100} className="bg-white rounded-lg" />
-                            <div className="flex flex-col gap-2">
-                                <div className="text-2xl">Uniswap</div>
-                                <div className='flex flex-row gap-1'>
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <div>
-                                        4.9 | (32 reviews)
-                                    </div>
-                                </div>
-                                <div>
-                                    Algoritmic, autonomous interest rate protocol
-                                </div>
-                            </div>
-                        </div>
-                        <div className="border-b-[1px] border-b-[#B2F1A8] ">
-                        </div>
-                        <div className="flex flex-row justify-between">
-                            <div className="flex flex-row gap-6">
-                                <Image src="/envelope-solid.png" height={10} width={20} alt="envelope logo" />
-                                <Image src="/globe-solid.png" height={10} width={20} alt="globe logo" />
-                                <Image src="/phone-solid.png" height={10} width={20} alt="phone logo" />
-                            </div>
-                            <div className="flex flex-row gap-4">
-                                <div className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
-                                    <div>
-                                        <Image src={`/star.png`} width={20} height={20} alt={`star Logo`} />
-                                    </div>
-                                    <div>
-                                        Derivatives
-                                    </div>
-                                </div>
-                                <div className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
-                                    <div>
-                                        <Image src={`/star.png`} width={20} height={20} alt={`star Logo`} />
-                                    </div>
-                                    <div>
-                                        Yield Farming
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-4 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg p-8">
-                        <div className="flex flex-row gap-6">
-                            <Image src="/uniswap.png" alt="uniswap logo" width={100} height={100} className="bg-white rounded-lg" />
-                            <div className="flex flex-col gap-2">
-                                <div className="text-2xl">Uniswap</div>
-                                <div className='flex flex-row gap-1'>
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <div>
-                                        4.9 | (32 reviews)
-                                    </div>
-                                </div>
-                                <div>
-                                    Algoritmic, autonomous interest rate protocol
-                                </div>
-                            </div>
-                        </div>
-                        <div className="border-b-[1px] border-b-[#B2F1A8] ">
-                        </div>
-                        <div className="flex flex-row justify-between">
-                            <div className="flex flex-row gap-6">
-                                <Image src="/envelope-solid.png" height={10} width={20} alt="envelope logo" />
-                                <Image src="/globe-solid.png" height={10} width={20} alt="globe logo" />
-                                <Image src="/phone-solid.png" height={10} width={20} alt="phone logo" />
-                            </div>
-                            <div className="flex flex-row gap-4">
-                                <div className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
-                                    <div>
-                                        <Image src={`/star.png`} width={20} height={20} alt={`star Logo`} />
-                                    </div>
-                                    <div>
-                                        Derivatives
-                                    </div>
-                                </div>
-                                <div className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
-                                    <div>
-                                        <Image src={`/star.png`} width={20} height={20} alt={`star Logo`} />
-                                    </div>
-                                    <div>
-                                        Yield Farming
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-4 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg p-8">
-                        <div className="flex flex-row gap-6">
-                            <Image src="/uniswap.png" alt="uniswap logo" width={100} height={100} className="bg-white rounded-lg" />
-                            <div className="flex flex-col gap-2">
-                                <div className="text-2xl">Uniswap</div>
-                                <div className='flex flex-row gap-1'>
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    <div>
-                                        4.9 | (32 reviews)
-                                    </div>
-                                </div>
-                                <div>
-                                    Algoritmic, autonomous interest rate protocol
-                                </div>
-                            </div>
-                        </div>
-                        <div className="border-b-[1px] border-b-[#B2F1A8] ">
-                        </div>
-                        <div className="flex flex-row justify-between">
-                            <div className="flex flex-row gap-6">
-                                <Image src="/envelope-solid.png" height={10} width={20} alt="envelope logo" />
-                                <Image src="/globe-solid.png" height={10} width={20} alt="globe logo" />
-                                <Image src="/phone-solid.png" height={10} width={20} alt="phone logo" />
-                            </div>
-                            <div className="flex flex-row gap-4">
-                                <div className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
-                                    <div>
-                                        <Image src={`/star.png`} width={20} height={20} alt={`star Logo`} />
-                                    </div>
-                                    <div>
-                                        Derivatives
-                                    </div>
-                                </div>
-                                <div className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
-                                    <div>
-                                        <Image src={`/star.png`} width={20} height={20} alt={`star Logo`} />
-                                    </div>
-                                    <div>
-                                        Yield Farming
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        )
+                    })}
                 </div>
             </div>
         </div>

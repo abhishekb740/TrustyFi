@@ -7,3 +7,14 @@ interface Ethereum {
 interface Window {
     ethereum?: Ethereum;
 }
+
+interface Protocol {
+    id: number;
+    protocol_name: string;
+    ProtocolCategories: {
+        Categories: {
+            id: number;
+            category_name: string;
+        }[];
+    }[];
+}
