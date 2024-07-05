@@ -1,7 +1,8 @@
 "use client"
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Reviews, WriteReview } from '@/components';
+import { fetchProtocolDetails } from '@/app/_actions/queries';
 
 type Props = {
     params: {
@@ -11,13 +12,24 @@ type Props = {
 
 export default function Protocol({ params }: Props) {
     const [writeReview, setWriteReview] = useState(false);
+    const [protocolDetails, setProtocolDetails] = useState<Protocol>();
+
+    useEffect(() => {
+        const getProtocolDetails = async () => {
+            const data = await fetchProtocolDetails(params.protocol);
+            console.log(data)
+            setProtocolDetails(data);
+        }
+        getProtocolDetails();
+    }, [])
+
     return (
-        <div className="flex flex-col" style={{fontFamily: 'Montserrat'}}>
+        <div className="flex flex-col" style={{ fontFamily: 'Montserrat' }}>
             <div className='flex flex-row items-center py-20 justify-evenly border-b-[1px] border-[#B2F1A8]'>
                 <div className="flex flex-row gap-6">
-                    <Image src="/uniswap.png" alt="uniswap logo" width={100} height={100} className="bg-white rounded-lg" />
+                    <Image src={`/protocols/${protocolDetails?.image_url}`} alt="uniswap logo" width={100} height={100} className="bg-white rounded-lg" />
                     <div className="flex flex-col gap-2">
-                        <div className="text-2xl">Uniswap</div>
+                        <div className="text-2xl">{protocolDetails?.protocol_name}</div>
                         <div>
                             Algoritmic, autonomous interest rate protocol
                         </div>
@@ -39,7 +51,7 @@ export default function Protocol({ params }: Props) {
                     </div>
                     <div className='flex flex-col gap-4'>
                         <div>
-                            app.uniswap.org
+                            {protocolDetails?.website_url}
                         </div>
                         <div>
                             Visit
@@ -47,12 +59,12 @@ export default function Protocol({ params }: Props) {
                     </div>
                 </div>
             </div>
-           {!writeReview ? <div className='p-4 w-[20%] flex justify-center ml-24 rounded-md mt-12 bg-[#B2F1A8] text-black hover:cursor-pointer' onClick={() => setWriteReview(true)}>
+            {!writeReview ? <div className='p-4 w-[20%] flex justify-center ml-24 rounded-md mt-12 bg-[#B2F1A8] text-black hover:cursor-pointer' onClick={() => setWriteReview(true)}>
                 <button>WRITE A REVIEW</button>
             </div> : <div className='p-4 w-[20%] flex justify-center ml-24 rounded-md mt-12 bg-[#B2F1A8] text-black hover:cursor-pointer' onClick={() => setWriteReview(false)}>
                 <button>Cancel</button>
             </div>}
-           {writeReview ? <WriteReview/> : <Reviews />}
+            {writeReview ? <WriteReview /> : <Reviews />}
         </div>
     )
 }

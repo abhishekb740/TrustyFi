@@ -6,21 +6,6 @@ import { useRouter } from "next/navigation";
 import { fetchProtocolsAndCategories } from '@/app/_actions/queries';
 import { useState, useEffect } from 'react';
 
-type Category = {
-    id: number;
-    category_name: string;
-};
-
-type ProtocolCategory = {
-    Categories: Category;
-};
-
-type Protocol = {
-    protocol_name: string;
-    ProtocolCategories: ProtocolCategory[];
-};
-
-
 export default function Categories() {
     
     const [protocols, setProtocols] = useState<Protocol[]>([]);
@@ -182,7 +167,7 @@ export default function Categories() {
                                         </div>
                                     </div>
                                     <div className="flex flex-row gap-4">
-                                        {protocol.ProtocolCategories.map((protocolCategory, index) => {
+                                        {protocol.ProtocolCategories?.map((protocolCategory, index) => {
                                             return (
                                                 <div key={index} className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
                                                     <div>

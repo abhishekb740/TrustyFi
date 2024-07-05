@@ -36,3 +36,22 @@ export const fetchProtocolsAndCategories = async () => {
   return formattedProtocols;
 };
 
+export const fetchProtocolDetails = async (protocolName: string) => {
+  const { data, error } = await client
+    .from('Protocols')
+    .select(`
+        id,
+        protocol_name,
+        protocol_description,
+        website_url,
+        image_url
+      `)
+    .eq('protocol_name', protocolName)
+    .single();
+
+  if (error) {
+    throw new Error(`Error fetching protocol details: ${error.message}`);
+  }
+
+  return data;
+};

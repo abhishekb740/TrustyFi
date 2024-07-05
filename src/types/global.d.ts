@@ -18,6 +18,10 @@ type ProtocolCategory = {
 };
 
 type Protocol = {
+    id: number;
     protocol_name: string;
-    ProtocolCategories: ProtocolCategory[];
+    protocol_description?: string;
+    website_url?: string;
+    ProtocolCategories?: ProtocolCategory[];
+    image_url?: string;
 };
