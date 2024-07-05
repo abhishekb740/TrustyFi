@@ -9,6 +9,7 @@ import {
 } from "react";
 import detectEthereumProvider from "@metamask/detect-provider";
 import { formatBalance } from "@/utils/utils";
+import { handleUserInDatabase } from "@/app/_actions/queries";
 
 interface WalletState {
   accounts: any[];
@@ -44,10 +45,10 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
   const clearError = () => setErrorMessage("");
 
   const [wallet, setWallet] = useState(disconnectedState);
-  
+
   const _updateWallet = useCallback(async (providedAccounts?: any) => {
     if (!window.ethereum) return;
-    
+
     const accounts =
       providedAccounts ||
       (await window.ethereum.request({ method: "eth_accounts" }));
@@ -73,8 +74,8 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         params: [{ chainId: '0xaa36a7' }],
       });
     }
-
     setWallet({ accounts, balance, chainId });
+    await handleUserInDatabase(accounts[0]);
   }, []);
 
   const updateWalletAndAccounts = useCallback(
@@ -111,7 +112,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
 
   const connectMetaMask = async () => {
     if (!window.ethereum) return;
-    
+
     setIsConnecting(true);
 
     try {

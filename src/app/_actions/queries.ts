@@ -55,3 +55,43 @@ export const fetchProtocolDetails = async (protocolName: string) => {
 
   return data;
 };
+
+
+export const handleUserInDatabase = async (walletAddress: string) => {
+  const { data: existingUser, error } = await client
+    .from('Users')
+    .select('*')
+    .eq('wallet_address', walletAddress)
+    .single();
+
+  if (error && error.code !== 'PGRST116') {
+    console.error('Error checking user existence:', error.message);
+    return;
+  }
+
+  console.log('Existing user:', existingUser)
+
+  if (!existingUser) {
+    // Create new user
+    const { error: insertError } = await client
+      .from('Users')
+      .insert({
+        wallet_address: walletAddress,
+        updated_at: new Date().toISOString()
+      });
+
+    if (insertError) {
+      console.error('Error creating new user:', insertError.message);
+    }
+  } else {
+    // Update user information if necessary
+    const { error: updateError } = await client
+      .from('Users')
+      .update({ updated_at: new Date().toISOString() })
+      .eq('wallet_address', walletAddress);
+
+    if (updateError) {
+      console.error('Error updating user:', updateError.message);
+    }
+  }
+};
