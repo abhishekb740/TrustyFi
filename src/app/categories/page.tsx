@@ -28,17 +28,7 @@ export default function Categories() {
     useEffect(() => {
         const getProtocolsAndCategories = async () => {
             const res = await fetchProtocolsAndCategories();
-            // Ensure the response matches the expected structure
-            const formattedProtocols = res.map((protocol: any) => ({
-                protocol_name: protocol.protocol_name,
-                ProtocolCategories: protocol.ProtocolCategories.map((category: any) => ({
-                    Categories: {
-                        id: category.Categories.id,
-                        category_name: category.Categories.category_name,
-                    }
-                }))
-            }));
-            setProtocols(formattedProtocols);
+            setProtocols(res);
         }
         getProtocolsAndCategories();
     }, [])
