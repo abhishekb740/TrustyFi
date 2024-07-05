@@ -6,15 +6,39 @@ import { useRouter } from "next/navigation";
 import { fetchProtocolsAndCategories } from '@/app/_actions/queries';
 import { useState, useEffect } from 'react';
 
-export default function Categories() {
+type Category = {
+    id: number;
+    category_name: string;
+};
 
+type ProtocolCategory = {
+    Categories: Category;
+};
+
+type Protocol = {
+    protocol_name: string;
+    ProtocolCategories: ProtocolCategory[];
+};
+
+
+export default function Categories() {
+    
     const [protocols, setProtocols] = useState<Protocol[]>([]);
 
     useEffect(() => {
         const getProtocolsAndCategories = async () => {
             const res = await fetchProtocolsAndCategories();
-            console.log(res);
-            setProtocols(res);
+            // Ensure the response matches the expected structure
+            const formattedProtocols = res.map((protocol: any) => ({
+                protocol_name: protocol.protocol_name,
+                ProtocolCategories: protocol.ProtocolCategories.map((category: any) => ({
+                    Categories: {
+                        id: category.Categories.id,
+                        category_name: category.Categories.category_name,
+                    }
+                }))
+            }));
+            setProtocols(formattedProtocols);
         }
         getProtocolsAndCategories();
     }, [])
@@ -134,8 +158,8 @@ export default function Categories() {
                     {protocols.map((protocol, index) => {
                         return (
                             <div key={index} className="flex flex-col gap-4 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg p-8">
-                                <div className="flex flex-row gap-6 hover:cursor-pointer" onClick={() => router.push(`/protocol/${'uniswap'}`)}>
-                                    <Image src={`/protocols/${protocol.protocol_name}.png`} alt="uniswap logo" width={100} height={100} className="bg-white rounded-lg" />
+                                <div className="flex flex-row gap-6 hover:cursor-pointer" onClick={() => router.push(`/protocol/${protocol.protocol_name}`)}>
+                                    <Image src={`/protocols/${protocol.protocol_name}.png`} alt="protocol logo" width={100} height={100} className="bg-white rounded-lg" />
                                     <div className="flex flex-col gap-2">
                                         <div className="text-2xl">{protocol.protocol_name}</div>
                                         <div className='flex flex-row gap-1'>
@@ -168,14 +192,14 @@ export default function Categories() {
                                         </div>
                                     </div>
                                     <div className="flex flex-row gap-4">
-                                        {protocol.ProtocolCategories.map((category, index) => {
+                                        {protocol.ProtocolCategories.map((protocolCategory, index) => {
                                             return (
                                                 <div key={index} className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
                                                     <div>
                                                         <Image src={`/star.png`} width={20} height={20} alt={`star Logo`} />
                                                     </div>
                                                     <div>
-                                                        {category.Categories.category_name}
+                                                        {protocolCategory.Categories.category_name}
                                                     </div>
                                                 </div>
                                             )

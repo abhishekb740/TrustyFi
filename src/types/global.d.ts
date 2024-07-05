@@ -8,13 +8,16 @@ interface Window {
     ethereum?: Ethereum;
 }
 
-interface Protocol {
+type Category = {
     id: number;
+    category_name: string;
+};
+
+type ProtocolCategory = {
+    Categories: Category;
+};
+
+type Protocol = {
     protocol_name: string;
-    ProtocolCategories: {
-        Categories: {
-            id: number;
-            category_name: string;
-        }[];
-    }[];
-}
+    ProtocolCategories: ProtocolCategory[];
+};
