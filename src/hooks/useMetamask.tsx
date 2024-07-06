@@ -9,7 +9,7 @@ import {
 } from "react";
 import detectEthereumProvider from "@metamask/detect-provider";
 import { formatBalance } from "@/utils/utils";
-import { handleUserInDatabase } from "@/app/_actions/queries";
+import { handleUserInDatabase, fetchUserByWalletAddress } from "@/app/_actions/queries";
 
 interface WalletState {
   accounts: any[];
@@ -23,9 +23,10 @@ interface MetaMaskContextData {
   error: boolean;
   errorMessage: string;
   isConnecting: boolean;
-  connectMetamask: () => void;
+  connectMetaMask: () => void;
   clearError: () => void;
   connected: boolean;
+  userId: string | null;
 }
 
 const disconnectedState: WalletState = {
@@ -43,8 +44,8 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const clearError = () => setErrorMessage("");
-
   const [wallet, setWallet] = useState(disconnectedState);
+  const [userId, setUserId] = useState<string | null>(null);
 
   const _updateWallet = useCallback(async (providedAccounts?: any) => {
     if (!window.ethereum) return;
@@ -55,6 +56,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
 
     if (accounts.length === 0) {
       setWallet(disconnectedState);
+      setUserId(null);
       return;
     }
 
@@ -75,7 +77,10 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
       });
     }
     setWallet({ accounts, balance, chainId });
+
     await handleUserInDatabase(accounts[0]);
+    const user = await fetchUserByWalletAddress(accounts[0]);
+    setUserId(user?.id || null);
   }, []);
 
   const updateWalletAndAccounts = useCallback(
@@ -135,9 +140,10 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         error: !!errorMessage,
         errorMessage,
         isConnecting,
-        connectMetamask: connectMetaMask,
+        connectMetaMask,
         clearError,
         connected: wallet.accounts.length > 0,
+        userId,
       }}
     >
       {children}

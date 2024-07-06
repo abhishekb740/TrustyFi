@@ -1,18 +1,45 @@
-import { useState } from 'react';
-import {StarRating} from '@/components';
-import { fetchProtocolsAndCategories } from '@/app/_actions/queries';
+import { useState, useEffect } from 'react';
+import { StarRating } from '@/components';
+import { writeReview } from '@/app/_actions/queries';
+import { useMetaMask } from '@/hooks/useMetamask';
 
-export default function WriteReviews() {
+type Props = {
+    protocol_id: number;
+    existingReview?: Review;
+}
+
+export default function WriteReviews({ protocol_id, existingReview }: Props) {
+    const { userId } = useMetaMask();
     const [review, setReview] = useState('');
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
     const [rating, setRating] = useState(0);
     const today = new Date().toISOString().split('T')[0];
 
-    const handleSubmit = async() => {
-        const res = await fetchProtocolsAndCategories();
-        console.log(res);
+    useEffect(() => {
+        if (existingReview) {
+            setReview(existingReview.description);
+            setTitle(existingReview.title);
+            setDate(existingReview.created_at.split('T')[0]);
+            setRating(existingReview.rating);
+        }
+    }, [existingReview]);
 
+    const handleSubmit = async () => {
+        if (!userId) {
+            console.error('User is not logged in');
+            return;
+        }
+        if (!protocol_id) {
+            console.error('Protocol is not selected');
+            return;
+        }
+        try {
+            await writeReview(userId, protocol_id, rating, title, review, date);
+            alert('Review submitted successfully');
+        } catch (error) {
+            console.error('Error submitting review:', (error as Error).message);
+        }
     };
 
     return (
@@ -23,9 +50,9 @@ export default function WriteReviews() {
                     <div className="text-4xl" style={{ fontFamily: 'Druk Trial' }}>
                         RATE YOUR EXPERIENCE
                     </div>
-                    <StarRating onRatingChange={(value) => setRating(value)} />
+                    <StarRating onRatingChange={(value) => setRating(value)} initialRating={existingReview?.rating ?? 0} />
                 </div>
-                
+
                 {/* Review Textarea Section */}
                 <div className="flex flex-col items-center gap-8 w-full">
                     <div className="text-4xl" style={{ fontFamily: 'Druk Trial' }}>
@@ -39,7 +66,7 @@ export default function WriteReviews() {
                                 border: 'none',
                                 boxShadow: 'none',
                                 lineHeight: '1.5',
-                                minHeight: '100px'
+                                minHeight: '100px',
                             }}
                             value={review}
                             onChange={(e) => setReview(e.target.value)}

@@ -25,3 +25,15 @@ type Protocol = {
     ProtocolCategories?: ProtocolCategory[];
     image_url?: string;
 };
+
+type Review = {
+    id: number;
+    protocol_id: number;
+    user_id: number;
+    rating: number;
+    title: string;
+    review: string;
+    description: string;
+    created_at: string;
+    updated_at?: string;
+}

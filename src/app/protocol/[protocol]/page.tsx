@@ -1,8 +1,9 @@
-"use client"
+"use client";
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { Reviews, WriteReview } from '@/components';
-import { fetchProtocolDetails } from '@/app/_actions/queries';
+import { fetchProtocolDetails, fetchUserReview } from '@/app/_actions/queries';
+import { useMetaMask } from '@/hooks/useMetamask';
 
 type Props = {
     params: {
@@ -13,15 +14,25 @@ type Props = {
 export default function Protocol({ params }: Props) {
     const [writeReview, setWriteReview] = useState(false);
     const [protocolDetails, setProtocolDetails] = useState<Protocol>();
+    const [userReview, setUserReview] = useState<Review>();
+    const { userId } = useMetaMask();
 
     useEffect(() => {
         const getProtocolDetails = async () => {
             const data = await fetchProtocolDetails(params.protocol);
-            console.log(data)
             setProtocolDetails(data);
-        }
+            if (userId) {
+                const review = await fetchUserReview(userId, data.id);
+                setUserReview(review);
+            }
+        };
         getProtocolDetails();
-    }, [])
+    }, [params.protocol, userId]); // Added userId to dependency array
+    
+
+    const toggleWriteReview = () => {
+        setWriteReview(prev => !prev);
+    };
 
     return (
         <div className="flex flex-col" style={{ fontFamily: 'Montserrat' }}>
@@ -59,12 +70,16 @@ export default function Protocol({ params }: Props) {
                     </div>
                 </div>
             </div>
-            {!writeReview ? <div className='p-4 w-[20%] flex justify-center ml-24 rounded-md mt-12 bg-[#B2F1A8] text-black hover:cursor-pointer' onClick={() => setWriteReview(true)}>
-                <button>WRITE A REVIEW</button>
-            </div> : <div className='p-4 w-[20%] flex justify-center ml-24 rounded-md mt-12 bg-[#B2F1A8] text-black hover:cursor-pointer' onClick={() => setWriteReview(false)}>
-                <button>Cancel</button>
-            </div>}
-            {writeReview ? <WriteReview /> : <Reviews />}
+            {!writeReview ? (
+                <div className='p-4 w-[20%] flex justify-center ml-24 rounded-md mt-12 bg-[#B2F1A8] text-black hover:cursor-pointer' onClick={toggleWriteReview}>
+                    <button>{userReview ? 'Update Review' : 'Write a Review'}</button>
+                </div>
+            ) : (
+                <div className='p-4 w-[20%] flex justify-center ml-24 rounded-md mt-12 bg-[#B2F1A8] text-black hover:cursor-pointer' onClick={toggleWriteReview}>
+                    <button>Cancel</button>
+                </div>
+            )}
+            {writeReview ? <WriteReview protocol_id={protocolDetails?.id ?? 0} existingReview={userReview} /> : <Reviews />}
         </div>
-    )
+    );
 }

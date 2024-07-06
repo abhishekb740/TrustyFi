@@ -1,17 +1,29 @@
-import { useState } from 'react';
+"use client";
+
+import { useState, useEffect } from 'react';
 
 interface StarRatingProps {
     maxStars?: number;
     onRatingChange?: (rating: number) => void;
+    initialRating?: number;
 }
 
-export default function StarRating({ maxStars = 5, onRatingChange }: StarRatingProps) {
-    const [rating, setRating] = useState<number>(0);
+export default function StarRating({ maxStars = 5, onRatingChange, initialRating }: StarRatingProps) {
+    // Initialize rating with a default value of 0, but use initialRating if it's defined
+    const [rating, setRating] = useState<number>(initialRating ?? 0);
+
+    useEffect(() => {
+        if (initialRating !== undefined) {
+            setRating(initialRating);
+        }
+    }, [initialRating]);
 
     const handleRating = (index: number) => {
-        setRating(index + 1);
+        const newRating = index + 1;
+        const finalRating = rating === newRating ? 0 : newRating;
+        setRating(finalRating);
         if (onRatingChange) {
-            onRatingChange(index + 1);
+            onRatingChange(finalRating);
         }
     };
 

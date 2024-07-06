@@ -56,7 +56,6 @@ export const fetchProtocolDetails = async (protocolName: string) => {
   return data;
 };
 
-
 export const handleUserInDatabase = async (walletAddress: string) => {
   const { data: existingUser, error } = await client
     .from('Users')
@@ -69,10 +68,7 @@ export const handleUserInDatabase = async (walletAddress: string) => {
     return;
   }
 
-  console.log('Existing user:', existingUser)
-
   if (!existingUser) {
-    // Create new user
     const { error: insertError } = await client
       .from('Users')
       .insert({
@@ -84,7 +80,6 @@ export const handleUserInDatabase = async (walletAddress: string) => {
       console.error('Error creating new user:', insertError.message);
     }
   } else {
-    // Update user information if necessary
     const { error: updateError } = await client
       .from('Users')
       .update({ updated_at: new Date().toISOString() })
@@ -95,3 +90,69 @@ export const handleUserInDatabase = async (walletAddress: string) => {
     }
   }
 };
+
+export const fetchUserByWalletAddress = async (walletAddress: string) => {
+  const { data, error } = await client
+    .from('Users')
+    .select('*')
+    .eq('wallet_address', walletAddress)
+    .single();
+
+  if (error) {
+    throw new Error(`Error fetching user: ${error.message}`);
+  }
+
+  return data;
+};
+
+export const writeReview = async (userId: string, protocolId: number, rating: number, title: string, description: string, date: string) => {
+  const { data, error } = await client
+    .from('Reviews')
+    .insert({
+      user_id: userId,
+      protocol_id: protocolId,
+      rating,
+      title,
+      description,
+      created_at: date,
+      updated_at: new Date().toISOString()
+    });
+
+  if (error) {
+    throw new Error(`Error writing review: ${error.message}`);
+  }
+
+  return data;
+};
+
+export const fetchUserReview = async (userId: string, protocolId: number) => {
+  try {
+    // Validate inputs
+    if (!userId || !protocolId) {
+      throw new Error('Invalid userId or protocolId');
+    }
+
+    console.log(`Fetching user review for userId: ${userId} and protocolId: ${protocolId}`);
+
+    const { data, error } = await client
+      .from('Reviews')
+      .select('*')
+      .eq('user_id', userId)
+      .eq('protocol_id', protocolId)
+      .limit(1)
+      .single();
+
+    if (error) {
+      if (error.message.includes('multiple (or no) rows')) {
+        return null;
+      }
+      throw new Error(`Error fetching user review: ${error.message}`);
+    }
+
+    return data || null;
+  } catch (err) {
+    console.error('Unexpected error:', err);
+    throw new Error(`Unexpected error fetching user review: ${(err as Error).message}`);
+  }
+};
+
