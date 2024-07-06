@@ -13,7 +13,7 @@ type Props = {
 
 export default function Hero({ setShowWallet, showWallet }: Props) {
 
-    const { wallet, connectMetamask, isConnecting, hasProvider, connected } = useMetaMask();
+    const { wallet, connectMetaMask, isConnecting, hasProvider, connected } = useMetaMask();
 
     useEffect(() => {
         if (connected) {
@@ -120,7 +120,7 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
                             CONNECT WALLET
                         </div>
                         <div className="flex flex-col justify-center items-center w-full mt-12 gap-6">
-                            <button onClick={connectMetamask} className="flex flex-row justify-center items-center gap-6 rounded-full border border-black p-2 min-w-56">
+                            <button onClick={connectMetaMask} className="flex flex-row justify-center items-center gap-6 rounded-full border border-black p-2 min-w-56">
                                 <Image src="/metamask.png" width={30} height={30} alt="Metamask Logo" />
                                 <div className="font-bold">
                                     Metamask

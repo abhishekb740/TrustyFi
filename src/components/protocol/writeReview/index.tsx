@@ -45,15 +45,12 @@ export default function WriteReviews({ protocol_id, existingReview }: Props) {
     return (
         <div>
             <div className="flex flex-col items-center mt-16 gap-12">
-                {/* Star Rating Section */}
                 <div className="flex flex-col items-center gap-8 w-full">
                     <div className="text-4xl" style={{ fontFamily: 'Druk Trial' }}>
                         RATE YOUR EXPERIENCE
                     </div>
                     <StarRating onRatingChange={(value) => setRating(value)} initialRating={existingReview?.rating ?? 0} />
                 </div>
-
-                {/* Review Textarea Section */}
                 <div className="flex flex-col items-center gap-8 w-full">
                     <div className="text-4xl" style={{ fontFamily: 'Druk Trial' }}>
                         EVALUATE YOUR RECENT EXPERIENCE
@@ -73,8 +70,6 @@ export default function WriteReviews({ protocol_id, existingReview }: Props) {
                         />
                     </div>
                 </div>
-
-                {/* Review Title Section */}
                 <div className="flex flex-col items-center gap-8 w-full">
                     <div className="text-4xl" style={{ fontFamily: 'Druk Trial' }}>
                         GIVE YOUR REVIEW A TITLE
@@ -92,8 +87,6 @@ export default function WriteReviews({ protocol_id, existingReview }: Props) {
                         />
                     </div>
                 </div>
-
-                {/* Date Section */}
                 <div className="flex flex-col items-center gap-8 w-full">
                     <div className="text-4xl" style={{ fontFamily: 'Druk Trial' }}>
                         DATE OF THE EXPERIENCE
@@ -113,8 +106,6 @@ export default function WriteReviews({ protocol_id, existingReview }: Props) {
                         />
                     </div>
                 </div>
-
-                {/* Submit Button */}
                 <button
                     className="mt-8 bg-[#B2F1A8] text-black px-4 py-2 rounded-md"
                     onClick={handleSubmit}
