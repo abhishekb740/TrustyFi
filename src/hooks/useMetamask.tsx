@@ -76,7 +76,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         params: [{ chainId: '0xaa36a7' }],
       });
     }
-    setWallet({ accounts, balance, chainId });
+    setWallet({ accounts: [accounts[0]], balance, chainId });
 
     await handleUserInDatabase(accounts[0]);
     const user = await fetchUserByWalletAddress(accounts[0]);

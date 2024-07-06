@@ -9,7 +9,7 @@ type Props = {
 }
 
 export default function WriteReviews({ protocol_id, existingReview }: Props) {
-    const { userId } = useMetaMask();
+    const { userId, wallet } = useMetaMask();
     const [review, setReview] = useState('');
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
@@ -35,7 +35,7 @@ export default function WriteReviews({ protocol_id, existingReview }: Props) {
             return;
         }
         try {
-            await writeReview(userId, protocol_id, rating, title, review, date);
+            await writeReview(userId, protocol_id, rating, title, review, date, wallet.accounts[0]);
             alert('Review submitted successfully');
         } catch (error) {
             console.error('Error submitting review:', (error as Error).message);

@@ -105,7 +105,7 @@ export const fetchUserByWalletAddress = async (walletAddress: string) => {
   return data;
 };
 
-export const writeReview = async (userId: string, protocolId: number, rating: number, title: string, description: string, date: string) => {
+export const writeReview = async (userId: string, protocolId: number, rating: number, title: string, description: string, date: string, wallet_address: string) => {
   const { data, error } = await client
     .from('Reviews')
     .insert({
@@ -114,7 +114,7 @@ export const writeReview = async (userId: string, protocolId: number, rating: nu
       rating,
       title,
       description,
-      created_at: date,
+      user_wallet_address: wallet_address,
       updated_at: new Date().toISOString()
     });
 
@@ -125,7 +125,7 @@ export const writeReview = async (userId: string, protocolId: number, rating: nu
   return data;
 };
 
-export const fetchUserReview = async (userId: string, protocolId: number) => {
+export const fetchUserReviewForAProtocol = async (userId: string, protocolId: number) => {
   try {
     // Validate inputs
     if (!userId || !protocolId) {
@@ -155,4 +155,12 @@ export const fetchUserReview = async (userId: string, protocolId: number) => {
     throw new Error(`Unexpected error fetching user review: ${(err as Error).message}`);
   }
 };
+
+export const fetchUserReviews = async (wallet_address: string) => {
+  const { data, error } = await client.from('Reviews').select("*, Protocols(protocol_name)").eq('user_wallet_address', wallet_address);
+  if (error) {
+    throw new Error(`Error fetching user reviews: ${error.message}`);
+  }
+  return data;
+}
 

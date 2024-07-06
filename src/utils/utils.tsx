@@ -13,6 +13,11 @@ export const formatAddress = (addr: string) => {
     return `${addr.substring(0, 4)+'...'+addr.substring(addr.length-3,addr.length)}`;
 };
 
+export const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+};
+
 export const Topics = [
     {
         name: "Yield Farming",

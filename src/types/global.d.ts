@@ -18,7 +18,7 @@ type ProtocolCategory = {
 };
 
 type Protocol = {
-    id: number;
+    id?: number;
     protocol_name: string;
     protocol_description?: string;
     website_url?: string;
@@ -36,4 +36,6 @@ type Review = {
     description: string;
     created_at: string;
     updated_at?: string;
+    user_wallet_address?: string;
+    Protocols?: Protocol;
 }

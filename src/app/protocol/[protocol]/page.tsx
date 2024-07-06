@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { Reviews, WriteReview } from '@/components';
-import { fetchProtocolDetails, fetchUserReview } from '@/app/_actions/queries';
+import { fetchProtocolDetails, fetchUserReviewForAProtocol } from '@/app/_actions/queries';
 import { useMetaMask } from '@/hooks/useMetamask';
 
 type Props = {
@@ -22,12 +22,12 @@ export default function Protocol({ params }: Props) {
             const data = await fetchProtocolDetails(params.protocol);
             setProtocolDetails(data);
             if (userId) {
-                const review = await fetchUserReview(userId, data.id);
+                const review = await fetchUserReviewForAProtocol(userId, data.id);
                 setUserReview(review);
             }
         };
         getProtocolDetails();
-    }, [params.protocol, userId]); // Added userId to dependency array
+    }, [params.protocol, userId]);
     
 
     const toggleWriteReview = () => {
