@@ -79,7 +79,7 @@ export default function Protocol({ params }: Props) {
                     <button>Cancel</button>
                 </div>
             )}
-            {writeReview ? <WriteReview protocol_id={protocolDetails?.id ?? 0} existingReview={userReview} /> : <Reviews />}
+            {writeReview ? <WriteReview protocol_id={protocolDetails?.id ?? 0} existingReview={userReview} /> : <Reviews protocol_id={protocolDetails?.id ?? 0} />}
         </div>
     );
 }

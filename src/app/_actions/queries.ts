@@ -79,11 +79,14 @@ export const handleUserInDatabase = async (walletAddress: string) => {
     if (insertError) {
       console.error('Error creating new user:', insertError.message);
     }
+    console.log('New user created:', walletAddress);
   } else {
     const { error: updateError } = await client
       .from('Users')
       .update({ updated_at: new Date().toISOString() })
       .eq('wallet_address', walletAddress);
+
+      console.log('User already exists:', walletAddress);
 
     if (updateError) {
       console.error('Error updating user:', updateError.message);
@@ -127,12 +130,9 @@ export const writeReview = async (userId: string, protocolId: number, rating: nu
 
 export const fetchUserReviewForAProtocol = async (userId: string, protocolId: number) => {
   try {
-    // Validate inputs
     if (!userId || !protocolId) {
       throw new Error('Invalid userId or protocolId');
     }
-
-    console.log(`Fetching user review for userId: ${userId} and protocolId: ${protocolId}`);
 
     const { data, error } = await client
       .from('Reviews')
@@ -160,6 +160,14 @@ export const fetchUserReviews = async (wallet_address: string) => {
   const { data, error } = await client.from('Reviews').select("*, Protocols(protocol_name)").eq('user_wallet_address', wallet_address);
   if (error) {
     throw new Error(`Error fetching user reviews: ${error.message}`);
+  }
+  return data;
+}
+
+export const fetchReviewsForAProtocol = async (protocolId: number) => {
+  const { data, error } = await client.from('Reviews').select('*, Protocols(protocol_name)').eq('protocol_id', protocolId);
+  if (error) {
+    throw new Error(`Error fetching reviews for a protocol: ${error.message}`);
   }
   return data;
 }

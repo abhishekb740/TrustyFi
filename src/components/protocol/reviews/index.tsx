@@ -1,7 +1,25 @@
 import Image from 'next/image';
-import { formatAddress } from '@/utils/utils';
+import { formatAddress, formatDate } from '@/utils/utils';
+import { fetchReviewsForAProtocol } from '@/app/_actions/queries';
+import { useEffect, useState } from 'react';
 
-export default function Reviews() {
+type Props = {
+    protocol_id: number;
+}
+
+export default function Reviews({ protocol_id }: Props) {
+
+    const [reviews, setReviews] = useState<Review[]>([]);
+
+    useEffect(() => {
+        const getReviews = async () => {
+            const data = await fetchReviewsForAProtocol(protocol_id);
+            console.log(data)
+            setReviews(data);
+        };
+        getReviews();
+    }, [protocol_id]);
+
     return (
         <div>
             <div className='flex flex-row justify-evenly mt-24'>
@@ -127,122 +145,40 @@ export default function Reviews() {
                         </div>
                     </div>
                     <div className='flex flex-col mt-24 gap-6'>
-                        <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4">
-                            <div className="flex flex-row items-center gap-2 border-b-[1px] border-b-[#B2F1A8] pb-4">
-                                <Image className="bg-white rounded-lg" src="/profile.png" height={40} width={40} alt="profile logo" />
-                                <div className="text-lg">
-                                    {formatAddress("0xD07D389EAb22F37F17a82AA139402b90B33dBFa0")}
-
-                                </div>
-                            </div>
-                            <div className='flex flex-col pt-4 gap-4'>
-                                <div className="flex flex-row justify-between">
-                                    <div className='flex flex-row gap-1'>
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                        {reviews.length === 0 ? (
+                            <div className="text-2xl">No reviews</div>
+                        ) : (
+                            reviews.map((review, index) => {
+                                return (
+                                    <div key={index} className="flex flex-col rounded-md border border-[#B2F1A8] p-4 w-full">
+                                        <div className="flex flex-row items-center gap-2 border-b-[1px] border-b-[#B2F1A8] pb-4">
+                                            <Image className="bg-white rounded-lg" src="/profile.png" height={40} width={40} alt="profile logo" />
+                                            <div className="text-lg">
+                                                {formatAddress(review?.user_wallet_address ?? '')}
+                                            </div>
+                                        </div>
+                                        <div className='flex flex-col pt-4 gap-4'>
+                                            <div className="flex flex-row justify-between">
+                                                <div className='flex flex-row gap-1'>
+                                                    {Array.from({ length: review.rating }).map((_, i) => (
+                                                        <Image key={i} src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                                    ))}
+                                                </div>
+                                                <div>
+                                                    {formatDate(review.created_at)}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                {review.Protocols?.protocol_name}
+                                            </div>
+                                            <div>
+                                                {review.description}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        Marzo 2024
-                                    </div>
-                                </div>
-                                <div>
-                                    Decentralized Exchange
-                                </div>
-                                <div>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, placeat tempora doloribus architecto asperiores iste sunt nesciunt vitae id fuga, molestiae nostrum veritatis ab obcaecati natus fugit, deserunt recusandae laboriosam!
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4">
-                            <div className="flex flex-row items-center gap-2 border-b-[1px] border-b-[#B2F1A8] pb-4">
-                                <Image className="bg-white rounded-lg" src="/profile.png" height={40} width={40} alt="profile logo" />
-                                <div className="text-lg">
-                                    {formatAddress("0xD07D389EAb22F37F17a82AA139402b90B33dBFa0")}
-
-                                </div>
-                            </div>
-                            <div className='flex flex-col pt-4 gap-4'>
-                                <div className="flex flex-row justify-between">
-                                    <div className='flex flex-row gap-1'>
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    </div>
-                                    <div>
-                                        Marzo 2024
-                                    </div>
-                                </div>
-                                <div>
-                                    Decentralized Exchange
-                                </div>
-                                <div>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, placeat tempora doloribus architecto asperiores iste sunt nesciunt vitae id fuga, molestiae nostrum veritatis ab obcaecati natus fugit, deserunt recusandae laboriosam!
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4">
-                            <div className="flex flex-row items-center gap-2 border-b-[1px] border-b-[#B2F1A8] pb-4">
-                                <Image className="bg-white rounded-lg" src="/profile.png" height={40} width={40} alt="profile logo" />
-                                <div className="text-lg">
-                                    {formatAddress("0xD07D389EAb22F37F17a82AA139402b90B33dBFa0")}
-
-                                </div>
-                            </div>
-                            <div className='flex flex-col pt-4 gap-4'>
-                                <div className="flex flex-row justify-between">
-                                    <div className='flex flex-row gap-1'>
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    </div>
-                                    <div>
-                                        Marzo 2024
-                                    </div>
-                                </div>
-                                <div>
-                                    Decentralized Exchange
-                                </div>
-                                <div>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, placeat tempora doloribus architecto asperiores iste sunt nesciunt vitae id fuga, molestiae nostrum veritatis ab obcaecati natus fugit, deserunt recusandae laboriosam!
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4">
-                            <div className="flex flex-row items-center gap-2 border-b-[1px] border-b-[#B2F1A8] pb-4">
-                                <Image className="bg-white rounded-lg" src="/profile.png" height={40} width={40} alt="profile logo" />
-                                <div className="text-lg">
-                                    {formatAddress("0xD07D389EAb22F37F17a82AA139402b90B33dBFa0")}
-
-                                </div>
-                            </div>
-                            <div className='flex flex-col pt-4 gap-4'>
-                                <div className="flex flex-row justify-between">
-                                    <div className='flex flex-row gap-1'>
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                    </div>
-                                    <div>
-                                        Marzo 2024
-                                    </div>
-                                </div>
-                                <div>
-                                    Decentralized Exchange
-                                </div>
-                                <div>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, placeat tempora doloribus architecto asperiores iste sunt nesciunt vitae id fuga, molestiae nostrum veritatis ab obcaecati natus fugit, deserunt recusandae laboriosam!
-                                </div>
-                            </div>
-                        </div>
+                                )
+                            })
+                        )}
                     </div>
                 </div>
                 <div className='flex flex-col w-[40%] gap-12'>
