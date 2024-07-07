@@ -139,7 +139,7 @@ export default function Categories() {
                                         <div className="text-2xl">{protocol.protocol_name}</div>
                                         <div className='flex flex-row gap-1'>
                                             {Array.from({ length: protocol.avg_rating ?? 0 }, (_, i) => (
-                                                <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                                <Image key={i} src="/ratingStar.png" width={20} height={20} alt="Rating" />
                                             ))}
                                             <div>
                                                 {`${protocol?.avg_rating} (${protocol?.review_count} reviews)`}
