@@ -24,6 +24,7 @@ type Protocol = {
     website_url?: string;
     ProtocolCategories?: ProtocolCategory[];
     image_url?: string;
+    review_count?: number;
 };
 
 type Review = {

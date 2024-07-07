@@ -86,7 +86,7 @@ export const handleUserInDatabase = async (walletAddress: string) => {
       .update({ updated_at: new Date().toISOString() })
       .eq('wallet_address', walletAddress);
 
-      console.log('User already exists:', walletAddress);
+    console.log('User already exists:', walletAddress);
 
     if (updateError) {
       console.error('Error updating user:', updateError.message);
@@ -121,8 +121,31 @@ export const writeReview = async (userId: string, protocolId: number, rating: nu
       updated_at: new Date().toISOString()
     });
 
-  if (error) {
-    throw new Error(`Error writing review: ${error.message}`);
+    console.log(data);
+
+  const { data: reviews, error: reviewsError } = await client
+    .from('Reviews')
+    .select('rating')
+    .eq('protocol_id', protocolId);
+
+    console.log("All Reviews Ratings", reviews);
+
+  if (reviewsError) {
+    throw new Error(`Error fetching reviews for protocol: ${reviewsError.message}`);
+  }
+
+  const totalReviews = reviews.length;
+  const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
+  const avgRating = totalRating / totalReviews;
+
+  console.log(avgRating, totalReviews)
+  const { error: updateError } = await client
+    .from('Protocols')
+    .update({ avg_rating: avgRating, review_count: totalReviews })
+    .eq('id', protocolId);
+
+  if (updateError) {
+    throw new Error(`Error updating protocol rating: ${updateError.message}`);
   }
 
   return data;
@@ -171,4 +194,3 @@ export const fetchReviewsForAProtocol = async (protocolId: number) => {
   }
   return data;
 }
-
