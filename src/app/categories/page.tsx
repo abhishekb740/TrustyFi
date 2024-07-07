@@ -7,7 +7,7 @@ import { fetchProtocolsAndCategories } from '@/app/_actions/queries';
 import { useState, useEffect } from 'react';
 
 export default function Categories() {
-    
+
     const [protocols, setProtocols] = useState<Protocol[]>([]);
 
     useEffect(() => {
@@ -138,13 +138,11 @@ export default function Categories() {
                                     <div className="flex flex-col gap-2">
                                         <div className="text-2xl">{protocol.protocol_name}</div>
                                         <div className='flex flex-row gap-1'>
-                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                            {Array.from({ length: protocol.avg_rating ?? 0 }, (_, i) => (
+                                                <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                            ))}
                                             <div>
-                                            {`${protocol?.avg_rating} (${protocol?.review_count} reviews)`}
+                                                {`${protocol?.avg_rating} (${protocol?.review_count} reviews)`}
                                             </div>
                                         </div>
                                         <div>
