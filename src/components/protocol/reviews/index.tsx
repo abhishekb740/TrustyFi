@@ -5,9 +5,10 @@ import { useEffect, useState } from 'react';
 
 type Props = {
     protocol_id: number;
+    avg_rating: number | undefined;
 }
 
-export default function Reviews({ protocol_id }: Props) {
+export default function Reviews({ protocol_id, avg_rating }: Props) {
 
     const [reviews, setReviews] = useState<Review[]>([]);
 
@@ -30,12 +31,16 @@ export default function Reviews({ protocol_id }: Props) {
                                 <div className='text-3xl'>
                                     REVIEWS
                                 </div>
-                                <div className='flex flex-row'>
-                                    <div>
-                                        <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                <div className='flex flex-row gap-4'>
+                                    <div  className='flex flex-row gap-1'>
+                                        {Array.from({ length: avg_rating ?? 0 }, (_, i) => {
+                                            return (
+                                                <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                            )
+                                        })}
                                     </div>
                                     <div>
-                                        4.9
+                                        {avg_rating}
                                     </div>
                                 </div>
                             </div>
