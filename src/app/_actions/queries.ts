@@ -108,27 +108,72 @@ export const fetchUserByWalletAddress = async (walletAddress: string) => {
   return data;
 };
 
-export const writeReview = async (userId: string, protocolId: number, rating: number, title: string, description: string, date: string, wallet_address: string) => {
-  const { data, error } = await client
+export const writeReview = async (
+  userId: string,
+  protocolId: number,
+  rating: number,
+  title: string,
+  description: string,
+  date: string,
+  wallet_address: string
+) => {
+  // Check if a review already exists for this user and protocol
+  const { data: existingReview, error: existingReviewError } = await client
     .from('Reviews')
-    .insert({
-      user_id: userId,
-      protocol_id: protocolId,
-      rating,
-      title,
-      description,
-      user_wallet_address: wallet_address,
-      updated_at: new Date().toISOString()
-    });
+    .select('*')
+    .eq('user_id', userId)
+    .eq('protocol_id', protocolId)
+    .single();
 
-    console.log(data);
+  if (existingReviewError && existingReviewError.code !== 'PGRST116') {
+    // Handle any error other than the "No rows" error
+    throw new Error(`Error checking existing review: ${existingReviewError.message}`);
+  }
 
+  let data;
+  if (existingReview) {
+    // Update the existing review
+    const { data: updateData, error: updateError } = await client
+      .from('Reviews')
+      .update({
+        rating,
+        title,
+        description,
+        user_wallet_address: wallet_address,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', existingReview.id);
+
+    if (updateError) {
+      throw new Error(`Error updating review: ${updateError.message}`);
+    }
+    data = updateData;
+  } else {
+    // Insert a new review
+    const { data: insertData, error: insertError } = await client
+      .from('Reviews')
+      .insert({
+        user_id: userId,
+        protocol_id: protocolId,
+        rating,
+        title,
+        description,
+        user_wallet_address: wallet_address,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      });
+
+    if (insertError) {
+      throw new Error(`Error inserting review: ${insertError.message}`);
+    }
+    data = insertData;
+  }
+
+  // Fetch all reviews for the protocol to update the average rating
   const { data: reviews, error: reviewsError } = await client
     .from('Reviews')
     .select('rating')
     .eq('protocol_id', protocolId);
-
-    console.log("All Reviews Ratings", reviews);
 
   if (reviewsError) {
     throw new Error(`Error fetching reviews for protocol: ${reviewsError.message}`);
@@ -138,18 +183,19 @@ export const writeReview = async (userId: string, protocolId: number, rating: nu
   const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
   const avgRating = totalRating / totalReviews;
 
-  console.log(avgRating, totalReviews)
-  const { error: updateError } = await client
+  // Update the protocol's average rating and review count
+  const { error: updateProtocolError } = await client
     .from('Protocols')
     .update({ avg_rating: avgRating, review_count: totalReviews })
     .eq('id', protocolId);
 
-  if (updateError) {
-    throw new Error(`Error updating protocol rating: ${updateError.message}`);
+  if (updateProtocolError) {
+    throw new Error(`Error updating protocol rating: ${updateProtocolError.message}`);
   }
 
   return data;
 };
+
 
 export const fetchUserReviewForAProtocol = async (userId: string, protocolId: number) => {
   try {
