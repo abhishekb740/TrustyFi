@@ -5,9 +5,7 @@ import { client } from "@/utils/supabase/client";
 export const fetchProtocolsAndCategories = async () => {
   const { data, error } = await client
     .from('Protocols')
-    .select(`
-        id,
-        protocol_name,
+    .select(`*,
         ProtocolCategories (
           Categories (
             id,
@@ -20,6 +18,11 @@ export const fetchProtocolsAndCategories = async () => {
   if (data) {
     formattedProtocols = data.map((protocol: any) => ({
       protocol_name: protocol.protocol_name,
+      protocol_description: protocol.protocol_description,
+      website_url: protocol.website_url,
+      image_url: protocol.image_url,
+      avg_rating: protocol.avg_rating===null ? 0 : protocol.avg_rating,
+      review_count: protocol.review_count===null ? 0 : protocol.review_count,
       ProtocolCategories: protocol.ProtocolCategories.map((category: any) => ({
         Categories: {
           id: category.Categories.id,
@@ -39,13 +42,7 @@ export const fetchProtocolsAndCategories = async () => {
 export const fetchProtocolDetails = async (protocolName: string) => {
   const { data, error } = await client
     .from('Protocols')
-    .select(`
-        id,
-        protocol_name,
-        protocol_description,
-        website_url,
-        image_url
-      `)
+    .select(`*`)
     .eq('protocol_name', protocolName)
     .single();
 

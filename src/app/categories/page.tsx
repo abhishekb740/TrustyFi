@@ -144,7 +144,7 @@ export default function Categories() {
                                             <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
                                             <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
                                             <div>
-                                                4.9 | (32 reviews)
+                                            {`${protocol?.avg_rating} (${protocol?.review_count} reviews)`}
                                             </div>
                                         </div>
                                         <div>

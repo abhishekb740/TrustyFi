@@ -20,6 +20,7 @@ export default function Protocol({ params }: Props) {
     useEffect(() => {
         const getProtocolDetails = async () => {
             const data = await fetchProtocolDetails(params.protocol);
+            console.log(data);
             setProtocolDetails(data);
             if (userId) {
                 const review = await fetchUserReviewForAProtocol(userId, data.id);
@@ -28,7 +29,7 @@ export default function Protocol({ params }: Props) {
         };
         getProtocolDetails();
     }, [params.protocol, userId]);
-    
+
 
     const toggleWriteReview = () => {
         setWriteReview(prev => !prev);
@@ -45,13 +46,11 @@ export default function Protocol({ params }: Props) {
                             Algoritmic, autonomous interest rate protocol
                         </div>
                         <div className='flex flex-row gap-1'>
-                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                            {Array.from({ length: protocolDetails?.avg_rating ?? 0 }, (_, i) => (
+                                <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                            ))}
                             <div>
-                                4.9  (32 reviews)
+                                {`${protocolDetails?.avg_rating===null ? 0 :  protocolDetails?.avg_rating} (${protocolDetails?.review_count===null ? 0 : protocolDetails?.review_count} reviews)`}
                             </div>
                         </div>
                     </div>
