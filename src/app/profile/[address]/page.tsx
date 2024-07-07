@@ -13,12 +13,13 @@ type Props = {
 export default function Profile({ params }: Props) {
 
     const [reviews, setReviews] = useState<Review[]>([]);
+    const [avgScore, setAvgScore] = useState<number>(0);
 
     useEffect(() => {
         const fetchReviews = async () => {
-            const reviews = await fetchUserReviews(params.address);
-            console.log(reviews);
+            const {reviews, avg_score} = await fetchUserReviews(params.address);
             setReviews(reviews);
+            setAvgScore(avg_score);
         }
         fetchReviews();
     }, [params.address]);
@@ -38,7 +39,7 @@ export default function Profile({ params }: Props) {
                             REVIEWS
                         </div>
                         <div className="text-2xl">
-                            11
+                            {reviews.length}
                         </div>
                     </div>
                     <div className="flex flex-col items-center gap-6">
@@ -46,7 +47,7 @@ export default function Profile({ params }: Props) {
                             AVERAGE SCORE
                         </div>
                         <div className="text-2xl">
-                            3.9
+                            {avgScore}
                         </div>
                     </div>
                 </div>

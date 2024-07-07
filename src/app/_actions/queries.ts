@@ -227,7 +227,10 @@ export const fetchUserReviews = async (wallet_address: string) => {
   if (error) {
     throw new Error(`Error fetching user reviews: ${error.message}`);
   }
-  return data;
+
+  const avg_score = data.reduce((acc: number, review: any) => acc + review.rating, 0) / data.length;
+
+  return { reviews: data, avg_score };
 }
 
 export const fetchReviewsForAProtocol = async (protocolId: number) => {
