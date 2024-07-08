@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { StarRating } from '@/components';
 import { writeReview } from '@/app/_actions/queries';
 import { useMetaMask } from '@/hooks/useMetamask';
+import WriteReviewSkeleton from '@/components/skeletons/writeReview';
 
 type Props = {
     protocol_id: number;
@@ -15,6 +16,7 @@ export default function WriteReviews({ protocol_id, existingReview }: Props) {
     const [date, setDate] = useState('');
     const [rating, setRating] = useState(0);
     const today = new Date().toISOString().split('T')[0];
+    const [loading, setLoading] = useState<Boolean>(true);
 
     useEffect(() => {
         if (existingReview) {
@@ -23,6 +25,7 @@ export default function WriteReviews({ protocol_id, existingReview }: Props) {
             setDate(existingReview.created_at.split('T')[0]);
             setRating(existingReview.rating);
         }
+        setLoading(false);
     }, [existingReview]);
 
     const handleSubmit = async () => {
@@ -41,6 +44,10 @@ export default function WriteReviews({ protocol_id, existingReview }: Props) {
             console.error('Error submitting review:', (error as Error).message);
         }
     };
+
+    if (loading) {
+        return <WriteReviewSkeleton />;
+    }
 
     return (
         <div>

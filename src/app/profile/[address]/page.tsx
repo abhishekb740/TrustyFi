@@ -3,6 +3,7 @@ import { formatAddress, formatDate } from '@/utils/utils';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { fetchUserReviews } from '@/app/_actions/queries';
+import SkeletonLoader from '@/components/skeletons/profile';
 
 type Props = {
     params: {
@@ -14,15 +15,21 @@ export default function Profile({ params }: Props) {
 
     const [reviews, setReviews] = useState<Review[]>([]);
     const [avgScore, setAvgScore] = useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchReviews = async () => {
-            const {reviews, avg_score} = await fetchUserReviews(params.address);
+            const { reviews, avg_score } = await fetchUserReviews(params.address);
             setReviews(reviews);
             setAvgScore(avg_score);
+            setLoading(false);
         }
         fetchReviews();
     }, [params.address]);
+
+    if (loading) {
+        return <SkeletonLoader />;
+    }
 
     return (
         <div className="flex flex-col min-h-screen" style={{ fontFamily: 'Montserrat' }}>

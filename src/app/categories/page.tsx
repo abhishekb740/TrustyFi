@@ -5,20 +5,28 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { fetchProtocolsAndCategories } from '@/app/_actions/queries';
 import { useState, useEffect } from 'react';
+import CategoriesSkeleton from "@/components/skeletons/categories";
 
 export default function Categories() {
 
     const [protocols, setProtocols] = useState<Protocol[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const getProtocolsAndCategories = async () => {
             const res = await fetchProtocolsAndCategories();
             setProtocols(res);
+            setLoading(false);
         }
         getProtocolsAndCategories();
     }, [])
 
     const router = useRouter();
+
+    if (loading) {
+        return <CategoriesSkeleton />;
+    }
+
     return (
         <div className="flex flex-col items-center min-h-screen w-full" style={{ fontFamily: 'Montserrat' }}>
             <div className="flex flex-col w-full items-center mt-16">
