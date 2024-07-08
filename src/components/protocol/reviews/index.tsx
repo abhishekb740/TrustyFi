@@ -6,20 +6,57 @@ import { useEffect, useState } from 'react';
 type Props = {
     protocol_id: number;
     avg_rating: number | undefined;
-}
+};
 
 export default function Reviews({ protocol_id, avg_rating }: Props) {
-
-    const [reviews, setReviews] = useState<Review[]>([]);
+    const [reviews, setReviews] = useState<CategorizedReviews>({ 1: [], 2: [], 3: [], 4: [], 5: [] });
 
     useEffect(() => {
         const getReviews = async () => {
             const data = await fetchReviewsForAProtocol(protocol_id);
-            console.log(data)
             setReviews(data);
         };
         getReviews();
     }, [protocol_id]);
+
+    const renderReviews = (rating: keyof CategorizedReviews) => {
+        return (
+            <div className='flex flex-col gap-6'>
+                {
+                    reviews[rating].map((review, index) => (
+                        <div key={index} className="flex flex-col rounded-md border border-[#B2F1A8] p-4 w-full">
+                            <div className="flex flex-row items-center gap-2 border-b-[1px] border-b-[#B2F1A8] pb-4">
+                                <Image className="bg-white rounded-lg" src="/profile.png" height={40} width={40} alt="profile logo" />
+                                <div className="text-lg">
+                                    {formatAddress(review?.user_wallet_address ?? '')}
+                                </div>
+                            </div>
+                            <div className='flex flex-col pt-4 gap-4'>
+                                <div className="flex flex-row justify-between">
+                                    <div className='flex flex-row gap-1'>
+                                        {Array.from({ length: review.rating }).map((_, i) => (
+                                            <Image key={i} src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                        ))}
+                                    </div>
+                                    <div>
+                                        {formatDate(review.created_at)}
+                                    </div>
+                                </div>
+                                <div>
+                                    {review.Protocols?.protocol_name}
+                                </div>
+                                <div>
+                                    {review.description}
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+        );
+    };
+
+    const totalReviews = reviews[1].length + reviews[2].length + reviews[3].length + reviews[4].length + reviews[5].length;
 
     return (
         <div>
@@ -32,11 +69,11 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                                     REVIEWS
                                 </div>
                                 <div className='flex flex-row gap-4'>
-                                    <div  className='flex flex-row gap-1'>
+                                    <div className='flex flex-row gap-1'>
                                         {Array.from({ length: avg_rating ?? 0 }, (_, i) => {
                                             return (
                                                 <Image key={i} src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                            )
+                                            );
                                         })}
                                     </div>
                                     <div>
@@ -45,90 +82,27 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                                 </div>
                             </div>
                             <div>
-                                32 reviews
+                                {totalReviews} reviews
                             </div>
                         </div>
                         <div className='flex flex-col justify-center gap-4'>
-                            <div className='flex flex-row gap-6'>
-                                <div className='flex flex-row gap-2'>
-                                    <input type='checkbox' className='' />
+                            {/* Render rating bars */}
+                            {[5, 4, 3, 2, 1].map((rating) => (
+                                <div key={rating} className='flex flex-row gap-6'>
+                                    <div className='flex flex-row gap-2'>
+                                        <input type='checkbox' className='' />
+                                        <div>
+                                            {rating} stars
+                                        </div>
+                                    </div>
+                                    <div className='flex w-[70%] rounded-full border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8]'>
+                                        <div className={`bg-[#B2F1A8] w-[${totalReviews === 0 ? 0 : (reviews[rating as keyof CategorizedReviews].length / totalReviews) * 100}%] rounded-full`}></div>
+                                    </div>
                                     <div>
-                                        5 stars
+                                        {totalReviews === 0 ? 0 : Math.round((reviews[rating as keyof CategorizedReviews].length / totalReviews) * 100)}%
                                     </div>
                                 </div>
-                                <div className='flex w-[70%] rounded-full border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8]'>
-                                    <div className='bg-[#B2F1A8] w-[72%] rounded-full'>
-
-                                    </div>
-                                </div>
-                                <div>
-                                    72%
-                                </div>
-                            </div>
-                            <div className='flex flex-row gap-6'>
-                                <div className='flex flex-row gap-2'>
-                                    <input type='checkbox' className='' />
-                                    <div>
-                                        4 stars
-                                    </div>
-                                </div>
-                                <div className='flex w-[70%] rounded-full border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8]'>
-                                    <div className='bg-[#B2F1A8] w-[65%] rounded-full'>
-
-                                    </div>
-                                </div>
-                                <div>
-                                    65%
-                                </div>
-                            </div>
-                            <div className='flex flex-row gap-6'>
-                                <div className='flex flex-row gap-2'>
-                                    <input type='checkbox' className='' />
-                                    <div>
-                                        3 stars
-                                    </div>
-                                </div>
-                                <div className='flex w-[70%] rounded-full border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8]'>
-                                    <div className='bg-[#B2F1A8] w-[53%] rounded-full'>
-
-                                    </div>
-                                </div>
-                                <div>
-                                    53%
-                                </div>
-                            </div>
-                            <div className='flex flex-row gap-6'>
-                                <div className='flex flex-row gap-2'>
-                                    <input type='checkbox' className='' />
-                                    <div>
-                                        2 stars
-                                    </div>
-                                </div>
-                                <div className='flex w-[70%] rounded-full border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8]'>
-                                    <div className='bg-[#B2F1A8] w-[24%] rounded-full'>
-
-                                    </div>
-                                </div>
-                                <div>
-                                    24%
-                                </div>
-                            </div>
-                            <div className='flex flex-row gap-6'>
-                                <div className='flex flex-row gap-2'>
-                                    <input type='checkbox' className='' />
-                                    <div>
-                                        1 stars
-                                    </div>
-                                </div>
-                                <div className='flex w-[70%] rounded-full border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8]'>
-                                    <div className='bg-[#B2F1A8] w-[0%] rounded-full'>
-
-                                    </div>
-                                </div>
-                                <div>
-                                    0%
-                                </div>
-                            </div>
+                            ))}
                         </div>
                         <div className='flex flex-row justify-between'>
                             <div className='flex flex-row gap-4 bg-[#B2F1A8] py-2 rounded-lg px-4'>
@@ -149,41 +123,41 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                             </div>
                         </div>
                     </div>
-                    <div className='flex flex-col mt-24 gap-6'>
-                        {reviews.length === 0 ? (
-                            <div className="text-2xl">No reviews</div>
-                        ) : (
-                            reviews.map((review, index) => {
-                                return (
-                                    <div key={index} className="flex flex-col rounded-md border border-[#B2F1A8] p-4 w-full">
-                                        <div className="flex flex-row items-center gap-2 border-b-[1px] border-b-[#B2F1A8] pb-4">
-                                            <Image className="bg-white rounded-lg" src="/profile.png" height={40} width={40} alt="profile logo" />
-                                            <div className="text-lg">
-                                                {formatAddress(review?.user_wallet_address ?? '')}
+                    <div className='flex flex-col mt-24 gap-2'>
+                        {[5, 4, 3, 2, 1].map((rating) => (
+                            <div key={rating}>
+                                <div className='flex flex-col gap-6'>
+                                    {reviews[rating as keyof CategorizedReviews].map((review, index) => (
+                                        <div key={index} className="flex flex-col rounded-md border border-[#B2F1A8] p-4 w-full">
+                                            <div className="flex flex-row items-center gap-2 border-b-[1px] border-b-[#B2F1A8] pb-4">
+                                                <Image className="bg-white rounded-lg" src="/profile.png" height={40} width={40} alt="profile logo" />
+                                                <div className="text-lg">
+                                                    {formatAddress(review?.user_wallet_address ?? '')}
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className='flex flex-col pt-4 gap-4'>
-                                            <div className="flex flex-row justify-between">
-                                                <div className='flex flex-row gap-1'>
-                                                    {Array.from({ length: review.rating }).map((_, i) => (
-                                                        <Image key={i} src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                                    ))}
+                                            <div className='flex flex-col pt-4 gap-4'>
+                                                <div className="flex flex-row justify-between">
+                                                    <div className='flex flex-row gap-1'>
+                                                        {Array.from({ length: review.rating }).map((_, i) => (
+                                                            <Image key={i} src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                                        ))}
+                                                    </div>
+                                                    <div>
+                                                        {formatDate(review.created_at)}
+                                                    </div>
                                                 </div>
                                                 <div>
-                                                    {formatDate(review.created_at)}
+                                                    {review.Protocols?.protocol_name}
+                                                </div>
+                                                <div>
+                                                    {review.description}
                                                 </div>
                                             </div>
-                                            <div>
-                                                {review.Protocols?.protocol_name}
-                                            </div>
-                                            <div>
-                                                {review.description}
-                                            </div>
                                         </div>
-                                    </div>
-                                )
-                            })
-                        )}
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
                 <div className='flex flex-col w-[40%] gap-12'>
@@ -219,34 +193,28 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                                 Category
                             </div>
                             <div>
-                                Algorithm, autonomous interest rate protocol
+                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
                             </div>
                         </div>
                         <div className="flex flex-col gap-2 items-center">
                             <div className="text-3xl font-bold">
-                                Related
+                                Security
                             </div>
-                            <div className='flex flex-col justify-center items-center'>
-                                <div>
-                                    Lido Finance
-                                </div>
-                                <div>
-                                    Aave
-                                </div>
-                                <div>
-                                    Compound Finance
-                                </div>
-                                <div>
-                                    Curve
-                                </div>
-                                <div>
-                                    EigenLayer
-                                </div>
+                            <div>
+                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
+                            </div>
+                        </div>
+                        <div className="flex flex-col gap-2 items-center">
+                            <div className="text-3xl font-bold">
+                                Performance
+                            </div>
+                            <div>
+                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }

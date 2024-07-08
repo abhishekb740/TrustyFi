@@ -233,10 +233,24 @@ export const fetchUserReviews = async (wallet_address: string) => {
   return { reviews: data, avg_score };
 }
 
-export const fetchReviewsForAProtocol = async (protocolId: number) => {
+export const fetchReviewsForAProtocol = async (protocolId: number): Promise<CategorizedReviews> => {
   const { data, error } = await client.from('Reviews').select('*, Protocols(protocol_name)').eq('protocol_id', protocolId);
   if (error) {
     throw new Error(`Error fetching reviews for a protocol: ${error.message}`);
   }
-  return data;
+
+  // Categorize reviews by rating
+  const categorizedReviews: CategorizedReviews = {
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: []
+  };
+
+  data.forEach((review: any) => {
+    categorizedReviews[review.rating as keyof CategorizedReviews].push(review);
+  });
+
+  return categorizedReviews;
 }

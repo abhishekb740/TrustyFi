@@ -8,6 +8,14 @@ interface Window {
     ethereum?: Ethereum;
 }
 
+type CategorizedReviews = {
+    1: Review[];
+    2: Review[];
+    3: Review[];
+    4: Review[];
+    5: Review[];
+};
+
 type Category = {
     id: number;
     category_name: string;
