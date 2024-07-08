@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { formatAddress, formatDate } from '@/utils/utils';
 import { fetchReviewsForAProtocol } from '@/app/_actions/queries';
 import { useEffect, useState } from 'react';
+import ReviewsSkeleton from '@/components/skeletons/reviews';
 
 type Props = {
     protocol_id: number;
@@ -10,53 +11,22 @@ type Props = {
 
 export default function Reviews({ protocol_id, avg_rating }: Props) {
     const [reviews, setReviews] = useState<CategorizedReviews>({ 1: [], 2: [], 3: [], 4: [], 5: [] });
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const getReviews = async () => {
             const data = await fetchReviewsForAProtocol(protocol_id);
             setReviews(data);
+            setLoading(false);
         };
         getReviews();
     }, [protocol_id]);
 
-    const renderReviews = (rating: keyof CategorizedReviews) => {
-        return (
-            <div className='flex flex-col gap-6'>
-                {
-                    reviews[rating].map((review, index) => (
-                        <div key={index} className="flex flex-col rounded-md border border-[#B2F1A8] p-4 w-full">
-                            <div className="flex flex-row items-center gap-2 border-b-[1px] border-b-[#B2F1A8] pb-4">
-                                <Image className="bg-white rounded-lg" src="/profile.png" height={40} width={40} alt="profile logo" />
-                                <div className="text-lg">
-                                    {formatAddress(review?.user_wallet_address ?? '')}
-                                </div>
-                            </div>
-                            <div className='flex flex-col pt-4 gap-4'>
-                                <div className="flex flex-row justify-between">
-                                    <div className='flex flex-row gap-1'>
-                                        {Array.from({ length: review.rating }).map((_, i) => (
-                                            <Image key={i} src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                        ))}
-                                    </div>
-                                    <div>
-                                        {formatDate(review.created_at)}
-                                    </div>
-                                </div>
-                                <div>
-                                    {review.Protocols?.protocol_name}
-                                </div>
-                                <div>
-                                    {review.description}
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                }
-            </div>
-        );
-    };
-
     const totalReviews = reviews[1].length + reviews[2].length + reviews[3].length + reviews[4].length + reviews[5].length;
+
+    if (loading) {
+        return <ReviewsSkeleton />;
+    }
 
     return (
         <div>
