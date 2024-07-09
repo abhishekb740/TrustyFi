@@ -81,13 +81,19 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                                         </div>
                                     </div>
                                     <div className='flex w-[70%] rounded-full border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8]'>
-                                        <div className={`bg-[#B2F1A8] w-[${totalReviews === 0 ? 0 : (reviews[rating as keyof CategorizedReviews].length / totalReviews) * 100}%] rounded-full`}></div>
+                                        <div
+                                            className='bg-[#B2F1A8] rounded-full'
+                                            style={{
+                                                width: `${totalReviews === 0 ? 0 : (reviews[rating as keyof CategorizedReviews].length / totalReviews) * 100}%`,
+                                            }}
+                                        ></div>
                                     </div>
                                     <div>
                                         {totalReviews === 0 ? 0 : Math.round((reviews[rating as keyof CategorizedReviews].length / totalReviews) * 100)}%
                                     </div>
                                 </div>
                             ))}
+
                         </div>
                         <div className='flex flex-row justify-between'>
                             <div className='flex flex-row gap-4 bg-[#B2F1A8] py-2 rounded-lg px-4'>
@@ -102,7 +108,7 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                                 <div>
                                     Sort by
                                 </div>
-                                <div className='bg-[#B2F1A8] text-black rounded-lg p-1 text-sm'>
+                                <div className='bg-[#B2F1A8] text-black rounded-lg p-2 text-sm'>
                                     MORE RELEVANT
                                 </div>
                             </div>
