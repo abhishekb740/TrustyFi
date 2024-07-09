@@ -4,16 +4,6 @@ import { fetchReviewsForAProtocol } from '@/app/_actions/queries';
 import { useEffect, useState } from 'react';
 import ReviewsSkeleton from '@/components/skeletons/reviews';
 
-type Review = {
-  user_wallet_address: string;
-  rating: number;
-  created_at: string;
-  description: string;
-  Protocols: {
-    protocol_name: string;
-  };
-};
-
 type Props = {
   protocol_id: number;
   avg_rating: number | undefined;
@@ -77,7 +67,6 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
               </div>
             </div>
             <div className='flex flex-col justify-center gap-4'>
-              {/* Render rating bars */}
               {[5, 4, 3, 2, 1].map((rating) => (
                 <div key={rating} className='flex flex-row gap-6'>
                   <div className='flex flex-row gap-2'>
@@ -119,7 +108,7 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
               </div>
             </div>
           </div>
-          <div className='flex flex-col mt-24 gap-2'>
+          <div className='flex flex-col mt-24 gap-4'>
             {filteredReviews.map((review, index) => (
               <div key={index} className="flex flex-col rounded-md border border-[#B2F1A8] p-4 w-full">
                 <div className="flex flex-row items-center gap-2 border-b-[1px] border-b-[#B2F1A8] pb-4">
