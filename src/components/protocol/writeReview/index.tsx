@@ -7,9 +7,10 @@ import WriteReviewSkeleton from '@/components/skeletons/writeReview';
 type Props = {
     protocol_id: number;
     existingReview?: Review;
+    toggleWriteReview: () => void;
 }
 
-export default function WriteReviews({ protocol_id, existingReview }: Props) {
+export default function WriteReviews({ protocol_id, existingReview, toggleWriteReview }: Props) {
     const { userId, wallet } = useMetaMask();
     const [review, setReview] = useState('');
     const [title, setTitle] = useState('');
@@ -40,6 +41,7 @@ export default function WriteReviews({ protocol_id, existingReview }: Props) {
         try {
             await writeReview(userId, protocol_id, rating, title, review, date, wallet.accounts[0]);
             alert('Review submitted successfully');
+            toggleWriteReview();
         } catch (error) {
             console.error('Error submitting review:', (error as Error).message);
         }
