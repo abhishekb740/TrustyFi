@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { formatAddress, formatDate } from '@/utils/utils';
 import { fetchReviewsForAProtocol } from '@/app/_actions/queries';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import ReviewsSkeleton from '@/components/skeletons/reviews';
 
 type Props = {
@@ -13,6 +13,9 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
     const [reviews, setReviews] = useState<CategorizedReviews>({ 1: [], 2: [], 3: [], 4: [], 5: [] });
     const [loading, setLoading] = useState(true);
     const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
+    const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState<boolean>(false);
+    const dropdownFilterRef = useRef<HTMLDivElement | null>(null);
+
 
     useEffect(() => {
         const getReviews = async () => {
@@ -22,6 +25,19 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
         };
         getReviews();
     }, [protocol_id]);
+
+    useEffect(() => {
+        const handleClickOutside = (event: any) => {
+            if (dropdownFilterRef.current && !dropdownFilterRef.current.contains(event.target)) {
+                setIsFilterDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     const totalReviews = reviews[1].length + reviews[2].length + reviews[3].length + reviews[4].length + reviews[5].length;
 
@@ -96,19 +112,74 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
 
                         </div>
                         <div className='flex flex-row justify-between'>
-                            <div className='flex flex-row gap-4 bg-[#B2F1A8] py-2 rounded-lg px-4'>
+                            <div className={`flex flex-row items-center gap-4 bg-[#B2F1A8] py-2 ${isFilterDropdownOpen ? "rounded-t-lg" : "rounded-lg"} px-4`} ref={dropdownFilterRef} onClick={() => setIsFilterDropdownOpen(true)}>
                                 <div>
                                     <Image src="/filter.png" width={20} height={20} alt="Filter Logo" />
                                 </div>
-                                <div className='text-black'>
+                                <div className='text-black text-sm font-bold'>
                                     FILTER
+                                </div>
+                            </div>
+                            <div className={`${isFilterDropdownOpen ? "block absolute" : "hidden"} bg-[#B2F1A8] flex flex-col mt-9 z-10 text-black w-1/4 rounded-r-lg rounded-bl-lg py-6 gap-4 `} >
+                                <div className='flex flex-col'>
+                                    <div className='font-bold text-xl pl-4' style={{ fontFamily: "Dunk Trial" }}>
+                                        Rating
+                                    </div>
+                                    <div className='flex flex-row pl-4'>
+
+                                    </div>
+                                </div>
+                                <div className='flex flex-col '>
+                                    <div className='font-bold text-xl pl-4' style={{ fontFamily: "Dunk Trial" }}>
+                                        Recomended
+                                    </div>
+                                    <div className='flex flex-col gap-1 pl-4'>
+                                        <div className='flex flex-row gap-2'>
+                                            <input type='radio' />
+                                            <label>Verified</label>
+                                        </div>
+                                        <div className='flex flex-row gap-2'>
+                                            <input type='radio' />
+                                            <label>All</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='flex flex-row items-end justify-between'>
+                                    <div className='flex flex-col'>
+                                        <div className='font-bold text-xl pl-4' style={{ fontFamily: "Dunk Trial" }} >
+                                            Publication Date
+                                        </div>
+                                        <div className='flex flex-col gap-1 pl-4'>
+                                            <div className='flex flex-row gap-2'>
+                                                <input type='radio' />
+                                                <label>Last month</label>
+                                            </div>
+                                            <div className='flex flex-row gap-2'>
+                                                <input type='radio' />
+                                                <label>last Two Month</label>
+                                            </div>
+                                            <div className='flex flex-row gap-2'>
+                                                <input type='radio' />
+                                                <label>Last Three Month</label>
+                                            </div>
+                                            <div className='flex flex-row gap-2'>
+                                                <input type='radio' />
+                                                <label>All</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='flex pr-8'>
+                                        <div className='py-1 px-4 rounded-full border border-black'>
+                                            Show
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div className='flex flex-row justify-center items-center gap-2'>
                                 <div>
                                     Sort by
                                 </div>
-                                <div className='bg-[#B2F1A8] text-black rounded-lg p-2 text-sm'>
+                                <div className='bg-[#B2F1A8] text-black rounded-lg p-2 text-xs font-bold'>
                                     MORE RELEVANT
                                 </div>
                             </div>

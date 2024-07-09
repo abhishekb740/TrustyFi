@@ -54,7 +54,7 @@ export default function Profile({ params }: Props) {
                             AVERAGE SCORE
                         </div>
                         <div className="text-2xl">
-                            {avgScore}
+                            {avgScore.toFixed(2)}
                         </div>
                     </div>
                 </div>
