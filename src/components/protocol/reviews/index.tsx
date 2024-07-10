@@ -14,7 +14,6 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
     const [loading, setLoading] = useState(true);
     const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
     const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState<boolean>(false);
-    // const [recommended, setRecommended] = useState<string>('all');
     const [selectedTab, setSelectedTab] = useState<number | null>(null);
     const [publicationDate, setPublicationDate] = useState<string>('all');
     const [filteredReviews, setFilteredReviews] = useState<Review[]>([]);
