@@ -14,7 +14,7 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
     const [loading, setLoading] = useState(true);
     const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
     const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState<boolean>(false);
-    const [recommended, setRecommended] = useState<string>('all');
+    // const [recommended, setRecommended] = useState<string>('all');
     const [selectedTab, setSelectedTab] = useState<number | null>(null);
     const [publicationDate, setPublicationDate] = useState<string>('all');
     const [filteredReviews, setFilteredReviews] = useState<Review[]>([]);
@@ -51,6 +51,15 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
             result = result.filter(review => review.rating === selectedTab);
         }
 
+        // Filter the reviews based on the publication date
+        if (publicationDate === 'lastMonth') {
+            result = result.filter(review => new Date(review.updated_at).getTime() > new Date().setMonth(new Date().getMonth() - 1));
+        } else if (publicationDate === 'lastTwoMonths') {
+            result = result.filter(review => new Date(review.updated_at).getTime() > new Date().setMonth(new Date().getMonth() - 2));
+        } else if (publicationDate === 'lastThreeMonths') {
+            result = result.filter(review => new Date(review.updated_at).getTime() > new Date().setMonth(new Date().getMonth() - 3));
+        }
+
         setFilteredReviews(result);
     }
 
@@ -61,10 +70,6 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
             setFilteredReviews(selectedRatings.flatMap(rating => reviews[rating as keyof CategorizedReviews]));
         }
     }, [reviews, selectedRatings]);
-
-    // const filteredReviews = selectedRatings.length === 0
-    //     ? Object.values(reviews).flat()
-    //     : selectedRatings.flatMap(rating => reviews[rating as keyof CategorizedReviews]);
 
     if (loading) {
         return <ReviewsSkeleton />;
@@ -141,31 +146,31 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                                         Rating
                                     </div>
                                     <div className='flex flex-row justify-evenly pt-2 items-center'>
-                                        <div className={`flex flex-row gap-2 ${selectedTab === 5 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(5)}>
+                                        <div className={`flex flex-row gap-2 p-2 ${selectedTab === 5 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(5)}>
                                             <div>
                                                 5
                                             </div>
                                             <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
                                         </div>
-                                        <div className={`flex flex-row gap-2 ${selectedTab === 4 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(4)}>
+                                        <div className={`flex flex-row gap-2 p-2 ${selectedTab === 4 ? "border-b-[3px] border-[#9482F2]"  : ""}`} onClick={() => handleTabRating(4)}>
                                             <div>
                                                 4
                                             </div>
                                             <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
                                         </div>
-                                        <div className={`flex flex-row gap-2 ${selectedTab === 3 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(3)}>
+                                        <div className={`flex flex-row gap-2 p-2 ${selectedTab === 3 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(3)}>
                                             <div>
                                                 3
                                             </div>
                                             <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
                                         </div>
-                                        <div className={`flex flex-row gap-2 ${selectedTab === 2 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(2)}>
+                                        <div className={`flex flex-row gap-2 p-2 ${selectedTab === 2 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(2)}>
                                             <div>
                                                 2
                                             </div>
                                             <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
                                         </div>
-                                        <div className={`flex flex-row gap-2 ${selectedTab === 1 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(1)}>
+                                        <div className={`flex flex-row gap-2 p-2 ${selectedTab === 1 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(1)}>
                                             <div>
                                                 1
                                             </div>
@@ -249,7 +254,7 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                                         </div>
                                     </div>
                                     <div className='flex pr-8'>
-                                        <div className='py-1 px-4 rounded-full border border-black' onClick={filterReviews}>
+                                        <div className='py-1 px-4 rounded-full border border-black hover:cursor-pointer' onClick={filterReviews}>
                                             Show
                                         </div>
                                     </div>
@@ -282,7 +287,7 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                                             ))}
                                         </div>
                                         <div>
-                                            {formatDate(review.updated_at ?? "")}
+                                            {formatDate(review.updated_at)}
                                         </div>
                                     </div>
                                     <div>

@@ -80,7 +80,7 @@ export default function Profile({ params }: Props) {
                                             ))}
                                         </div>
                                         <div>
-                                            {formatDate(review.created_at)}
+                                            {formatDate(review.updated_at)}
                                         </div>
                                     </div>
                                     <div>

@@ -44,8 +44,8 @@ type Review = {
     title: string;
     review: string;
     description: string;
-    created_at: string;
-    updated_at?: string;
+    created_at?: string;
+    updated_at: string;
     user_wallet_address?: string;
     Protocols?: Protocol;
 }
