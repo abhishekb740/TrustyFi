@@ -5,6 +5,7 @@ import { IoIosSearch } from "react-icons/io";
 import { useMetaMask } from "@/hooks/useMetamask";
 import { useEffect } from "react";
 import { Protocols, Topics } from "@/utils/utils";
+import { useRouter } from "next/navigation";
 
 type Props = {
     setShowWallet: (showWallet: boolean) => void;
@@ -14,6 +15,7 @@ type Props = {
 export default function Hero({ setShowWallet, showWallet }: Props) {
 
     const { wallet, connectMetaMask, isConnecting, hasProvider, connected } = useMetaMask();
+    const router = useRouter();
 
     useEffect(() => {
         if (connected) {
@@ -69,7 +71,7 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
             </div>
             <div className={`w-full mt-8 ${showWallet ? 'z-30' : ''}`}>
                 <div className="flex flex-row justify-end pr-12">
-                    <button>
+                    <button onClick={() => router.push("/categories")} >
                         See all Categories
                     </button>
                 </div>

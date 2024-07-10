@@ -14,8 +14,14 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
     const [loading, setLoading] = useState(true);
     const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
     const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState<boolean>(false);
-    const dropdownFilterRef = useRef<HTMLDivElement | null>(null);
+    const [recommended, setRecommended] = useState<string>('all');
+    const [selectedTab, setSelectedTab] = useState<number | null>(null);
+    const [publicationDate, setPublicationDate] = useState<string>('all');
+    const [filteredReviews, setFilteredReviews] = useState<Review[]>([]);
 
+    const handleTabRating = (rating: number) => {
+        setSelectedTab(rating);
+    }
 
     useEffect(() => {
         const getReviews = async () => {
@@ -26,18 +32,9 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
         getReviews();
     }, [protocol_id]);
 
-    useEffect(() => {
-        const handleClickOutside = (event: any) => {
-            if (dropdownFilterRef.current && !dropdownFilterRef.current.contains(event.target)) {
-                setIsFilterDropdownOpen(false);
-            }
-        };
-
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+    const toggleFilterDropdown = () => {
+        setIsFilterDropdownOpen(prev => !prev);
+    }
 
     const totalReviews = reviews[1].length + reviews[2].length + reviews[3].length + reviews[4].length + reviews[5].length;
 
@@ -47,9 +44,45 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
         );
     };
 
-    const filteredReviews = selectedRatings.length === 0
-        ? Object.values(reviews).flat()
-        : selectedRatings.flatMap(rating => reviews[rating as keyof CategorizedReviews]);
+    const filterReviews = () => {
+        let result = Object.values(reviews).flat();
+
+        if (selectedTab !== null) {
+            result = result.filter(review => review.rating === selectedTab);
+        }
+
+        // if (publicationDate !== 'all') {
+        //     const now = new Date();
+        //     const pastDate = new Date();
+
+        //     switch (publicationDate) {
+        //         case 'lastMonth':
+        //             pastDate.setMonth(now.getMonth() - 1);
+        //             break;
+        //         case 'lastTwoMonths':
+        //             pastDate.setMonth(now.getMonth() - 2);
+        //             break;
+        //         case 'lastThreeMonths':
+        //             pastDate.setMonth(now.getMonth() - 3);
+        //             break;
+        //     }
+        //     console.log(result);
+        //     result = result.filter(review => new Date(review.created_at) >= pastDate);
+        // }
+        setFilteredReviews(result);
+    }
+
+    useEffect(() => {
+        if (selectedRatings.length === 0) {
+            setFilteredReviews(Object.values(reviews).flat());
+        } else {
+            setFilteredReviews(selectedRatings.flatMap(rating => reviews[rating as keyof CategorizedReviews]));
+        }
+    }, [reviews, selectedRatings]);
+
+    // const filteredReviews = selectedRatings.length === 0
+    //     ? Object.values(reviews).flat()
+    //     : selectedRatings.flatMap(rating => reviews[rating as keyof CategorizedReviews]);
 
     if (loading) {
         return <ReviewsSkeleton />;
@@ -112,7 +145,7 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
 
                         </div>
                         <div className='flex flex-row justify-between'>
-                            <div className={`flex flex-row items-center gap-4 bg-[#B2F1A8] py-2 ${isFilterDropdownOpen ? "rounded-t-lg" : "rounded-lg"} px-4`} ref={dropdownFilterRef} onClick={() => setIsFilterDropdownOpen(true)}>
+                            <div className={`flex flex-row items-center gap-4 bg-[#B2F1A8] py-2 ${isFilterDropdownOpen ? "rounded-t-lg" : "rounded-lg"} px-4`} onClick={toggleFilterDropdown}>
                                 <div>
                                     <Image src="/filter.png" width={20} height={20} alt="Filter Logo" />
                                 </div>
@@ -121,29 +154,70 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                                 </div>
                             </div>
                             <div className={`${isFilterDropdownOpen ? "block absolute" : "hidden"} bg-[#B2F1A8] flex flex-col mt-9 z-10 text-black w-1/4 rounded-r-lg rounded-bl-lg py-6 gap-4 `} >
-                                <div className='flex flex-col'>
+                                <div className='flex flex-col border-b border-[black] justify-end'>
                                     <div className='font-bold text-xl pl-4' style={{ fontFamily: "Dunk Trial" }}>
                                         Rating
                                     </div>
-                                    <div className='flex flex-row pl-4'>
-
+                                    <div className='flex flex-row justify-evenly pt-2 items-center'>
+                                        <div className={`flex flex-row gap-2 ${selectedTab === 5 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(5)}>
+                                            <div>
+                                                5
+                                            </div>
+                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                        </div>
+                                        <div className={`flex flex-row gap-2 ${selectedTab === 4 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(4)}>
+                                            <div>
+                                                4
+                                            </div>
+                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                        </div>
+                                        <div className={`flex flex-row gap-2 ${selectedTab === 3 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(3)}>
+                                            <div>
+                                                3
+                                            </div>
+                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                        </div>
+                                        <div className={`flex flex-row gap-2 ${selectedTab === 2 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(2)}>
+                                            <div>
+                                                2
+                                            </div>
+                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                        </div>
+                                        <div className={`flex flex-row gap-2 ${selectedTab === 1 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(1)}>
+                                            <div>
+                                                1
+                                            </div>
+                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                        </div>
                                     </div>
                                 </div>
-                                <div className='flex flex-col '>
+                                {/* <div className='flex flex-col '>
                                     <div className='font-bold text-xl pl-4' style={{ fontFamily: "Dunk Trial" }}>
-                                        Recomended
+                                        Recommended
                                     </div>
                                     <div className='flex flex-col gap-1 pl-4'>
                                         <div className='flex flex-row gap-2'>
-                                            <input type='radio' />
+                                            <input
+                                                type='radio'
+                                                name='recommended'
+                                                value='verified'
+                                                checked={recommended === 'verified'}
+                                                onChange={(e) => setRecommended(e.target.value)}
+                                            />
                                             <label>Verified</label>
                                         </div>
                                         <div className='flex flex-row gap-2'>
-                                            <input type='radio' />
+                                            <input
+                                                type='radio'
+                                                name='recommended'
+                                                value='all'
+                                                checked={recommended === 'all'}
+                                                onChange={(e) => setRecommended(e.target.value)}
+                                            />
                                             <label>All</label>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className='flex flex-row items-end justify-between'>
                                     <div className='flex flex-col'>
                                         <div className='font-bold text-xl pl-4' style={{ fontFamily: "Dunk Trial" }} >
@@ -151,25 +225,49 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                                         </div>
                                         <div className='flex flex-col gap-1 pl-4'>
                                             <div className='flex flex-row gap-2'>
-                                                <input type='radio' />
+                                                <input
+                                                    type='radio'
+                                                    name='publicationDate'
+                                                    value='lastMonth'
+                                                    checked={publicationDate === 'lastMonth'}
+                                                    onChange={(e) => setPublicationDate(e.target.value)}
+                                                />
                                                 <label>Last month</label>
                                             </div>
                                             <div className='flex flex-row gap-2'>
-                                                <input type='radio' />
-                                                <label>last Two Month</label>
+                                                <input
+                                                    type='radio'
+                                                    name='publicationDate'
+                                                    value='lastTwoMonths'
+                                                    checked={publicationDate === 'lastTwoMonths'}
+                                                    onChange={(e) => setPublicationDate(e.target.value)}
+                                                />
+                                                <label>Last Two Months</label>
                                             </div>
                                             <div className='flex flex-row gap-2'>
-                                                <input type='radio' />
-                                                <label>Last Three Month</label>
+                                                <input
+                                                    type='radio'
+                                                    name='publicationDate'
+                                                    value='lastThreeMonths'
+                                                    checked={publicationDate === 'lastThreeMonths'}
+                                                    onChange={(e) => setPublicationDate(e.target.value)}
+                                                />
+                                                <label>Last Three Months</label>
                                             </div>
                                             <div className='flex flex-row gap-2'>
-                                                <input type='radio' />
+                                                <input
+                                                    type='radio'
+                                                    name='publicationDate'
+                                                    value='all'
+                                                    checked={publicationDate === 'all'}
+                                                    onChange={(e) => setPublicationDate(e.target.value)}
+                                                />
                                                 <label>All</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div className='flex pr-8'>
-                                        <div className='py-1 px-4 rounded-full border border-black'>
+                                        <div className='py-1 px-4 rounded-full border border-black' onClick={filterReviews}>
                                             Show
                                         </div>
                                     </div>
