@@ -51,24 +51,6 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
             result = result.filter(review => review.rating === selectedTab);
         }
 
-        // if (publicationDate !== 'all') {
-        //     const now = new Date();
-        //     const pastDate = new Date();
-
-        //     switch (publicationDate) {
-        //         case 'lastMonth':
-        //             pastDate.setMonth(now.getMonth() - 1);
-        //             break;
-        //         case 'lastTwoMonths':
-        //             pastDate.setMonth(now.getMonth() - 2);
-        //             break;
-        //         case 'lastThreeMonths':
-        //             pastDate.setMonth(now.getMonth() - 3);
-        //             break;
-        //     }
-        //     console.log(result);
-        //     result = result.filter(review => new Date(review.created_at) >= pastDate);
-        // }
         setFilteredReviews(result);
     }
 
@@ -300,7 +282,7 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                                             ))}
                                         </div>
                                         <div>
-                                            {formatDate(review.created_at)}
+                                            {formatDate(review.updated_at ?? "")}
                                         </div>
                                     </div>
                                     <div>

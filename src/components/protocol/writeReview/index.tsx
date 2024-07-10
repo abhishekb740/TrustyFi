@@ -14,16 +14,13 @@ export default function WriteReviews({ protocol_id, existingReview, toggleWriteR
     const { userId, wallet } = useMetaMask();
     const [review, setReview] = useState('');
     const [title, setTitle] = useState('');
-    const [date, setDate] = useState('');
     const [rating, setRating] = useState(0);
-    const today = new Date().toISOString().split('T')[0];
     const [loading, setLoading] = useState<Boolean>(true);
 
     useEffect(() => {
         if (existingReview) {
             setReview(existingReview.description);
             setTitle(existingReview.title);
-            setDate(existingReview.created_at.split('T')[0]);
             setRating(existingReview.rating);
         }
         setLoading(false);
@@ -39,7 +36,7 @@ export default function WriteReviews({ protocol_id, existingReview, toggleWriteR
             return;
         }
         try {
-            await writeReview(userId, protocol_id, rating, title, review, date, wallet.accounts[0]);
+            await writeReview(userId, protocol_id, rating, title, review, wallet.accounts[0]);
             alert('Review submitted successfully');
             toggleWriteReview();
         } catch (error) {
@@ -93,25 +90,6 @@ export default function WriteReviews({ protocol_id, existingReview, toggleWriteR
                             }}
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                        />
-                    </div>
-                </div>
-                <div className="flex flex-col items-center gap-8 w-full">
-                    <div className="text-4xl" style={{ fontFamily: 'Druk Trial' }}>
-                        DATE OF THE EXPERIENCE
-                    </div>
-                    <div className="border border-[#B2F1A8] rounded-md w-1/3 p-2">
-                        <input
-                            type="date"
-                            className="bg-transparent w-full text-center text-white"
-                            style={{
-                                outline: 'none',
-                                border: 'none',
-                                boxShadow: 'none',
-                            }}
-                            value={date}
-                            onChange={(e) => setDate(e.target.value)}
-                            max={today}
                         />
                     </div>
                 </div>

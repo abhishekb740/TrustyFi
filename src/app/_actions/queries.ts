@@ -111,7 +111,6 @@ export const writeReview = async (
   rating: number,
   title: string,
   description: string,
-  date: string,
   wallet_address: string
 ) => {
   // Check if a review already exists for this user and protocol
