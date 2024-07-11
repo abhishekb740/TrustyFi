@@ -60,6 +60,7 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
         }
 
         setFilteredReviews(result);
+        setIsFilterDropdownOpen(false);
     }
 
     useEffect(() => {
@@ -131,7 +132,7 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
 
                         </div>
                         <div className='flex flex-row justify-between'>
-                            <div className={`flex flex-row items-center gap-4 bg-[#B2F1A8] py-2 ${isFilterDropdownOpen ? "rounded-t-lg" : "rounded-lg"} px-4`} onClick={toggleFilterDropdown}>
+                            <div className={`flex flex-row items-center gap-4 bg-[#B2F1A8] py-2 ${isFilterDropdownOpen ? "rounded-t-lg" : "rounded-lg"} px-4 hover:cursor-pointer`} onClick={toggleFilterDropdown}>
                                 <div>
                                     <Image src="/filter.png" width={20} height={20} alt="Filter Logo" />
                                 </div>
