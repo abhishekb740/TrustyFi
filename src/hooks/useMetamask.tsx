@@ -10,6 +10,7 @@ import {
 import detectEthereumProvider from "@metamask/detect-provider";
 import { formatBalance } from "@/utils/utils";
 import { handleUserInDatabase, fetchUserByWalletAddress } from "@/app/_actions/queries";
+import { fetchProtocolsAndCategories } from '@/app/_actions/queries';
 
 interface WalletState {
   accounts: any[];
@@ -27,6 +28,9 @@ interface MetaMaskContextData {
   clearError: () => void;
   connected: boolean;
   userId: string | null;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
+  protocols: Protocol[];
 }
 
 const disconnectedState: WalletState = {
@@ -43,8 +47,10 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
   const [hasProvider, setHasProvider] = useState<boolean | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [protocols, setProtocols] = useState<Protocol[]>([]);
   const clearError = () => setErrorMessage("");
   const [wallet, setWallet] = useState(disconnectedState);
+  const [loading, setLoading] = useState<boolean>(true);
   const [userId, setUserId] = useState<string | null>(null);
 
   const _updateWallet = useCallback(async (providedAccounts?: any) => {
@@ -93,10 +99,18 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
   );
 
   useEffect(() => {
+    const getProtocolsAndCategories = async () => {
+      const res = await fetchProtocolsAndCategories();
+      setProtocols(res);
+      setLoading(false);
+    }
+    getProtocolsAndCategories();
+  }, [])
+
+  useEffect(() => {
     const getProvider = async () => {
       const provider = await detectEthereumProvider({ silent: true });
       setHasProvider(Boolean(provider));
-
       if (provider) {
         updateWalletAndAccounts();
         window.ethereum?.on("accountsChanged", updateWallet);
@@ -144,6 +158,9 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         clearError,
         connected: wallet.accounts.length > 0,
         userId,
+        loading,
+        setLoading,
+        protocols
       }}
     >
       {children}

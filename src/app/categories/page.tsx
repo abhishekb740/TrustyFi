@@ -6,21 +6,12 @@ import { useRouter } from "next/navigation";
 import { fetchProtocolsAndCategories } from '@/app/_actions/queries';
 import { useState, useEffect } from 'react';
 import CategoriesSkeleton from "@/components/skeletons/categories";
+import { useMetaMask } from "@/hooks/useMetamask";
 
 export default function Categories() {
 
-    const [protocols, setProtocols] = useState<Protocol[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
     const [searchQuery, setSearchQuery] = useState<string>("");
-
-    useEffect(() => {
-        const getProtocolsAndCategories = async () => {
-            const res = await fetchProtocolsAndCategories();
-            setProtocols(res);
-            setLoading(false);
-        }
-        getProtocolsAndCategories();
-    }, [])
+    const { protocols, loading } = useMetaMask();
 
     const router = useRouter();
 
@@ -46,8 +37,14 @@ export default function Categories() {
                         {
                             filterProtocols.length ?
                                 filterProtocols.map((protocol, index) => {
+                                    const isLast = index === filterProtocols.length - 1;
                                     return (
-                                        <div onClick={() => router.push(`/protocol/${protocol.protocol_name}`)} key={index} className="border-b py-2 border-black text-lg hover:cursor-pointer flex flex-row gap-4 items-center" style={{ fontWeight: '800' }}>
+                                        <div
+                                            onClick={() => router.push(`/protocol/${protocol.protocol_name}`)}
+                                            key={index}
+                                            className={`py-2 ${!isLast ? 'border-b border-black' : ''} text-lg hover:cursor-pointer flex flex-row gap-4 items-center`}
+                                            style={{ fontWeight: '800' }}
+                                        >
                                             <div>
                                                 <Image src={`/protocols/${protocol.protocol_name}.svg`} width={25} height={25} alt="protocol logo" />
                                             </div>
@@ -61,6 +58,7 @@ export default function Categories() {
                         }
                     </div>
                 )}
+
             </div>
             <div className="mt-16 overflow-hidden w-full">
                 <div className="flex flex-row animate-marquee gap-10">
