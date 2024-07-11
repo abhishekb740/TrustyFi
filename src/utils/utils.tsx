@@ -61,27 +61,27 @@ export const Protocols = [
     },
     {
         name: "Aave",
-        image: "Aave.png",
+        image: "Aave.svg",
         description: "Algoritmic, autonomous interest rate protocol",
     },
     {
         name: "Curve",
-        image: "Curve.png",
+        image: "Curve.svg",
         description: "Algoritmic, autonomous interest rate protocol",
     },
     {
         name: "Lido Finance",
-        image: "Lido.png",
+        image: "Lido.svg",
         description: "Algoritmic, autonomous interest rate protocol",
     },
     {
         name: "Compound Finance",
-        image: "Compound.png",
+        image: "Compound.svg",
         description: "Algoritmic, autonomous interest rate protocol",
     },
     {
         name: "EigenLayer",
-        image: "Eigen.png",
+        image: "Eigen.svg",
         description: "Algoritmic, autonomous interest rate protocol",
     }
 
