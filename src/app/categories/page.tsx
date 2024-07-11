@@ -11,6 +11,7 @@ export default function Categories() {
 
     const [protocols, setProtocols] = useState<Protocol[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [searchQuery, setSearchQuery] = useState<string>("");
 
     useEffect(() => {
         const getProtocolsAndCategories = async () => {
@@ -23,37 +24,60 @@ export default function Categories() {
 
     const router = useRouter();
 
+    const filterProtocols = protocols.filter(protocol => protocol.protocol_name.toLowerCase().includes(searchQuery.toLowerCase()));
+
     if (loading) {
         return <CategoriesSkeleton />;
     }
 
     return (
         <div className="flex flex-col items-center min-h-screen w-full" style={{ fontFamily: 'Montserrat' }}>
-            <div className="flex flex-col w-full items-center mt-16">
+            <div className="flex relative flex-col w-full items-center mt-16">
                 <div className="flex flex-row w-1/2 rounded-3xl py-1 px-5 items-center justify-center bg-white border shadow-[0_0_20px_#B2F1A8]">
                     <input
                         className="flex ml-4 w-full py-1.5 bg-transparent focus:outline-none text-black"
                         placeholder="Search..."
+                        onChange={(e) => setSearchQuery(e.target.value)}
                     />
                     <IoIosSearch size={25} className="text-neutral-400" />
                 </div>
-                <div className="mt-16 overflow-hidden w-full">
-                    <div className="flex flex-row animate-marquee gap-10">
+                {searchQuery && (
+                    <div className="absolute text-black top-full flex flex-col z-30 mt-1 max-h-[13rem] border border-neutral-100 bg-white/90 backdrop-blur-lg w-1/2 rounded-xl shadow-lg scroll-smooth scrollbar py-2 px-8">
                         {
-                            Topics.map((topic, index) => {
-                                return (
-                                    <div key={index} className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-2 px-4 md:px-6 rounded-tr-2xl rounded-br-2xl whitespace-nowrap">
-                                        <div className="flex-shrink-0">
-                                            <Image src={`/${topic.icon}`} width={20} height={20} alt={`${topic.name} Logo`} />
+                            filterProtocols.length ?
+                                filterProtocols.map((protocol, index) => {
+                                    return (
+                                        <div onClick={() => router.push(`/protocol/${protocol.protocol_name}`)} key={index} className="border-b py-2 border-black text-lg hover:cursor-pointer flex flex-row gap-4 items-center" style={{ fontWeight: '800' }}>
+                                            <div>
+                                                <Image src={`/protocols/${protocol.protocol_name}.svg`} width={25} height={25} alt="protocol logo" />
+                                            </div>
+                                            <div>
+                                                {protocol.protocol_name}
+                                            </div>
                                         </div>
-                                        <div className="flex-shrink-0">
-                                            {topic.name}
-                                        </div>
-                                    </div>
-                                )
-                            })
+                                    )
+                                }) :
+                                <p className="text-lg py-2 text-neutral-800 font-primary">No creator found</p>
                         }
                     </div>
+                )}
+            </div>
+            <div className="mt-16 overflow-hidden w-full">
+                <div className="flex flex-row animate-marquee gap-10">
+                    {
+                        Topics.map((topic, index) => {
+                            return (
+                                <div key={index} className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-2 px-4 md:px-6 rounded-tr-2xl rounded-br-2xl whitespace-nowrap">
+                                    <div className="flex-shrink-0">
+                                        <Image src={`/${topic.icon}`} width={20} height={20} alt={`${topic.name} Logo`} />
+                                    </div>
+                                    <div className="flex-shrink-0">
+                                        {topic.name}
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
             </div>
             <div className="flex flex-row mt-16 justify-around px-8">
@@ -149,11 +173,11 @@ export default function Categories() {
                                     <div className="flex flex-row gap-4">
                                         {protocol.ProtocolCategories?.map((protocolCategory, index) => {
                                             return (
-                                                <div key={index} className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
-                                                    <div>
+                                                <div key={index} className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl whitespace-nowrap">
+                                                    <div className="flex-shrink-0">
                                                         <Image src={`/star.svg`} width={20} height={20} alt={`star Logo`} />
                                                     </div>
-                                                    <div>
+                                                    <div className="flex-shrink-0">
                                                         {protocolCategory.Categories.category_name}
                                                     </div>
                                                 </div>
