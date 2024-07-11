@@ -68,31 +68,37 @@ export const Protocols = [
         name: "Uniswap",
         image: "Uniswap.svg",
         description: "Algoritmic, autonomous interest rate protocol",
+        website_url: "https://uniswap.org/"
     },
     {
         name: "Aave",
         image: "Aave.svg",
         description: "Algoritmic, autonomous interest rate protocol",
+        website_url: "https://aave.com/"
     },
     {
         name: "Curve",
         image: "Curve.svg",
         description: "Algoritmic, autonomous interest rate protocol",
+        website_url: "https://curve.fi/"
     },
     {
         name: "Lido Finance",
         image: "Lido.svg",
         description: "Algoritmic, autonomous interest rate protocol",
+        website_url: "https://lido.fi/"
     },
     {
         name: "Compound Finance",
         image: "Compound.svg",
         description: "Algoritmic, autonomous interest rate protocol",
+        website_url: "https://compound.finance/"
     },
     {
         name: "EigenLayer",
         image: "Eigen.svg",
         description: "Algoritmic, autonomous interest rate protocol",
+        website_url: "https://eigenlayer.com/"
     }
 
 ];
