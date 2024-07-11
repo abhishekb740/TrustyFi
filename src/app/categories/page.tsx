@@ -42,11 +42,11 @@ export default function Categories() {
                         {
                             Topics.map((topic, index) => {
                                 return (
-                                    <div key={index} className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-2 px-6 rounded-tr-2xl rounded-br-2xl">
-                                        <div>
+                                    <div key={index} className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-2 px-4 md:px-6 rounded-tr-2xl rounded-br-2xl whitespace-nowrap">
+                                        <div className="flex-shrink-0">
                                             <Image src={`/${topic.icon}`} width={20} height={20} alt={`${topic.name} Logo`} />
                                         </div>
-                                        <div>
+                                        <div className="flex-shrink-0">
                                             {topic.name}
                                         </div>
                                     </div>
@@ -56,7 +56,7 @@ export default function Categories() {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-row mt-16 justify-between px-8">
+            <div className="flex flex-row mt-16 justify-around px-8">
                 <div className="flex flex-col w-1/3 gap-8">
                     <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4 gap-3">
                         <div className="flex flex-col gap-2">
