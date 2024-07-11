@@ -60,12 +60,12 @@ export default function Categories() {
                 )}
 
             </div>
-            <div className="mt-16 overflow-hidden w-full">
-                <div className="flex flex-row animate-marquee gap-10">
+            <div className="mt-16 overflow-hidden">
+                <div className="flex flex-row animate-marquee gap-4 md:gap-10">
                     {
                         Topics.map((topic, index) => {
                             return (
-                                <div key={index} className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-2 px-4 md:px-6 rounded-tr-2xl rounded-br-2xl whitespace-nowrap">
+                                <div key={index} className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-2 px-8 md:px-10 rounded-tr-2xl rounded-br-2xl whitespace-nowrap">
                                     <div className="flex-shrink-0">
                                         <Image src={`/${topic.icon}`} width={20} height={20} alt={`${topic.name} Logo`} />
                                     </div>

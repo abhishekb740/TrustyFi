@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { StarRating } from '@/components';
+import { StarRating, Notification } from '@/components';
 import { writeReview } from '@/app/_actions/queries';
 import { useMetaMask } from '@/hooks/useMetamask';
 import WriteReviewSkeleton from '@/components/skeletons/writeReview';
@@ -15,6 +15,7 @@ export default function WriteReviews({ protocol_id, existingReview, toggleWriteR
     const [review, setReview] = useState('');
     const [title, setTitle] = useState('');
     const [rating, setRating] = useState(0);
+    const [showNotification, setShowNotification] = useState(false);
     const [loading, setLoading] = useState<Boolean>(true);
 
     useEffect(() => {
@@ -37,8 +38,7 @@ export default function WriteReviews({ protocol_id, existingReview, toggleWriteR
         }
         try {
             await writeReview(userId, protocol_id, rating, title, review, wallet.accounts[0]);
-            alert('Review submitted successfully');
-            toggleWriteReview();
+            setShowNotification(true);
         } catch (error) {
             console.error('Error submitting review:', (error as Error).message);
         }
@@ -50,6 +50,7 @@ export default function WriteReviews({ protocol_id, existingReview, toggleWriteR
 
     return (
         <div>
+            <Notification message="Review submitted successfully" toggleWriteReview={toggleWriteReview} show={showNotification} onClose={() => { setShowNotification(false) }} isSuccess={true} />
             <div className="flex flex-col items-center mt-16 gap-12">
                 <div className="flex flex-col items-center gap-8 w-full">
                     <div className="text-4xl" style={{ fontFamily: 'Druk Trial' }}>

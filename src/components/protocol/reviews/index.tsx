@@ -3,6 +3,7 @@ import { formatAddress, formatDate } from '@/utils/utils';
 import { fetchReviewsForAProtocol } from '@/app/_actions/queries';
 import { useEffect, useState, useRef } from 'react';
 import ReviewsSkeleton from '@/components/skeletons/reviews';
+import { FaAngleUp, FaAngleDown } from "react-icons/fa";
 
 type Props = {
     protocol_id: number;
@@ -17,6 +18,28 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
     const [selectedTab, setSelectedTab] = useState<number | null>(null);
     const [publicationDate, setPublicationDate] = useState<string>('all');
     const [filteredReviews, setFilteredReviews] = useState<Review[]>([]);
+    const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
+    const [previousSortOption, setPreviousSortOption] = useState<string | null>(null);
+    const [currentSortOption, setCurrentSortOption] = useState<string | null>(null);
+
+    const toggleSortDropdown = () => {
+        setIsSortDropdownOpen(prev => !prev);
+    };
+
+    const handleSortOption = (option: string) => {
+        if (currentSortOption === option) {
+            setCurrentSortOption(null);
+            setPreviousSortOption(null);
+            filterReviews();
+        } else {
+            setPreviousSortOption(option);
+            setCurrentSortOption(option);
+            if (option === 'mostRecent') {
+                setFilteredReviews(prevReviews => [...prevReviews].sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()));
+            }
+            // Add more sorting logic here if needed for "moreRelevant"
+        }
+    };
 
     const handleTabRating = (rating: number) => {
         setSelectedTab(rating);
@@ -29,7 +52,7 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
             setLoading(false);
         };
         getReviews();
-    }, [protocol_id]);
+    }, [protocol_id, avg_rating]);
 
     const toggleFilterDropdown = () => {
         setIsFilterDropdownOpen(prev => !prev);
@@ -57,6 +80,10 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
             result = result.filter(review => new Date(review.updated_at).getTime() > new Date().setMonth(new Date().getMonth() - 2));
         } else if (publicationDate === 'lastThreeMonths') {
             result = result.filter(review => new Date(review.updated_at).getTime() > new Date().setMonth(new Date().getMonth() - 3));
+        }
+
+        if (currentSortOption === 'mostRecent') {
+            result = result.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
         }
 
         setFilteredReviews(result);
@@ -152,7 +179,7 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                                             </div>
                                             <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
                                         </div>
-                                        <div className={`flex flex-row gap-2 p-2 ${selectedTab === 4 ? "border-b-[3px] border-[#9482F2]"  : ""}`} onClick={() => handleTabRating(4)}>
+                                        <div className={`flex flex-row gap-2 p-2 ${selectedTab === 4 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(4)}>
                                             <div>
                                                 4
                                             </div>
@@ -264,9 +291,36 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                                 <div>
                                     Sort by
                                 </div>
-                                <div className='bg-[#B2F1A8] text-black rounded-lg p-2 text-xs font-bold'>
-                                    MORE RELEVANT
+                                <div className="relative">
+                                    <div className={`${isSortDropdownOpen ? "rounded-t-lg" : "rounded-lg"} bg-[#B2F1A8] text-black p-2 text-xs font-bold cursor-pointer text-center`} onClick={toggleSortDropdown}>
+                                        <div>
+                                            MORE RELEVANT
+                                        </div>
+                                    </div>
+                                    <div className={`absolute p-2 bg-[#B2F1A8] text-black w-[calc(100%+1rem)] left-[-1rem] rounded-tl-lg rounded-b-lg z-10 shadow-lg flex flex-col justify-center ${isSortDropdownOpen ? 'block z-10' : 'hidden'}`}>
+                                        <div className="p-2 cursor-pointer text-xs flex flex-row items-center gap-1">
+                                            <input
+                                                type='radio'
+                                                name='sortOption'
+                                                value='moreRelevant'
+                                                checked={previousSortOption === 'moreRelevant'}
+                                                onChange={(e) => handleSortOption(e.target.value)}
+                                            />
+                                            <label>More Relevant</label>
+                                        </div>
+                                        <div className="p-2 cursor-pointer text-xs flex flex-row items-center gap-1">
+                                            <input
+                                                type='radio'
+                                                name='sortOption'
+                                                value='mostRecent'
+                                                checked={previousSortOption === 'mostRecent'}
+                                                onChange={(e) => handleSortOption(e.target.value)}
+                                            />
+                                            <label>Most Recent</label>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>

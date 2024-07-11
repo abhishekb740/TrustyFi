@@ -53,31 +53,29 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
                     </div>
                     {searchQuery && (
                         <div className="absolute text-black top-full flex flex-col z-30 mt-1 max-h-[13rem] border border-neutral-100 bg-white/90 backdrop-blur-lg w-3/4 rounded-xl shadow-lg scroll-smooth scrollbar py-2 px-8">
-                            {
-                                filterProtocols.length ?
-                                    filterProtocols.map((protocol, index) => {
-                                        const isLast = index === filterProtocols.length - 1;
-                                        return (
-                                            <div
-                                                onClick={() => router.push(`/protocol/${protocol.protocol_name}`)}
-                                                key={index}
-                                                className={`py-2 ${!isLast ? 'border-b border-black' : ''} text-lg hover:cursor-pointer flex flex-row gap-4 items-center`}
-                                                style={{ fontWeight: '800' }}
-                                            >
-                                                <div>
-                                                    <Image src={`/protocols/${protocol.protocol_name}.svg`} width={25} height={25} alt="protocol logo" />
-                                                </div>
-                                                <div>
-                                                    {protocol.protocol_name}
-                                                </div>
+                            {filterProtocols.length ?
+                                filterProtocols.map((protocol, index) => {
+                                    const isLast = index === filterProtocols.length - 1;
+                                    return (
+                                        <div
+                                            onClick={() => router.push(`/protocol/${protocol.protocol_name}`)}
+                                            key={index}
+                                            className={`py-2 ${!isLast ? 'border-b border-black' : ''} text-lg hover:cursor-pointer flex flex-row gap-4 items-center`}
+                                            style={{ fontWeight: '800' }}
+                                        >
+                                            <div>
+                                                <Image src={`/protocols/${protocol.protocol_name}.svg`} width={25} height={25} alt="protocol logo" />
                                             </div>
-                                        )
-                                    }) :
-                                    <p className="text-lg py-2 text-neutral-800 font-primary">No creator found</p>
+                                            <div>
+                                                {protocol.protocol_name}
+                                            </div>
+                                        </div>
+                                    )
+                                }) :
+                                <p className="text-lg py-2 text-neutral-800 font-primary">No creator found</p>
                             }
                         </div>
                     )}
-
                 </div>
             </div>
             <div className={`w-full ${showWallet ? 'z-30' : ''}`}>

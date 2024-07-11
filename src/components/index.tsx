@@ -5,6 +5,7 @@ import Footer from "./footer";
 import Reviews from "./protocol/reviews";
 import WriteReview from "./protocol/writeReview";
 import StarRating from "./starRating";
+import Notification from "./notification";
 
 export {
     Hero, 
@@ -13,5 +14,6 @@ export {
     Footer,
     Reviews,
     WriteReview,
-    StarRating 
+    StarRating,
+    Notification
 }
