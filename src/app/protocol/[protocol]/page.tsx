@@ -6,6 +6,7 @@ import { fetchProtocolDetails, fetchUserReviewForAProtocol } from '@/app/_action
 import { useMetaMask } from '@/hooks/useMetamask';
 import ProtocolSkeleton from '@/components/skeletons/protocol';
 import ReviewsSkeleton from '@/components/skeletons/reviews';
+import formatUrl from '@/utils/utils';
 
 type Props = {
     params: {
@@ -68,19 +69,21 @@ export default function Protocol({ params }: Props) {
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-row py-4 px-4 gap-8 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg'>
-                    <div className=''>
-                        <Image src="/redirect.png" width={35} height={35} alt="Rating" />
+                <a href={protocolDetails?.website_url ?? "#"}
+                    target="_blank"
+                    rel="noopener noreferrer" className='flex flex-row py-4 px-4 gap-8 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg' >
+                    <div className='flex flex-row items-center'>
+                        <Image src="/redirect.svg" width={35} height={35} alt="Rating" />
                     </div>
                     <div className='flex flex-col gap-4'>
                         <div>
-                            {protocolDetails?.website_url}
+                            {formatUrl(protocolDetails?.website_url ?? "")}
                         </div>
                         <div>
-                            Visit
+                            Visit site
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             {!writeReview ? (
                 <div className='p-4 w-[20%] flex justify-center ml-24 rounded-md mt-12 bg-[#B2F1A8] text-black hover:cursor-pointer' onClick={toggleWriteReview}>
@@ -91,7 +94,7 @@ export default function Protocol({ params }: Props) {
                     <button>Cancel</button>
                 </div>
             )}
-            {writeReview ? <WriteReview  toggleWriteReview={toggleWriteReview} protocol_id={protocolDetails?.id ?? 0} existingReview={userReview} /> : <Reviews avg_rating={protocolDetails?.avg_rating === null ? 0 : Number(protocolDetails?.avg_rating?.toFixed(2))} protocol_id={protocolDetails?.id ?? 0} />}
+            {writeReview ? <WriteReview toggleWriteReview={toggleWriteReview} protocol_id={protocolDetails?.id ?? 0} existingReview={userReview} /> : <Reviews avg_rating={protocolDetails?.avg_rating === null ? 0 : Number(protocolDetails?.avg_rating?.toFixed(2))} protocol_id={protocolDetails?.id ?? 0} />}
         </div>
     );
 }

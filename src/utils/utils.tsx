@@ -10,13 +10,23 @@ export const formatChainAsNum = (chainIdHex: string) => {
 };
 
 export const formatAddress = (addr: string) => {
-    return `${addr.substring(0, 4)+'...'+addr.substring(addr.length-3,addr.length)}`;
+    return `${addr.substring(0, 4) + '...' + addr.substring(addr.length - 3, addr.length)}`;
 };
 
 export const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
 };
+
+export default function formatUrl(url: string): string {
+    try {
+        const { hostname } = new URL(url);
+        return hostname.replace('www.', '');
+    } catch (error) {
+        console.error('Invalid URL:', error);
+        return '';
+    }
+}
 
 export const Topics = [
     {
