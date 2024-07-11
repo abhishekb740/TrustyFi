@@ -63,7 +63,7 @@ export default function Protocol({ params }: Props) {
                                 <Image key={i} src="/ratingStar.png" width={20} height={20} alt="Rating" />
                             ))}
                             <div>
-                                {`${protocolDetails?.avg_rating === null ? 0 : protocolDetails?.avg_rating} (${protocolDetails?.review_count === null ? 0 : protocolDetails?.review_count} reviews)`}
+                                {`${protocolDetails?.avg_rating === null ? 0 : protocolDetails?.avg_rating?.toFixed(2)} (${protocolDetails?.review_count === null ? 0 : protocolDetails?.review_count} reviews)`}
                             </div>
                         </div>
                     </div>
@@ -91,7 +91,7 @@ export default function Protocol({ params }: Props) {
                     <button>Cancel</button>
                 </div>
             )}
-            {writeReview ? <WriteReview  toggleWriteReview={toggleWriteReview} protocol_id={protocolDetails?.id ?? 0} existingReview={userReview} /> : <Reviews avg_rating={protocolDetails?.avg_rating === null ? 0 : protocolDetails?.avg_rating} protocol_id={protocolDetails?.id ?? 0} />}
+            {writeReview ? <WriteReview  toggleWriteReview={toggleWriteReview} protocol_id={protocolDetails?.id ?? 0} existingReview={userReview} /> : <Reviews avg_rating={protocolDetails?.avg_rating === null ? 0 : Number(protocolDetails?.avg_rating?.toFixed(2))} protocol_id={protocolDetails?.id ?? 0} />}
         </div>
     );
 }

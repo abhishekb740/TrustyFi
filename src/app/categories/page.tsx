@@ -150,7 +150,7 @@ export default function Categories() {
                                                 <Image key={i} src="/ratingStar.png" width={20} height={20} alt="Rating" />
                                             ))}
                                             <div>
-                                                {`${protocol?.avg_rating} (${protocol?.review_count} reviews)`}
+                                                {`${protocol?.avg_rating.toFixed(2)} (${protocol?.review_count} reviews)`}
                                             </div>
                                         </div>
                                         <div>

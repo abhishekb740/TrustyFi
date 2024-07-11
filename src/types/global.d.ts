@@ -33,7 +33,7 @@ type Protocol = {
     ProtocolCategories?: ProtocolCategory[];
     image_url?: string;
     review_count?: number;
-    avg_rating?: number;
+    avg_rating: number;
 };
 
 type Review = {

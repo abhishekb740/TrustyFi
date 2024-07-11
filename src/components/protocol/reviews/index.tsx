@@ -6,7 +6,7 @@ import ReviewsSkeleton from '@/components/skeletons/reviews';
 
 type Props = {
     protocol_id: number;
-    avg_rating: number | undefined;
+    avg_rating: number;
 };
 
 export default function Reviews({ protocol_id, avg_rating }: Props) {
