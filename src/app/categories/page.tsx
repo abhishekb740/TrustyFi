@@ -116,7 +116,7 @@ export default function Categories() {
                         return (
                             <div key={index} className="flex flex-col gap-4 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg p-8">
                                 <div className="flex flex-row gap-6 hover:cursor-pointer" onClick={() => router.push(`/protocol/${protocol.protocol_name}`)}>
-                                    <Image src={`/protocols/${protocol.protocol_name}.png`} alt="protocol logo" width={100} height={100} className="bg-white rounded-lg" />
+                                    <Image src={`/protocols/${protocol.protocol_name}.svg`} alt="protocol logo" width={100} height={100} className="bg-white rounded-lg" />
                                     <div className="flex flex-col gap-2">
                                         <div className="text-2xl">{protocol.protocol_name}</div>
                                         <div className='flex flex-row gap-1'>
