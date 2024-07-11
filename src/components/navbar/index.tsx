@@ -24,7 +24,7 @@ export default function Navbar({ setShowWallet, showWallet }: Props) {
     return (
         <div className='flex flex-row lg:flex-row h-[5rem] items-center justify-between px-4 lg:px-16 border-b-[1px] border-b-[#B2F1A8] relative' style={{ fontFamily: 'Montserrat' }}>
             <div className='flex flex-row gap-2 hover:cursor-pointer' onClick={() => (router.push("/"))}>
-                <Image src='/TrustifyLogo.png' width={20} height={20} alt="Trustify Logo" />
+                <Image src='/TrustifyLogo.svg' width={20} height={20} alt="Trustify Logo" />
                 <div className='text-xl lg:text-2xl'>TRUSTYFI</div>
             </div>
             <div className='lg:hidden flex items-center' onClick={handleToggleMenu}>

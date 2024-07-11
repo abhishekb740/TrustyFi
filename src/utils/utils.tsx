@@ -21,42 +21,42 @@ export const formatDate = (dateString: string) => {
 export const Topics = [
     {
         name: "Yield Farming",
-        icon: "star.png"
+        icon: "star.svg"
     },
     {
         name: "LaunchPads",
-        icon: "star.png"
+        icon: "star.svg"
     },
     {
         name: "DEX",
-        icon: "star.png"
+        icon: "star.svg"
     },
     {
         name: "AMM",
-        icon: "star.png"
+        icon: "star.svg"
     },
     {
         name: "RWA",
-        icon: "star.png"
+        icon: "star.svg"
     },
     {
         name: "AI",
-        icon: "star.png"
+        icon: "star.svg"
     },
     {
         name: "NFT Marketplace",
-        icon: "star.png"
+        icon: "star.svg"
     },
     {
         name: "Derivatives",
-        icon: "star.png"
+        icon: "star.svg"
     }
 ];
 
 export const Protocols = [
     {
         name: "Uniswap",
-        image: "Uniswap.png",
+        image: "Uniswap.svg",
         description: "Algoritmic, autonomous interest rate protocol",
     },
     {

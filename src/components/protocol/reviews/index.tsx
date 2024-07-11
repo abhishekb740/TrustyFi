@@ -88,7 +88,7 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                                     <div className='flex flex-row gap-1'>
                                         {Array.from({ length: avg_rating ?? 0 }, (_, i) => {
                                             return (
-                                                <Image key={i} src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                                <Image key={i} src="/ratingStar.svg" width={20} height={20} alt="Rating" />
                                             );
                                         })}
                                     </div>
@@ -149,31 +149,31 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                                             <div>
                                                 5
                                             </div>
-                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                            <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
                                         </div>
                                         <div className={`flex flex-row gap-2 p-2 ${selectedTab === 4 ? "border-b-[3px] border-[#9482F2]"  : ""}`} onClick={() => handleTabRating(4)}>
                                             <div>
                                                 4
                                             </div>
-                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                            <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
                                         </div>
                                         <div className={`flex flex-row gap-2 p-2 ${selectedTab === 3 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(3)}>
                                             <div>
                                                 3
                                             </div>
-                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                            <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
                                         </div>
                                         <div className={`flex flex-row gap-2 p-2 ${selectedTab === 2 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(2)}>
                                             <div>
                                                 2
                                             </div>
-                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                            <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
                                         </div>
                                         <div className={`flex flex-row gap-2 p-2 ${selectedTab === 1 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(1)}>
                                             <div>
                                                 1
                                             </div>
-                                            <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                            <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
                                         </div>
                                     </div>
                                 </div>
@@ -273,7 +273,7 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                         {filteredReviews.map((review, index) => (
                             <div key={index} className="flex flex-col rounded-md border border-[#B2F1A8] p-4 w-full">
                                 <div className="flex flex-row items-center gap-2 border-b-[1px] border-b-[#B2F1A8] pb-4">
-                                    <Image className="bg-white rounded-lg" src="/profile.png" height={40} width={40} alt="profile logo" />
+                                    <Image className="bg-white rounded-lg" src="/profile.svg" height={40} width={40} alt="profile logo" />
                                     <div className="text-lg">
                                         {formatAddress(review?.user_wallet_address ?? '')}
                                     </div>
@@ -282,7 +282,7 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                                     <div className="flex flex-row justify-between">
                                         <div className='flex flex-row gap-1'>
                                             {Array.from({ length: review.rating }).map((_, i) => (
-                                                <Image key={i} src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                                <Image key={i} src="/ratingStar.svg" width={20} height={20} alt="Rating" />
                                             ))}
                                         </div>
                                         <div>

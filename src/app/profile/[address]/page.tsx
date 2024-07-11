@@ -35,7 +35,7 @@ export default function Profile({ params }: Props) {
         <div className="flex flex-col min-h-screen" style={{ fontFamily: 'Montserrat' }}>
             <div className="flex flex-row justify-evenly items-center p-8 border-b-[1px] border-b-[#B2F1A8]">
                 <div className="flex flex-row items-center gap-8">
-                    <img className="bg-white rounded-lg" src="/profile.png" height={120} width={120} alt="profile logo" />
+                    <img className="bg-white rounded-lg" src="/profile.svg" height={120} width={120} alt="profile logo" />
                     <div className="text-3xl">
                         {formatAddress(params.address)}
                     </div>
@@ -67,7 +67,7 @@ export default function Profile({ params }: Props) {
                         return (
                             <div key={index} className="flex flex-col rounded-md border border-[#B2F1A8] p-4 w-1/2">
                                 <div className="flex flex-row items-center gap-2 border-b-[1px] border-b-[#B2F1A8] pb-4">
-                                    <Image className="bg-white rounded-lg" src="/profile.png" height={40} width={40} alt="profile logo" />
+                                    <Image className="bg-white rounded-lg" src="/profile.svg" height={40} width={40} alt="profile logo" />
                                     <div className="text-lg">
                                         {formatAddress(params.address)}
                                     </div>
@@ -76,7 +76,7 @@ export default function Profile({ params }: Props) {
                                     <div className="flex flex-row justify-between">
                                         <div className='flex flex-row gap-1'>
                                             {Array.from({ length: review.rating }).map((_, i) => (
-                                                <Image key={i} src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                                <Image key={i} src="/ratingStar.svg" width={20} height={20} alt="Rating" />
                                             ))}
                                         </div>
                                         <div>

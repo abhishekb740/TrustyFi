@@ -110,32 +110,6 @@ export default function Categories() {
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4 gap-3">
-                        <div className="flex flex-col gap-2">
-                            <div className="text-3xl font-bold">
-                                Company Data
-                            </div>
-                            <div>
-                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <div className="text-3xl font-bold">
-                                Bio
-                            </div>
-                            <div>
-                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <div className="text-3xl font-bold">
-                                Social
-                            </div>
-                            <div>
-                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div className="flex flex-col w-[50%] gap-12">
                     {protocols.map((protocol, index) => {
@@ -147,7 +121,7 @@ export default function Categories() {
                                         <div className="text-2xl">{protocol.protocol_name}</div>
                                         <div className='flex flex-row gap-1'>
                                             {Array.from({ length: protocol.avg_rating ?? 0 }, (_, i) => (
-                                                <Image key={i} src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                                <Image key={i} src="/ratingStar.svg" width={20} height={20} alt="Rating" />
                                             ))}
                                             <div>
                                                 {`${protocol?.avg_rating.toFixed(2)} (${protocol?.review_count} reviews)`}
@@ -177,7 +151,7 @@ export default function Categories() {
                                             return (
                                                 <div key={index} className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl">
                                                     <div>
-                                                        <Image src={`/star.png`} width={20} height={20} alt={`star Logo`} />
+                                                        <Image src={`/star.svg`} width={20} height={20} alt={`star Logo`} />
                                                     </div>
                                                     <div>
                                                         {protocolCategory.Categories.category_name}

@@ -95,11 +95,11 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
                                         </div>
                                         <div className="flex flex-row gap-2">
                                             <div className="flex flex-row gap-1">
-                                                <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                                <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                                <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                                <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
-                                                <Image src="/ratingStar.png" width={20} height={20} alt="Rating" />
+                                                <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
+                                                <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
+                                                <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
+                                                <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
+                                                <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
                                             </div>
                                             <div>
                                                 4.9
