@@ -12,6 +12,7 @@ export default function Categories() {
     const [selectedCategory, setSelectedCategory] = useState<string>("all");
     const [minRating, setMinRating] = useState<number>(0);
     const [minReviews, setMinReviews] = useState<number>(0);
+    const [sortAlphabetically, setSortAlphabetically] = useState<boolean>(false);
     const { protocols, loading, categories } = useMetaMask();
 
     const router = useRouter();
@@ -23,6 +24,8 @@ export default function Categories() {
         const matchesReviews = (protocol.review_count ?? 0) >= minReviews;
         return matchesSearchQuery && matchesCategory && matchesRating && matchesReviews;
     });
+
+    const sortedProtocols = sortAlphabetically ? filterProtocols.sort((a, b) => a.protocol_name.localeCompare(b.protocol_name)) : filterProtocols;
 
     if (loading) {
         return <CategoriesSkeleton />;
@@ -42,9 +45,9 @@ export default function Categories() {
                 {searchQuery && (
                     <div className="absolute text-black top-full flex flex-col z-30 mt-1 max-h-[13rem] border border-neutral-100 bg-white/90 backdrop-blur-lg w-1/2 rounded-xl shadow-lg scroll-smooth scrollbar py-2 px-8">
                         {
-                            filterProtocols.length ?
-                                filterProtocols.map((protocol, index) => {
-                                    const isLast = index === filterProtocols.length - 1;
+                            sortedProtocols.length ?
+                                sortedProtocols.map((protocol, index) => {
+                                    const isLast = index === sortedProtocols.length - 1;
                                     return (
                                         <div
                                             onClick={() => router.push(`/protocol/${protocol.protocol_name}`)}
@@ -127,10 +130,32 @@ export default function Categories() {
                             <span>{minReviews} Reviews</span>
                         </div>
                     </div>
+                    <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4 gap-3 filter-twitter">
+                        <label className="font-semibold text-lg">Filter by Twitter Followers</label>
+                        <input
+                            type="range"
+                            min="0"
+                            max="1000000"
+                            step="1000"
+                            className="w-full"
+                        />
+                        <span className="text-gray-500">0 - 1,000,000 Followers</span>
+                        <div className="mt-4 flex items-center">
+                            <input
+                                type="checkbox"
+                                id="sortAlphabetically"
+                                checked={sortAlphabetically}
+                                onChange={(e) => setSortAlphabetically(e.target.checked)}
+                                className="mr-2"
+                            />
+                            <label htmlFor="sortAlphabetically" className="text-lg">Sort Alphabetically</label>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div className="flex flex-col min-w-[50%] gap-12">
-                    {filterProtocols.map((protocol, index) => {
+                    {sortedProtocols.map((protocol, index) => {
                         return (
                             <div key={index} className="flex flex-col gap-4 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg p-8">
                                 <div className="flex flex-row gap-6 hover:cursor-pointer" onClick={() => router.push(`/protocol/${protocol.protocol_name}`)}>
