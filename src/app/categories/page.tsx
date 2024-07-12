@@ -3,8 +3,7 @@ import { Topics } from "@/utils/utils";
 import { IoIosSearch } from "react-icons/io";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { fetchProtocolsAndCategories } from '@/app/_actions/queries';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import CategoriesSkeleton from "@/components/skeletons/categories";
 import { useMetaMask } from "@/hooks/useMetamask";
 
@@ -60,7 +59,7 @@ export default function Categories() {
                 )}
 
             </div>
-            <div className="mt-16 overflow-hidden">
+            <div className="mt-16 overflow-hidden w-full">
                 <div className="flex flex-row animate-marquee gap-4 md:gap-10">
                     {
                         Topics.map((topic, index) => {
