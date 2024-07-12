@@ -26,6 +26,13 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
         setIsSortDropdownOpen(prev => !prev);
     };
 
+    const clearFilters = () => {
+        setSelectedRatings([]);
+        setPublicationDate('all');
+        setSelectedTab(null);
+        setCurrentSortOption(null);
+    }
+
     const handleSortOption = (option: string) => {
         if (currentSortOption === option) {
             setCurrentSortOption(null);
@@ -280,10 +287,13 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='flex pr-8'>
-                                        <div className='py-1 px-4 rounded-full border border-black hover:cursor-pointer' onClick={filterReviews}>
-                                            Show
-                                        </div>
+                                </div>
+                                <div className='flex flex-row justify-around'>
+                                    <div className='py-1 px-4 rounded-full border border-black hover:cursor-pointer' onClick={clearFilters}>
+                                        Clear
+                                    </div>
+                                    <div className='py-1 px-4 rounded-full border border-black hover:cursor-pointer' onClick={filterReviews}>
+                                        Show
                                     </div>
                                 </div>
                             </div>
