@@ -7,7 +7,7 @@ import WriteReviewSkeleton from '@/components/skeletons/writeReview';
 type Props = {
     protocol_id: number;
     existingReview?: Review;
-    toggleWriteReview: () => void;
+    toggleWriteReview: (isSuccess: boolean) => void;
 }
 
 export default function WriteReviews({ protocol_id, existingReview, toggleWriteReview }: Props) {
@@ -15,8 +15,10 @@ export default function WriteReviews({ protocol_id, existingReview, toggleWriteR
     const [review, setReview] = useState('');
     const [title, setTitle] = useState('');
     const [rating, setRating] = useState(0);
-    const [showNotification, setShowNotification] = useState(false);
-    const [loading, setLoading] = useState<Boolean>(true);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+    const [error, setError] = useState('');
+    const [showErrorNotification, setErrorShowNotification] = useState<boolean>(false);
 
     useEffect(() => {
         if (existingReview) {
@@ -28,17 +30,23 @@ export default function WriteReviews({ protocol_id, existingReview, toggleWriteR
     }, [existingReview]);
 
     const handleSubmit = async () => {
+        setIsSubmitting(true);
         if (!userId) {
-            console.error('User is not logged in');
+            setIsSubmitting(false);
+            setError('Please connect your wallet to submit a review');
+            setErrorShowNotification(true);
             return;
         }
         if (!protocol_id) {
-            console.error('Protocol is not selected');
+            setIsSubmitting(false);
+            setError('Invalid protocol id');
+            setErrorShowNotification(true);
             return;
         }
         try {
             await writeReview(userId, protocol_id, rating, title, review, wallet.accounts[0]);
-            setShowNotification(true);
+            setIsSubmitting(false);
+            toggleWriteReview(true);
         } catch (error) {
             console.error('Error submitting review:', (error as Error).message);
         }
@@ -50,7 +58,10 @@ export default function WriteReviews({ protocol_id, existingReview, toggleWriteR
 
     return (
         <div>
-            <Notification message="Review submitted successfully" toggleWriteReview={toggleWriteReview} show={showNotification} onClose={() => { setShowNotification(false) }} isSuccess={true} />
+            {isSubmitting && <div className="flex top-0 bg-opacity-50 z-50 justify-center items-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            </div>}
+            <Notification message={`${error}`} show={showErrorNotification} onClose={() => setErrorShowNotification(false)} isSuccess={false} />
             <div className="flex flex-col items-center mt-16 gap-12">
                 <div className="flex flex-col items-center gap-8 w-full">
                     <div className="text-4xl" style={{ fontFamily: 'Druk Trial' }}>

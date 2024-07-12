@@ -6,17 +6,13 @@ type NotificationProps = {
   show: boolean;
   onClose: () => void;
   isSuccess: boolean;
-  toggleWriteReview?: () => void;
 };
 
-export default function Notification ({ message, show, onClose, isSuccess, toggleWriteReview }: NotificationProps) {
+export default function Notification ({ message, show, onClose, isSuccess }: NotificationProps) {
   useEffect(() => {
     if (show) {
       const timer = setTimeout(() => {
         onClose();
-        if(toggleWriteReview){
-          toggleWriteReview();
-        }
       }, 4000);
 
       return () => clearTimeout(timer);
