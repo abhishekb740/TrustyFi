@@ -21,8 +21,8 @@ export const fetchProtocolsAndCategories = async () => {
       protocol_description: protocol.protocol_description,
       website_url: protocol.website_url,
       image_url: protocol.image_url,
-      avg_rating: protocol.avg_rating===null ? 0 : protocol.avg_rating,
-      review_count: protocol.review_count===null ? 0 : protocol.review_count,
+      avg_rating: protocol.avg_rating === null ? 0 : protocol.avg_rating,
+      review_count: protocol.review_count === null ? 0 : protocol.review_count,
       ProtocolCategories: protocol.ProtocolCategories.map((category: any) => ({
         Categories: {
           id: category.Categories.id,
@@ -48,6 +48,18 @@ export const fetchProtocolDetails = async (protocolName: string) => {
 
   if (error) {
     throw new Error(`Error fetching protocol details: ${error.message}`);
+  }
+
+  return data;
+};
+
+export const fetchAllCategories = async () => {
+  const { data, error } = await client
+    .from('Categories')
+    .select('*');
+
+  if (error) {
+    throw new Error(`Error fetching categories: ${error.message}`);
   }
 
   return data;

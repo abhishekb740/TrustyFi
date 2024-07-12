@@ -9,7 +9,7 @@ import {
 } from "react";
 import detectEthereumProvider from "@metamask/detect-provider";
 import { formatBalance } from "@/utils/utils";
-import { handleUserInDatabase, fetchUserByWalletAddress } from "@/app/_actions/queries";
+import { handleUserInDatabase, fetchUserByWalletAddress, fetchAllCategories } from "@/app/_actions/queries";
 import { fetchProtocolsAndCategories } from '@/app/_actions/queries';
 
 interface WalletState {
@@ -31,6 +31,7 @@ interface MetaMaskContextData {
   loading: boolean;
   setLoading: (loading: boolean) => void;
   protocols: Protocol[];
+  categories: Category[];
 }
 
 const disconnectedState: WalletState = {
@@ -48,10 +49,12 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [protocols, setProtocols] = useState<Protocol[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const clearError = () => setErrorMessage("");
   const [wallet, setWallet] = useState(disconnectedState);
   const [loading, setLoading] = useState<boolean>(true);
   const [userId, setUserId] = useState<string | null>(null);
+
 
   const _updateWallet = useCallback(async (providedAccounts?: any) => {
     if (!window.ethereum) return;
@@ -101,7 +104,9 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     const getProtocolsAndCategories = async () => {
       const res = await fetchProtocolsAndCategories();
+      const cat = await fetchAllCategories();
       setProtocols(res);
+      setCategories(cat);
       setLoading(false);
     }
     getProtocolsAndCategories();
@@ -160,7 +165,8 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         userId,
         loading,
         setLoading,
-        protocols
+        protocols,
+        categories
       }}
     >
       {children}

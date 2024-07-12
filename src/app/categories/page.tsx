@@ -8,13 +8,21 @@ import CategoriesSkeleton from "@/components/skeletons/categories";
 import { useMetaMask } from "@/hooks/useMetamask";
 
 export default function Categories() {
-
     const [searchQuery, setSearchQuery] = useState<string>("");
-    const { protocols, loading } = useMetaMask();
+    const [selectedCategory, setSelectedCategory] = useState<string>("all");
+    const [minRating, setMinRating] = useState<number>(0);
+    const [minReviews, setMinReviews] = useState<number>(0);
+    const { protocols, loading, categories } = useMetaMask();
 
     const router = useRouter();
 
-    const filterProtocols = protocols.filter(protocol => protocol.protocol_name.toLowerCase().includes(searchQuery.toLowerCase()));
+    const filterProtocols = protocols.filter(protocol => {
+        const matchesSearchQuery = protocol.protocol_name.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesCategory = selectedCategory === "all" || (protocol.ProtocolCategories && protocol.ProtocolCategories.some(category => category.Categories.category_name === selectedCategory));
+        const matchesRating = (protocol.avg_rating ?? 0) >= minRating;
+        const matchesReviews = (protocol.review_count ?? 0) >= minReviews;
+        return matchesSearchQuery && matchesCategory && matchesRating && matchesReviews;
+    });
 
     if (loading) {
         return <CategoriesSkeleton />;
@@ -57,7 +65,6 @@ export default function Categories() {
                         }
                     </div>
                 )}
-
             </div>
             <div className="mt-16 overflow-hidden w-full">
                 <div className="flex flex-row animate-marquee gap-4 md:gap-10">
@@ -77,63 +84,53 @@ export default function Categories() {
                     }
                 </div>
             </div>
-            <div className="flex flex-row mt-16 justify-around px-8">
+            <div className="flex flex-row mt-16 justify-around px-8 w-full">
                 <div className="flex flex-col w-1/3 gap-8">
                     <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4 gap-3">
-                        <div className="flex flex-col gap-2">
-                            <div className="text-3xl font-bold">
-                                COMPANY DATA
-                            </div>
-                            <div>
-                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
-                            </div>
+                        <div className="flex flex-col gap-4">
+                            <label className="font-semibold text-lg">Categories</label>
+                            <select
+                                className="border border-[#B2F1A8] rounded-lg p-2 bg-transparent focus:outline-none"
+                                value={selectedCategory}
+                                onChange={(e) => setSelectedCategory(e.target.value)}
+                            >
+                                <option className="text-black" value="all">All Categories</option>
+                                {categories.map((category, index) => (
+                                    <option className="text-black" key={index} value={category.category_name}>
+                                        {category.category_name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
-                        <div className="flex flex-col gap-2">
-                            <div className="text-3xl font-bold">
-                                Bio
-                            </div>
-                            <div>
-                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
-                            </div>
+                        <div className="flex flex-col gap-4">
+                            <label className="font-semibold text-lg">Minimum Rating</label>
+                            <input
+                                type="range"
+                                min="0"
+                                max="5"
+                                step="0.1"
+                                value={minRating}
+                                onChange={(e) => setMinRating(Number(e.target.value))}
+                                className="w-full"
+                            />
+                            <span>{minRating} Stars</span>
                         </div>
-                        <div className="flex flex-col gap-2">
-                            <div className="text-3xl font-bold">
-                                Social
-                            </div>
-                            <div>
-                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4 gap-3">
-                        <div className="flex flex-col gap-2">
-                            <div className="text-3xl font-bold">
-                                Company Data
-                            </div>
-                            <div>
-                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <div className="text-3xl font-bold">
-                                Bio
-                            </div>
-                            <div>
-                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <div className="text-3xl font-bold">
-                                Social
-                            </div>
-                            <div>
-                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
-                            </div>
+                        <div className="flex flex-col gap-4">
+                            <label className="font-semibold text-lg">Minimum Reviews</label>
+                            <input
+                                type="number"
+                                min="0"
+                                value={minReviews}
+                                onChange={(e) => setMinReviews(Number(e.target.value))}
+                                className="border border-[#B2F1A8] rounded-lg p-2 bg-transparent focus:outline-none"
+                            />
+                            <span>{minReviews} Reviews</span>
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col w-[50%] gap-12">
-                    {protocols.map((protocol, index) => {
+
+                <div className="flex flex-col min-w-[50%] gap-12">
+                    {filterProtocols.map((protocol, index) => {
                         return (
                             <div key={index} className="flex flex-col gap-4 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg p-8">
                                 <div className="flex flex-row gap-6 hover:cursor-pointer" onClick={() => router.push(`/protocol/${protocol.protocol_name}`)}>
@@ -145,7 +142,7 @@ export default function Categories() {
                                                 <Image key={i} src="/ratingStar.svg" width={20} height={20} alt="Rating" />
                                             ))}
                                             <div>
-                                                {`${protocol?.avg_rating.toFixed(2)} (${protocol?.review_count} reviews)`}
+                                                {protocol.avg_rating?.toFixed(2)} ({protocol.review_count} reviews)
                                             </div>
                                         </div>
                                         <div>
@@ -153,8 +150,7 @@ export default function Categories() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="border-b-[1px] border-b-[#B2F1A8] ">
-                                </div>
+                                <div className="border-b-[1px] border-b-[#B2F1A8] "></div>
                                 <div className="flex flex-row justify-between">
                                     <div className="flex flex-row gap-6 items-center">
                                         <div>
@@ -172,7 +168,7 @@ export default function Categories() {
                                             return (
                                                 <div key={index} className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl whitespace-nowrap">
                                                     <div className="flex-shrink-0">
-                                                        <Image src={`/star.svg`} width={20} height={20} alt={`star Logo`} />
+                                                        <Image src="/star.svg" width={20} height={20} alt="star Logo" />
                                                     </div>
                                                     <div className="flex-shrink-0">
                                                         {protocolCategory.Categories.category_name}

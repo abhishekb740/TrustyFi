@@ -25,3 +25,15 @@ body {
 ::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
+
+.slider::-webkit-slider-thumb {
+  @apply appearance-none h-4 w-4 bg-green-600 rounded-full cursor-pointer;
+}
+
+.slider::-moz-range-thumb {
+  @apply h-4 w-4 bg-green-600 rounded-full cursor-pointer;
+}
+
+.slider {
+  @apply w-full h-2 bg-green-200 rounded-lg appearance-none cursor-pointer;
+}
