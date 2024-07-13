@@ -15,7 +15,7 @@ const config: Config = {
         }
       },
       animation: {
-        marquee: 'marquee 36s linear infinite' // Adjust the duration as needed
+        marquee: 'marquee 20s linear infinite' // Adjust the duration as needed
       }
     },
   },
