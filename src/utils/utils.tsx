@@ -90,7 +90,7 @@ export const Protocols = [
     },
     {
         name: "Compound Finance",
-        image: "Compound.svg",
+        image: "CompoundFinance.svg",
         description: "Algoritmic, autonomous interest rate protocol",
         website_url: "https://compound.finance/"
     },
