@@ -14,7 +14,7 @@ type Props = {
 
 export default function Hero({ setShowWallet, showWallet }: Props) {
 
-    const { wallet, connectMetaMask, isConnecting, hasProvider, connected, protocols, loading } = useMetaMask();
+    const { connectMetaMask, connected, protocols, setSelectedCategory } = useMetaMask();
     const [searchQuery, setSearchQuery] = useState<string>("");
     const router = useRouter();
 
@@ -84,7 +84,10 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
                         {
                             [...Topics, ...Topics].map((topic, index) => {
                                 return (
-                                    <div key={index} className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-2 px-8 md:px-10 rounded-tr-2xl rounded-br-2xl whitespace-nowrap">
+                                    <div onClick={() => {
+                                        setSelectedCategory(topic.name)
+                                        router.push("/categories")
+                                    }} key={index} className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-2 px-8 md:px-10 rounded-tr-2xl rounded-br-2xl whitespace-nowrap hover:cursor-pointer">
                                         <div className="flex-shrink-0">
                                             <Image src={`/${topic.icon}`} width={20} height={20} alt={`${topic.name} Logo`} />
                                         </div>

@@ -9,11 +9,10 @@ import { useMetaMask } from "@/hooks/useMetamask";
 
 export default function Categories() {
     const [searchQuery, setSearchQuery] = useState<string>("");
-    const [selectedCategory, setSelectedCategory] = useState<string>("all");
     const [minRating, setMinRating] = useState<number>(0);
     const [minReviews, setMinReviews] = useState<number>(0);
     const [sortAlphabetically, setSortAlphabetically] = useState<boolean>(false);
-    const { protocols, loading, categories } = useMetaMask();
+    const { protocols, loading, categories, selectedCategory, setSelectedCategory } = useMetaMask();
     console.log(protocols);
 
     const router = useRouter();

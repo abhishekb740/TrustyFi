@@ -32,6 +32,8 @@ interface MetaMaskContextData {
   setLoading: (loading: boolean) => void;
   protocols: Protocol[];
   categories: Category[];
+  setSelectedCategory: (category: string) => void;
+  selectedCategory: string;
 }
 
 const disconnectedState: WalletState = {
@@ -54,6 +56,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
   const [wallet, setWallet] = useState(disconnectedState);
   const [loading, setLoading] = useState<boolean>(true);
   const [userId, setUserId] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
 
   const _updateWallet = useCallback(async (providedAccounts?: any) => {
@@ -166,7 +169,9 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         loading,
         setLoading,
         protocols,
-        categories
+        categories,
+        selectedCategory,
+        setSelectedCategory
       }}
     >
       {children}
