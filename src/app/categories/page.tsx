@@ -3,7 +3,7 @@ import { Topics } from "@/utils/utils";
 import { IoIosSearch } from "react-icons/io";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CategoriesSkeleton from "@/components/skeletons/categories";
 import { useMetaMask } from "@/hooks/useMetamask";
 
@@ -27,6 +27,10 @@ export default function Categories() {
     });
 
     const sortedProtocols = sortAlphabetically ? filterProtocols.sort((a, b) => a.protocol_name.localeCompare(b.protocol_name)) : filterProtocols;
+
+    useEffect(() => {
+        // Optional: Perform additional actions when selectedCategory changes
+    }, [selectedCategory]);
 
     if (loading) {
         return <CategoriesSkeleton />;
@@ -75,7 +79,11 @@ export default function Categories() {
                     {
                         [...Topics, ...Topics].map((topic, index) => {
                             return (
-                                <div key={index} className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-2 px-8 md:px-10 rounded-tr-2xl rounded-br-2xl whitespace-nowrap">
+                                <div
+                                    key={index}
+                                    className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-2 px-8 md:px-10 rounded-tr-2xl rounded-br-2xl whitespace-nowrap hover:cursor-pointer"
+                                    onClick={() => setSelectedCategory(topic.name)}
+                                >
                                     <div className="flex-shrink-0">
                                         <Image src={`/${topic.icon}`} width={20} height={20} alt={`${topic.name} Logo`} />
                                     </div>
@@ -152,9 +160,7 @@ export default function Categories() {
                             <label htmlFor="sortAlphabetically" className="text-lg">Sort Alphabetically</label>
                         </div>
                     </div>
-
                 </div>
-
                 <div className="flex flex-col min-w-[50%] gap-12">
                     {sortedProtocols.map((protocol, index) => {
                         return (
