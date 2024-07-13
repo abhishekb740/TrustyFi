@@ -14,6 +14,7 @@ export default function Categories() {
     const [minReviews, setMinReviews] = useState<number>(0);
     const [sortAlphabetically, setSortAlphabetically] = useState<boolean>(false);
     const { protocols, loading, categories } = useMetaMask();
+    console.log(protocols);
 
     const router = useRouter();
 
@@ -56,7 +57,7 @@ export default function Categories() {
                                             style={{ fontWeight: '800' }}
                                         >
                                             <div>
-                                                <Image src={`/protocols/${protocol.protocol_name}.svg`} width={25} height={25} alt="protocol logo" />
+                                                <Image src={`/protocols/${protocol.image_url}`} width={25} height={25} alt="protocol logo" />
                                             </div>
                                             <div>
                                                 {protocol.protocol_name}
@@ -159,7 +160,7 @@ export default function Categories() {
                         return (
                             <div key={index} className="flex flex-col gap-4 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg p-8">
                                 <div className="flex flex-row gap-6 hover:cursor-pointer" onClick={() => router.push(`/protocol/${protocol.protocol_name}`)}>
-                                    <Image src={`/protocols/${protocol.protocol_name}.svg`} alt="protocol logo" width={100} height={100} className="bg-white rounded-lg" />
+                                    <Image src={`/protocols/${protocol.image_url}`} alt="protocol logo" width={100} height={100} className="bg-white rounded-lg" />
                                     <div className="flex flex-col gap-2">
                                         <div className="text-2xl">{protocol.protocol_name}</div>
                                         <div className='flex flex-row gap-1'>

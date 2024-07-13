@@ -40,6 +40,7 @@ export const fetchProtocolsAndCategories = async () => {
 };
 
 export const fetchProtocolDetails = async (protocolName: string) => {
+  console.log(protocolName)
   const { data, error } = await client
     .from('Protocols')
     .select(`*`)

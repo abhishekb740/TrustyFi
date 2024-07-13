@@ -24,7 +24,7 @@ export default function Protocol({ params }: Props) {
 
     useEffect(() => {
         const getProtocolDetails = async () => {
-            const data = await fetchProtocolDetails(params.protocol);
+            const data = await fetchProtocolDetails(decodeURIComponent(params.protocol));
             console.log(data);
             setProtocolDetails(data);
             if (userId) {
