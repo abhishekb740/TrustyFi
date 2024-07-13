@@ -82,7 +82,7 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
                 <div className="mt-16 overflow-hidden">
                     <div className="flex flex-row animate-marquee gap-4 md:gap-10">
                         {
-                            Topics.map((topic, index) => {
+                            [...Topics, ...Topics].map((topic, index) => {
                                 return (
                                     <div key={index} className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-2 px-8 md:px-10 rounded-tr-2xl rounded-br-2xl whitespace-nowrap">
                                         <div className="flex-shrink-0">
@@ -114,8 +114,8 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
                         Protocols.map((protocol, index) => {
                             return (
                                 <a href={protocol?.website_url ?? "#"}
-                                target="_blank"
-                                rel="noopener noreferrer" key={index} className="flex flex-row border-[#B2F1A8] border-[1px] rounded-md max-w-[27rem] shadow-[0px_2px_6px_#B2F1A8]">
+                                    target="_blank"
+                                    rel="noopener noreferrer" key={index} className="flex flex-row border-[#B2F1A8] border-[1px] rounded-md max-w-[27rem] shadow-[0px_2px_6px_#B2F1A8]">
                                     <div className="bg-[white] w-36 flex justify-center items-center rounded-md">
                                         <Image className="object-contain" src={`/protocols/${protocol.image}`} width={80} height={80} alt={`${protocol.name} Logo`} />
                                     </div>
