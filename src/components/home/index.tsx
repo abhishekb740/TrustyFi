@@ -64,7 +64,7 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
                                             style={{ fontWeight: '800' }}
                                         >
                                             <div>
-                                                <Image src={`/protocols/${protocol.protocol_name}.svg`} width={25} height={25} alt="protocol logo" />
+                                                <Image src={`/protocols/${protocol.image_url}`} width={25} height={25} alt="protocol logo" />
                                             </div>
                                             <div>
                                                 {protocol.protocol_name}
