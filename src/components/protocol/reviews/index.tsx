@@ -343,7 +343,7 @@ export default function Reviews({ protocol_id, avg_rating, description, x, teleg
                             <div className="text-3xl font-bold">
                                 Bio
                             </div>
-                            <div className='text-center'>
+                            <div className='text-center mt-2'>
                                 {description}
                             </div>
                         </div>
