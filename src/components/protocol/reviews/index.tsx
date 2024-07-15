@@ -112,7 +112,7 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
     return (
         <div>
             <div className='flex flex-row justify-evenly mt-24'>
-                <div className='flex flex-col w-[40%]'>
+                <div className='flex flex-col w-[40%] gap-12'>
                     <div className='flex flex-col p-8 border border-[#B2F1A8] rounded-lg gap-8'>
                         <div className='flex flex-col gap-4 items-start'>
                             <div className='flex flex-row gap-8 justify-center items-center'>
@@ -334,7 +334,35 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                             </div>
                         </div>
                     </div>
-                    <div className='flex flex-col mt-24 gap-4'>
+                    <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4 gap-12 items-center">
+                        <div className="flex flex-col gap-2 items-center">
+                            <div className="text-3xl font-bold">
+                                Company Data
+                            </div>
+                            <div>
+                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
+                            </div>
+                        </div>
+                        <div className="flex flex-col gap-2 items-center">
+                            <div className="text-3xl font-bold">
+                                Bio
+                            </div>
+                            <div>
+                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
+                            </div>
+                        </div>
+                        <div className="flex flex-col gap-2 items-center">
+                            <div className="text-3xl font-bold">
+                                Social
+                            </div>
+                            <div>
+                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className='flex flex-col w-[40%] gap-12'>
+                    <div className='flex flex-col gap-4 h-screen scroll-auto scrollbar'>
                         {filteredReviews.map((review, index) => (
                             <div key={index} className="flex flex-col rounded-md border border-[#B2F1A8] p-4 w-full">
                                 <div className="flex flex-row items-center gap-2 border-b-[1px] border-b-[#B2F1A8] pb-4">
@@ -363,60 +391,6 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                                 </div>
                             </div>
                         ))}
-                    </div>
-                </div>
-                <div className='flex flex-col w-[40%] gap-12'>
-                    <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4 gap-12 items-center">
-                        <div className="flex flex-col gap-2 items-center">
-                            <div className="text-3xl font-bold">
-                                Company Data
-                            </div>
-                            <div>
-                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-2 items-center">
-                            <div className="text-3xl font-bold">
-                                Bio
-                            </div>
-                            <div>
-                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-2 items-center">
-                            <div className="text-3xl font-bold">
-                                Social
-                            </div>
-                            <div>
-                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4 gap-12 items-center">
-                        <div className="flex flex-col gap-2 items-center">
-                            <div className="text-3xl font-bold">
-                                Category
-                            </div>
-                            <div>
-                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-2 items-center">
-                            <div className="text-3xl font-bold">
-                                Security
-                            </div>
-                            <div>
-                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-2 items-center">
-                            <div className="text-3xl font-bold">
-                                Performance
-                            </div>
-                            <div>
-                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
