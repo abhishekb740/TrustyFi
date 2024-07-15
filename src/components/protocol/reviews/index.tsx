@@ -3,14 +3,18 @@ import { formatAddress, formatDate } from '@/utils/utils';
 import { fetchReviewsForAProtocol } from '@/app/_actions/queries';
 import { useEffect, useState, useRef } from 'react';
 import ReviewsSkeleton from '@/components/skeletons/reviews';
-import { FaAngleUp, FaAngleDown } from "react-icons/fa";
+import { FaXTwitter, FaTelegram, FaDiscord   } from "react-icons/fa6";
 
 type Props = {
     protocol_id: number;
     avg_rating: number;
+    description: string;
+    x: string;
+    telegram: string;
+    discord: string;
 };
 
-export default function Reviews({ protocol_id, avg_rating }: Props) {
+export default function Reviews({ protocol_id, avg_rating, description, x, telegram, discord }: Props) {
     const [reviews, setReviews] = useState<CategorizedReviews>({ 1: [], 2: [], 3: [], 4: [], 5: [] });
     const [loading, setLoading] = useState(true);
     const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
@@ -337,26 +341,28 @@ export default function Reviews({ protocol_id, avg_rating }: Props) {
                     <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4 gap-12 items-center">
                         <div className="flex flex-col gap-2 items-center">
                             <div className="text-3xl font-bold">
-                                Company Data
-                            </div>
-                            <div>
-                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-2 items-center">
-                            <div className="text-3xl font-bold">
                                 Bio
                             </div>
-                            <div>
-                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
+                            <div className='text-center'>
+                                {description}
                             </div>
                         </div>
                         <div className="flex flex-col gap-2 items-center">
                             <div className="text-3xl font-bold">
                                 Social
                             </div>
-                            <div>
-                                Sed vel ex elit. Sed condimentum lacus odio, vel pretium purus placerat sed. Mauris vel purus in nisi finibus condimentum at eget orci.
+                            <div className='mt-4'>
+                                <div className="flex flex-row gap-6 items-center">
+                                    <a href={`https://${x}`} target="_blank" rel="noopener noreferrer">
+                                        <FaXTwitter size={20} />
+                                    </a>
+                                    <a href={`https://${telegram}`} target="_blank" rel="noopener noreferrer">
+                                        <FaTelegram size={20} />
+                                    </a>
+                                    <a href={`https://${discord}`} target="_blank" rel="noopener noreferrer">
+                                        <FaDiscord size={20} />
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

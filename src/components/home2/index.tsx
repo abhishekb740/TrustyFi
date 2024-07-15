@@ -17,7 +17,7 @@ export default function Home2() {
                                 Find your favorite protocol
                             </div>
                             <div>
-                                Search for your favorite protocol on our platform and check its page to see what other users think about it. Can't find the protocol you're looking for? Send us an email at info@trustyfi.io to suggest it, and we will contact them to bring it to our platform.
+                                Search for your favorite protocol on our platform and check its page to see what other users think about it. Can&apos;t find the protocol you&apos;re looking for? Send us an email at info@trustyfi.io to suggest it, and we will contact them to bring it to our platform.
                             </div>
                         </div>
                     </div>
@@ -30,7 +30,7 @@ export default function Home2() {
                                 Leave a verified review
                             </div>
                             <div>
-                                You can leave your reviews on each protocol's page. Share your experience by giving a rating from 1 to 5 and leaving written feedback to help new users make a choice!
+                                You can leave your reviews on each protocol&apos;s page. Share your experience by giving a rating from 1 to 5 and leaving written feedback to help new users make a choice!
                             </div>
                         </div>
                     </div>

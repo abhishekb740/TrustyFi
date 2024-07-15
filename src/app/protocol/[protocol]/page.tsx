@@ -99,7 +99,7 @@ export default function Protocol({ params }: Props) {
                     <button>Cancel</button>
                 </div>
             )}
-            {writeReview ? <WriteReview toggleWriteReview={toggleWriteReview} protocol_id={protocolDetails?.id ?? 0} existingReview={userReview} /> : <Reviews avg_rating={protocolDetails?.avg_rating === null ? 0 : Number(protocolDetails?.avg_rating?.toFixed(2))} protocol_id={protocolDetails?.id ?? 0} />}
+            {writeReview ? <WriteReview toggleWriteReview={toggleWriteReview} protocol_id={protocolDetails?.id ?? 0} existingReview={userReview} /> : <Reviews x={protocolDetails?.x ?? ""} telegram={protocolDetails?.telegram ?? ""} discord={protocolDetails?.discord ?? ""} description={protocolDetails?.protocol_description ?? ""} avg_rating={protocolDetails?.avg_rating === null ? 0 : Number(protocolDetails?.avg_rating?.toFixed(2))} protocol_id={protocolDetails?.id ?? 0} />}
         </div>
     );
 }
