@@ -27,10 +27,6 @@ export default function Categories() {
 
     const sortedProtocols = sortAlphabetically ? filterProtocols.sort((a, b) => a.protocol_name.localeCompare(b.protocol_name)) : filterProtocols;
 
-    useEffect(() => {
-        // Optional: Perform additional actions when selectedCategory changes
-    }, [selectedCategory]);
-
     if (loading) {
         return <CategoriesSkeleton />;
     }

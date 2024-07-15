@@ -116,9 +116,7 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
                     {
                         Protocols.map((protocol, index) => {
                             return (
-                                <a href={protocol?.website_url ?? "#"}
-                                    target="_blank"
-                                    rel="noopener noreferrer" key={index} className="flex flex-row border-[#B2F1A8] border-[1px] rounded-md max-w-[27rem] shadow-[0px_2px_6px_#B2F1A8]">
+                                <div onClick={() => router.push(`/protocol/${protocol.name}`)} key={index} className="flex flex-row border-[#B2F1A8] border-[1px] rounded-md max-w-[27rem] shadow-[0px_2px_6px_#B2F1A8] hover:cursor-pointer">
                                     <div className="bg-[white] w-36 flex justify-center items-center rounded-md">
                                         <Image className="object-contain" src={`/protocols/${protocol.image}`} width={80} height={80} alt={`${protocol.name} Logo`} />
                                     </div>
@@ -143,7 +141,7 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
                                             </div>
                                         </div>
                                     </div>
-                                </a>
+                                </div>
                             )
                         })
                     }
