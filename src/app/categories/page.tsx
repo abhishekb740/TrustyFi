@@ -189,7 +189,7 @@ export default function Categories() {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col min-w-[50%] gap-12">
+                <div className="flex flex-col min-w-[50%] gap-12 h-screen scroll-auto scrollbar">
                     {sortedProtocols.map((protocol, index) => {
                         return (
                             <div key={index} className="flex flex-col gap-4 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg p-8">
