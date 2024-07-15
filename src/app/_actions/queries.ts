@@ -23,6 +23,9 @@ export const fetchProtocolsAndCategories = async () => {
       image_url: protocol.image_url,
       avg_rating: protocol.avg_rating === null ? 0 : protocol.avg_rating,
       review_count: protocol.review_count === null ? 0 : protocol.review_count,
+      discord: protocol.discord,
+      x: protocol.x,
+      telegram: protocol.telegram,
       ProtocolCategories: protocol.ProtocolCategories.map((category: any) => ({
         Categories: {
           id: category.Categories.id,

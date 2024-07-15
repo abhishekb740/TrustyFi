@@ -34,6 +34,9 @@ type Protocol = {
     image_url?: string;
     review_count?: number;
     avg_rating: number;
+    discord?: string;
+    x?: string;
+    telegram?: string;
 };
 
 type Review = {

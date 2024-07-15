@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from 'react';
 import CategoriesSkeleton from "@/components/skeletons/categories";
+import { FaXTwitter, FaTelegram, FaDiscord   } from "react-icons/fa6";
 import { useMetaMask } from "@/hooks/useMetamask";
 
 export default function Categories() {
@@ -212,15 +213,15 @@ export default function Categories() {
                                 <div className="border-b-[1px] border-b-[#B2F1A8] "></div>
                                 <div className="flex flex-row justify-between">
                                     <div className="flex flex-row gap-6 items-center">
-                                        <div>
-                                            <Image src="/envelope-solid.png" height={10} width={20} alt="envelope logo" />
-                                        </div>
-                                        <div>
-                                            <Image src="/globe-solid.png" height={10} width={20} alt="globe logo" />
-                                        </div>
-                                        <div>
-                                            <Image src="/phone-solid.png" height={10} width={20} alt="phone logo" />
-                                        </div>
+                                        <a href={`https://${protocol.x}`} target="_blank" rel="noopener noreferrer">
+                                            <FaXTwitter size={20} />
+                                        </a>
+                                        <a href={`https://${protocol.telegram}`} target="_blank" rel="noopener noreferrer">
+                                            <FaTelegram size={20} />
+                                        </a>
+                                        <a href={`https://${protocol.discord}`} target="_blank" rel="noopener noreferrer">
+                                            <FaDiscord size={20} />
+                                        </a>
                                     </div>
                                     <div className="flex flex-row gap-4">
                                         {protocol.ProtocolCategories?.map((protocolCategory, index) => {
