@@ -11,7 +11,8 @@ export default function Categories() {
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [minRating, setMinRating] = useState<number>(0);
     const [minReviews, setMinReviews] = useState<number>(0);
-    const [sortAlphabetically, setSortAlphabetically] = useState<boolean>(false);
+    const [sortOption, setSortOption] = useState<string>("alphabetical");
+    const [isAscending, setIsAscending] = useState<boolean>(true);
     const { protocols, loading, categories, selectedCategory, setSelectedCategory } = useMetaMask();
     console.log(protocols);
 
@@ -25,7 +26,26 @@ export default function Categories() {
         return matchesSearchQuery && matchesCategory && matchesRating && matchesReviews;
     });
 
-    const sortedProtocols = sortAlphabetically ? filterProtocols.sort((a, b) => a.protocol_name.localeCompare(b.protocol_name)) : filterProtocols;
+    const sortProtocols = (protocols: Protocol[]) => {
+        const sorted = [...protocols];
+
+        switch (sortOption) {
+            case 'alphabetical':
+                sorted.sort((a, b) => a.protocol_name.localeCompare(b.protocol_name));
+                break;
+            case 'rating':
+                sorted.sort((a, b) => (b.avg_rating ?? 0) - (a.avg_rating ?? 0));
+                break;
+            case 'reviews':
+                sorted.sort((a, b) => (b.review_count ?? 0) - (a.review_count ?? 0));
+                break;
+            default:
+                return protocols;
+        }
+
+        return isAscending ? sorted : sorted.reverse();
+    };
+    const sortedProtocols = sortProtocols(filterProtocols);
 
     if (loading) {
         return <CategoriesSkeleton />;
@@ -64,7 +84,7 @@ export default function Categories() {
                                         </div>
                                     )
                                 }) :
-                                <p className="text-lg py-2 text-neutral-800 font-primary">No creator found</p>
+                                <p className="text-lg py-2 text-neutral-800 font-primary">No protocol found</p>
                         }
                     </div>
                 )}
@@ -133,26 +153,38 @@ export default function Categories() {
                             />
                             <span>{minReviews} Reviews</span>
                         </div>
-                    </div>
-                    <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4 gap-3 filter-twitter">
-                        <label className="font-semibold text-lg">Filter by Twitter Followers</label>
-                        <input
-                            type="range"
-                            min="0"
-                            max="1000000"
-                            step="1000"
-                            className="w-full"
-                        />
-                        <span className="text-gray-500">0 - 1,000,000 Followers</span>
-                        <div className="mt-4 flex items-center">
+                        <div>
+                            <label className="font-semibold text-lg">Filter by Twitter Followers</label>
+                            <input
+                                type="range"
+                                min="0"
+                                max="1000000"
+                                step="1000"
+                                className="w-full"
+                            />
+                            <span className="text-gray-500">0 - 1,000,000 Followers</span>
+                        </div>
+                        <div className="flex flex-col gap-4">
+                            <label className="font-semibold text-lg">Sort By</label>
+                            <select
+                                className="border border-[#B2F1A8] rounded-lg p-2 bg-transparent focus:outline-none"
+                                value={sortOption}
+                                onChange={(e) => setSortOption(e.target.value)}
+                            >
+                                <option className="text-black" value="none">None</option>
+                                <option className="text-black" value="alphabetical">Alphabetical</option>
+                                <option className="text-black" value="rating">Rating</option>
+                                <option className="text-black" value="reviews">Number of Reviews</option>
+                            </select>
+                        </div>
+                        <div className="flex flex-row gap-2 items-center">
                             <input
                                 type="checkbox"
-                                id="sortAlphabetically"
-                                checked={sortAlphabetically}
-                                onChange={(e) => setSortAlphabetically(e.target.checked)}
-                                className="mr-2"
+                                id="order"
+                                checked={isAscending}
+                                onChange={(e) => setIsAscending(e.target.checked)}
                             />
-                            <label htmlFor="sortAlphabetically" className="text-lg">Sort Alphabetically</label>
+                            <label htmlFor="order" className="font-semibold text-lg">Ascending Order</label>
                         </div>
                     </div>
                 </div>

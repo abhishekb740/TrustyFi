@@ -72,7 +72,7 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
                                         </div>
                                     )
                                 }) :
-                                <p className="text-lg py-2 text-neutral-800 font-primary">No creator found</p>
+                                <p className="text-lg py-2 text-neutral-800 font-primary">No protocol found</p>
                             }
                         </div>
                     )}
