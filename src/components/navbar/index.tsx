@@ -34,7 +34,7 @@ export default function Navbar({ setShowWallet, showWallet }: Props) {
                 <button className='border shadow-[0_0_5px_#B2F1A8] rounded-md py-1 px-3' onClick={() => router.push("/governance")}>Governance</button>
                 <button className='border shadow-[0_0_5px_#B2F1A8] rounded-md py-1 px-3' onClick={() => router.push("/categories")}>Categories</button>
                 <button className='border shadow-[0_0_5px_#B2F1A8] rounded-md py-1 px-3' onClick={() => router.push("/stake")}>Stake</button>
-                <button className='border shadow-[0_0_5px_#B2F1A8] rounded-md py-1 px-3'>BSC</button>
+                <button className='border shadow-[0_0_5px_#B2F1A8] rounded-md py-1 px-3'>{wallet.network}</button>
                 <button className='bg-[#B2F1A8] shadow-[0_0_5px_#B2F1A8] text-black rounded-md py-1 px-3 flex flex-row gap-2' onClick={connected ? () => (router.push(`/profile/${wallet.accounts}`)) : toggleWallet}>
                     <div>
                         <Image src='/wallet.png' width={20} height={20} alt="Wallet" />

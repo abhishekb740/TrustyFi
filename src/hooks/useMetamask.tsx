@@ -11,11 +11,13 @@ import detectEthereumProvider from "@metamask/detect-provider";
 import { formatBalance } from "@/utils/utils";
 import { handleUserInDatabase, fetchUserByWalletAddress, fetchAllCategories } from "@/app/_actions/queries";
 import { fetchProtocolsAndCategories } from '@/app/_actions/queries';
+import { ethers } from "ethers";
 
 interface WalletState {
   accounts: any[];
   balance: string;
   chainId: string;
+  network: string;
 }
 
 interface MetaMaskContextData {
@@ -40,6 +42,7 @@ const disconnectedState: WalletState = {
   accounts: [],
   balance: "",
   chainId: "",
+  network: "",
 };
 
 const MetaMaskContext = createContext<MetaMaskContextData>(
@@ -81,14 +84,9 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     const chainId = await window.ethereum.request({
       method: "eth_chainId",
     });
-
-    if (chainId !== '0xaa36a7') {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: '0xaa36a7' }],
-      });
-    }
-    setWallet({ accounts: [accounts[0]], balance, chainId });
+    console.log(chainId)
+    const network = ethers.providers.getNetwork(parseInt(chainId, 16));
+    setWallet({ accounts: [accounts[0]], balance, chainId, network: network.name });
 
     await handleUserInDatabase(accounts[0]);
     const user = await fetchUserByWalletAddress(accounts[0]);
