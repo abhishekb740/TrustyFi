@@ -3,7 +3,7 @@ import { formatAddress, formatDate } from '@/utils/utils';
 import { fetchReviewsForAProtocol } from '@/app/_actions/queries';
 import { useEffect, useState, useRef } from 'react';
 import ReviewsSkeleton from '@/components/skeletons/reviews';
-import { FaXTwitter, FaTelegram, FaDiscord   } from "react-icons/fa6";
+import { FaXTwitter, FaTelegram, FaDiscord } from "react-icons/fa6";
 
 type Props = {
     protocol_id: number;
@@ -115,9 +115,9 @@ export default function Reviews({ protocol_id, avg_rating, description, x, teleg
 
     return (
         <div>
-            <div className='flex flex-row justify-evenly mt-24'>
-                <div className='flex flex-col w-[40%] gap-12'>
-                    <div className='flex flex-col p-8 border border-[#B2F1A8] rounded-lg gap-8'>
+            <div className='flex flex-col xl:justify-evenly mt-24 xl:flex-row gap-12'>
+                <div className='flex flex-col w-[80%] xl:w-[45%] gap-12 items-center mx-auto xl:mx-0'>
+                    <div className='flex flex-col p-8 border border-[#B2F1A8] rounded-lg gap-8 w-full'>
                         <div className='flex flex-col gap-4 items-start'>
                             <div className='flex flex-row gap-8 justify-center items-center'>
                                 <div className='text-3xl'>
@@ -143,18 +143,18 @@ export default function Reviews({ protocol_id, avg_rating, description, x, teleg
                         <div className='flex flex-col justify-center gap-4'>
                             {[5, 4, 3, 2, 1].map((rating) => (
                                 <div key={rating} className='flex flex-row gap-6'>
-                                    <div className='flex flex-row gap-2'>
+                                    <div className='flex flex-row gap-2 flex-1'>
                                         <input
                                             type='checkbox'
                                             className=''
                                             checked={selectedRatings.includes(rating)}
                                             onChange={() => handleRatingChange(rating)}
                                         />
-                                        <div>
+                                        <div className=''>
                                             {rating} stars
                                         </div>
                                     </div>
-                                    <div className='flex w-[70%] rounded-full border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8]'>
+                                    <div className='flex w-[65%] h-[1.5rem] rounded-full border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8]'>
                                         <div
                                             className='bg-[#B2F1A8] rounded-full'
                                             style={{
@@ -162,7 +162,7 @@ export default function Reviews({ protocol_id, avg_rating, description, x, teleg
                                             }}
                                         ></div>
                                     </div>
-                                    <div>
+                                    <div className='w-[10%]'>
                                         {totalReviews === 0 ? 0 : Math.round((reviews[rating as keyof CategorizedReviews].length / totalReviews) * 100)}%
                                     </div>
                                 </div>
@@ -367,8 +367,8 @@ export default function Reviews({ protocol_id, avg_rating, description, x, teleg
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-col w-[40%] gap-12'>
-                    <div className='flex flex-col gap-4 h-screen scroll-auto scrollbar'>
+                <div className='flex flex-col w-full xl:w-[40%] gap-12 items-center'>
+                    <div className='flex flex-col w-[80%] xl:w-full gap-4 h-screen scroll-auto scrollbar mx-auto xl:mx-0'>
                         {filteredReviews.map((review, index) => (
                             <div key={index} className="flex flex-col rounded-md border border-[#B2F1A8] p-4 w-full">
                                 <div className="flex flex-row items-center gap-2 border-b-[1px] border-b-[#B2F1A8] pb-4">
