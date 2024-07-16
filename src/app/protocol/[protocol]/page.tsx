@@ -80,7 +80,7 @@ export default function Protocol({ params }: Props) {
                     <div className='flex flex-row items-center'>
                         <Image src="/redirect.svg" width={35} height={35} alt="Rating" />
                     </div>
-                    <div className='flex flex-col gap-4'>
+                    <div className='flex flex-col gap-1'>
                         <div>
                             {formatUrl(protocolDetails?.website_url ?? "")}
                         </div>
