@@ -97,7 +97,7 @@ export default function Categories() {
                             return (
                                 <div
                                     key={index}
-                                    className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-2 px-8 md:px-10 rounded-tr-2xl rounded-br-2xl whitespace-nowrap hover:cursor-pointer"
+                                    className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-2 px-8 md:px-10 rounded-tr-2xl rounded-br-2xl whitespace-nowrap hover:cursor-pointer justify-center"
                                     onClick={() => setSelectedCategory(topic.name)}
                                 >
                                     <div className="flex-shrink-0">
