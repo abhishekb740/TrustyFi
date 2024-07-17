@@ -31,9 +31,18 @@ export default function Navbar({ setShowWallet, showWallet }: Props) {
                 <AiOutlineMenu size={24} />
             </div>
             <div className={`absolute z-20 top-[5rem] right-0 lg:static lg:flex flex-col lg:flex-row gap-4 ${menuOpen ? 'flex' : 'hidden'} lg:flex`}>
-                <button className='border shadow-[0_0_5px_#B2F1A8] rounded-md py-1 px-3' onClick={() => router.push("/governance")}>Governance</button>
-                <button className='border shadow-[0_0_5px_#B2F1A8] rounded-md py-1 px-3' onClick={() => router.push("/categories")}>Categories</button>
-                <button className='border shadow-[0_0_5px_#B2F1A8] rounded-md py-1 px-3' onClick={() => router.push("/stake")}>Stake</button>
+                <button className='border shadow-[0_0_5px_#B2F1A8] rounded-md py-1 px-3' onClick={() => {
+                    router.push("/governance")
+                    setMenuOpen(false);
+                }}>Governance</button>
+                <button className='border shadow-[0_0_5px_#B2F1A8] rounded-md py-1 px-3' onClick={() => {
+                    router.push("/categories")
+                    setMenuOpen(false);
+                }}>Categories</button>
+                <button className='border shadow-[0_0_5px_#B2F1A8] rounded-md py-1 px-3' onClick={() => {
+                    router.push("/stake")
+                    setMenuOpen(false);
+                }}>Stake</button>
                 <button className={`${wallet.network ? "border shadow-[0_0_5px_#B2F1A8] rounded-md py-1 px-3" : "hidden"}`}>{wallet.network}</button>
                 <button className='bg-[#B2F1A8] shadow-[0_0_5px_#B2F1A8] text-black rounded-md py-1 px-3 flex flex-row gap-2' onClick={connected ? () => (router.push(`/profile/${wallet.accounts}`)) : toggleWallet}>
                     <div>
