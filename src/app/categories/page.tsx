@@ -101,7 +101,7 @@ export default function Categories() {
                                     onClick={() => setSelectedCategory(topic.name)}
                                 >
                                     <div className="flex-shrink-0">
-                                        <Image src={`/${topic.icon}`} width={20} height={20} alt={`${topic.name} Logo`} />
+                                        <Image src={`/categories/${topic.icon}`} width={20} height={20} alt={`${topic.name} Logo`} />
                                     </div>
                                     <div className="flex-shrink-0">
                                         {topic.name}

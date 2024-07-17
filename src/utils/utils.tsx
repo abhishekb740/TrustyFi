@@ -31,31 +31,31 @@ export default function formatUrl(url: string): string {
 export const Topics = [
     {
         name: "Yield Farming",
-        icon: "star.svg"
+        icon: "yieldfarming.svg"
     },
     {
         name: "LaunchPads",
-        icon: "star.svg"
+        icon: "launchpads.svg"
     },
     {
         name: "DEX",
-        icon: "star.svg"
+        icon: "dex.svg"
     },
     {
         name: "AMM",
-        icon: "star.svg"
+        icon: "amm.svg"
     },
     {
         name: "RWA",
-        icon: "star.svg"
+        icon: "rwa.svg"
     },
     {
         name: "AI",
-        icon: "star.svg"
+        icon: "ai.svg"
     },
     {
         name: "NFT Marketplace",
-        icon: "star.svg"
+        icon: "nftmarketplace.svg"
     },
     {
         name: "Derivatives",
