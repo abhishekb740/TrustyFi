@@ -19,7 +19,7 @@ export function generateProfilePic(address: string): string {
     ctx.fillStyle = '#FFFFFF';
     ctx.fillRect(0, 0, 120, 120);
 
-    ctx.fillStyle = "#B2F1A8"
+    ctx.fillStyle = "#648364"
     ctx.font = '60px Montserrat';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
