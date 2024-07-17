@@ -9,7 +9,6 @@ interface StarRatingProps {
 }
 
 export default function StarRating({ maxStars = 5, onRatingChange, initialRating }: StarRatingProps) {
-    // Initialize rating with a default value of 0, but use initialRating if it's defined
     const [rating, setRating] = useState<number>(initialRating ?? 0);
 
     useEffect(() => {
@@ -32,7 +31,7 @@ export default function StarRating({ maxStars = 5, onRatingChange, initialRating
             {[...Array(maxStars)].map((_, index) => (
                 <img
                     key={index}
-                    src={index < rating ? `/stars/star_${rating}.svg` : '/Vector.png'}
+                    src={index < rating ? `/stars/star_${rating}.svg` : '/stars/star_0.svg'}
                     alt={`${index + 1} star`}
                     height={50}
                     width={50}
