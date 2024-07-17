@@ -21,7 +21,7 @@ export default function Notification ({ message, show, onClose, isSuccess }: Not
 
   return (
       show ? (
-        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 ${isSuccess ? 'bg-green-700' : 'bg-red-500'} text-white px-4 py-2 rounded shadow-lg`}>
+        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 ${isSuccess ? 'bg-green-700' : 'bg-red-500'} text-white px-4 py-2 rounded shadow-lg z-30`}>
           {message}
         </div>
       ) : null
