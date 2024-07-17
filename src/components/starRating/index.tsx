@@ -32,7 +32,7 @@ export default function StarRating({ maxStars = 5, onRatingChange, initialRating
             {[...Array(maxStars)].map((_, index) => (
                 <img
                     key={index}
-                    src={index < rating ? '/ratingStar.svg' : '/Vector.png'}
+                    src={index < rating ? `/stars/star_${rating}.svg` : '/Vector.png'}
                     alt={`${index + 1} star`}
                     height={50}
                     width={50}
