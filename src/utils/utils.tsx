@@ -1,13 +1,13 @@
 import { createCanvas } from 'canvas';
 
-function getRandomDarkColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 10)];
-    }
-    return color;
-}
+// function getRandomDarkColor() {
+//     const letters = '0123456789ABCDEF';
+//     let color = '#';
+//     for (let i = 0; i < 6; i++) {
+//         color += letters[Math.floor(Math.random() * 10)];
+//     }
+//     return color;
+// }
 
 export function generateProfilePic(address: string): string {
     const firstChar = address[2].toUpperCase();
@@ -19,7 +19,7 @@ export function generateProfilePic(address: string): string {
     ctx.fillStyle = '#FFFFFF';
     ctx.fillRect(0, 0, 120, 120);
 
-    ctx.fillStyle = getRandomDarkColor();
+    ctx.fillStyle = "#B2F1A8"
     ctx.font = '60px Montserrat';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
