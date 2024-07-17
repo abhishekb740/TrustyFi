@@ -76,7 +76,7 @@ export default function Profile({ params }: Props) {
                                     <div className="flex flex-row justify-between">
                                         <div className='flex flex-row gap-1'>
                                             {Array.from({ length: review.rating }).map((_, i) => (
-                                                <Image key={i} src="/ratingStar.svg" width={20} height={20} alt="Rating" />
+                                                <Image key={i} src={`/stars/star_${review.rating}.svg`} width={20} height={20} alt="Rating" />
                                             ))}
                                         </div>
                                         <div>
