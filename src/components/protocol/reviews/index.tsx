@@ -125,11 +125,7 @@ export default function Reviews({ protocol_id, avg_rating, description, x, teleg
                                 </div>
                                 <div className='flex flex-row gap-4'>
                                     <div className='flex flex-row gap-1'>
-                                        {Array.from({ length: avg_rating ?? 0 }, (_, i) => {
-                                            return (
-                                                <Image key={i} src="/ratingStar.svg" width={20} height={20} alt="Rating" />
-                                            );
-                                        })}
+                                        <Image src={`/stars/star_${Math.round(avg_rating ?? 0)}.svg`} width={20} height={20} alt="Rating" />
                                     </div>
                                     <div>
                                         {avg_rating}
@@ -188,31 +184,31 @@ export default function Reviews({ protocol_id, avg_rating, description, x, teleg
                                             <div>
                                                 5
                                             </div>
-                                            <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
+                                            <Image src="/stars/star_5.svg" width={20} height={20} alt="Rating" />
                                         </div>
                                         <div className={`flex flex-row gap-2 p-2 ${selectedTab === 4 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(4)}>
                                             <div>
                                                 4
                                             </div>
-                                            <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
+                                            <Image src="/stars/star_4.svg" width={20} height={20} alt="Rating" />
                                         </div>
                                         <div className={`flex flex-row gap-2 p-2 ${selectedTab === 3 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(3)}>
                                             <div>
                                                 3
                                             </div>
-                                            <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
+                                            <Image src="/stars/star_3.svg" width={20} height={20} alt="Rating" />
                                         </div>
                                         <div className={`flex flex-row gap-2 p-2 ${selectedTab === 2 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(2)}>
                                             <div>
                                                 2
                                             </div>
-                                            <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
+                                            <Image src="/stars/star_2.svg" width={20} height={20} alt="Rating" />
                                         </div>
                                         <div className={`flex flex-row gap-2 p-2 ${selectedTab === 1 ? "border-b-[3px] border-[#9482F2]" : ""}`} onClick={() => handleTabRating(1)}>
                                             <div>
                                                 1
                                             </div>
-                                            <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
+                                            <Image src="/stars/star_1.svg" width={20} height={20} alt="Rating" />
                                         </div>
                                     </div>
                                 </div>
@@ -381,7 +377,7 @@ export default function Reviews({ protocol_id, avg_rating, description, x, teleg
                                     <div className="flex flex-row justify-between">
                                         <div className='flex flex-row gap-1'>
                                             {Array.from({ length: review.rating }).map((_, i) => (
-                                                <Image key={i} src="/ratingStar.svg" width={20} height={20} alt="Rating" />
+                                                <Image key={i} src={`/stars/star_${Math.round(review.rating)}.svg`} width={20} height={20} alt="Rating" />
                                             ))}
                                         </div>
                                         <div>

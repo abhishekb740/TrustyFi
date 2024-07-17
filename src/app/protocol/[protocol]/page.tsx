@@ -66,9 +66,9 @@ export default function Protocol({ params }: Props) {
                         </div>
                         <div className='flex flex-row gap-1'>
                             {Array.from({ length: protocolDetails?.avg_rating ?? 0 }, (_, i) => (
-                                <Image key={i} src="/ratingStar.svg" width={20} height={20} alt="Rating" />
+                                <Image key={i} src={`/stars/star_${Math.round(protocolDetails?.avg_rating ?? 0)}.svg`} width={20} height={20} alt="Rating" />
                             ))}
-                            <div>
+                            <div className='ml-3'>
                                 {`${protocolDetails?.avg_rating === null ? 0 : protocolDetails?.avg_rating?.toFixed(2)} (${protocolDetails?.review_count === null ? 0 : protocolDetails?.review_count} reviews)`}
                             </div>
                         </div>

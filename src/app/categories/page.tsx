@@ -198,10 +198,10 @@ export default function Categories() {
                                     <div className="flex flex-col gap-2">
                                         <div className="text-2xl">{protocol.protocol_name}</div>
                                         <div className='flex flex-row gap-1'>
-                                            {Array.from({ length: protocol.avg_rating ?? 0 }, (_, i) => (
-                                                <Image key={i} src="/ratingStar.svg" width={20} height={20} alt="Rating" />
+                                            {Array.from({ length: Math.round(protocol.avg_rating ?? 0)}, (_, i) => (
+                                                <Image key={i} src={`/stars/star_${Math.round(protocol.avg_rating)}.svg`} width={20} height={20} alt="Rating" />
                                             ))}
-                                            <div>
+                                            <div className="ml-2">
                                                 {protocol.avg_rating?.toFixed(2)} ({protocol.review_count} reviews)
                                             </div>
                                         </div>
