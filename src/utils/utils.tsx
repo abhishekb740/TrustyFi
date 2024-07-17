@@ -1,3 +1,32 @@
+import { createCanvas } from 'canvas';
+
+function getRandomDarkColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 10)];
+    }
+    return color;
+}
+
+export function generateProfilePic(address: string): string {
+    const firstChar = address[2].toUpperCase();
+    const lastChar = address[address.length - 1].toUpperCase();
+    const initials = `${firstChar}${lastChar}`;
+    const canvas = createCanvas(120, 120);
+    const ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, 120, 120);
+
+    ctx.fillStyle = getRandomDarkColor();
+    ctx.font = '60px Montserrat';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(initials, 60, 60);
+
+    return canvas.toDataURL();
+}
 
 export const formatBalance = (rawBalance: string) => {
     const balance = (parseInt(rawBalance) / 1000000000000000000).toFixed(2);

@@ -4,6 +4,7 @@ import { fetchReviewsForAProtocol } from '@/app/_actions/queries';
 import { useEffect, useState, useRef } from 'react';
 import ReviewsSkeleton from '@/components/skeletons/reviews';
 import { FaXTwitter, FaTelegram, FaDiscord } from "react-icons/fa6";
+import { generateProfilePic } from '@/utils/utils';
 
 type Props = {
     protocol_id: number;
@@ -368,7 +369,7 @@ export default function Reviews({ protocol_id, avg_rating, description, x, teleg
                         {filteredReviews.map((review, index) => (
                             <div key={index} className="flex flex-col rounded-md border border-[#B2F1A8] p-4 w-full">
                                 <div className="flex flex-row items-center gap-2 border-b-[1px] border-b-[#B2F1A8] pb-4">
-                                    <Image className="bg-white rounded-lg" src="/profile.svg" height={40} width={40} alt="profile logo" />
+                                    <Image className="bg-white rounded-lg" src={generateProfilePic(review?.user_wallet_address ?? '')} height={40} width={40} alt="profile logo" />
                                     <div className="text-lg">
                                         {formatAddress(review?.user_wallet_address ?? '')}
                                     </div>

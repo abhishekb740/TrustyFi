@@ -7,6 +7,7 @@ import { useMetaMask } from '@/hooks/useMetamask';
 import ProtocolSkeleton from '@/components/skeletons/protocol';
 import ReviewsSkeleton from '@/components/skeletons/reviews';
 import formatUrl from '@/utils/utils';
+import { generateProfilePic } from '@/utils/utils';
 
 type Props = {
     params: {
@@ -20,7 +21,7 @@ export default function Protocol({ params }: Props) {
     const [userReview, setUserReview] = useState<Review>();
     const [loading, setLoading] = useState<boolean>(true);
     const [showNotification, setShowNotification] = useState(false);
-    const { userId } = useMetaMask();
+    const { userId, profilePic, setProfilePic } = useMetaMask();
 
     useEffect(() => {
         const getProtocolDetails = async () => {

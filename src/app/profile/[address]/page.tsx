@@ -1,10 +1,10 @@
 "use client"
-import { formatAddress, formatDate } from '@/utils/utils';
+import { formatAddress, formatDate, generateProfilePic } from '@/utils/utils';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { fetchUserReviews } from '@/app/_actions/queries';
 import SkeletonLoader from '@/components/skeletons/profile';
-
+import { useMetaMask } from '@/hooks/useMetamask';
 type Props = {
     params: {
         address: string;
@@ -12,7 +12,7 @@ type Props = {
 }
 
 export default function Profile({ params }: Props) {
-
+    const { setProfilePic, profilePic } = useMetaMask();
     const [reviews, setReviews] = useState<Review[]>([]);
     const [avgScore, setAvgScore] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
@@ -25,6 +25,9 @@ export default function Profile({ params }: Props) {
             setLoading(false);
         }
         fetchReviews();
+
+        const pic = generateProfilePic(params.address);
+        setProfilePic(pic);
     }, [params.address]);
 
     if (loading) {
@@ -35,7 +38,7 @@ export default function Profile({ params }: Props) {
         <div className="flex flex-col min-h-screen" style={{ fontFamily: 'Montserrat' }}>
             <div className="flex flex-row justify-evenly items-center p-8 border-b-[1px] border-b-[#B2F1A8]">
                 <div className="flex flex-row items-center gap-8">
-                    <img className="bg-white rounded-lg" src="/profile.svg" height={120} width={120} alt="profile logo" />
+                    <img className="bg-white rounded-lg" src={profilePic} height={120} width={120} alt="profile logo" />
                     <div className="text-3xl">
                         {formatAddress(params.address)}
                     </div>
@@ -67,7 +70,7 @@ export default function Profile({ params }: Props) {
                         return (
                             <div key={index} className="flex flex-col rounded-md border border-[#B2F1A8] p-4 w-1/2">
                                 <div className="flex flex-row items-center gap-2 border-b-[1px] border-b-[#B2F1A8] pb-4">
-                                    <Image className="bg-white rounded-lg" src="/profile.svg" height={40} width={40} alt="profile logo" />
+                                    <Image className="bg-white rounded-lg" src={profilePic} height={40} width={40} alt="profile logo" />
                                     <div className="text-lg">
                                         {formatAddress(params.address)}
                                     </div>

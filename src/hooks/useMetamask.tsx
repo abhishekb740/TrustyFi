@@ -36,6 +36,8 @@ interface MetaMaskContextData {
   categories: Category[];
   setSelectedCategory: (category: string) => void;
   selectedCategory: string;
+  profilePic: string;
+  setProfilePic: (pic: string) => void;
 }
 
 const disconnectedState: WalletState = {
@@ -60,7 +62,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [userId, setUserId] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
-
+  const [profilePic, setProfilePic] = useState<string>('');
 
   const _updateWallet = useCallback(async (providedAccounts?: any) => {
     if (!window.ethereum) return;
@@ -169,7 +171,9 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         protocols,
         categories,
         selectedCategory,
-        setSelectedCategory
+        setSelectedCategory,
+        profilePic,
+        setProfilePic
       }}
     >
       {children}
