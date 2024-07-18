@@ -269,3 +269,11 @@ export const fetchReviewsForAProtocol = async (protocolId: number): Promise<Cate
 
   return categorizedReviews;
 }
+
+export const fetchTopSixProtocols = async () => {
+  const { data, error} = await client.from("Protocols").select("*").order("avg_rating", { ascending: false }).limit(6);
+  if (error) {
+    throw new Error(`Error fetching top six protocols: ${error.message}`);
+  }
+  return data;
+}

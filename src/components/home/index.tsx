@@ -6,6 +6,7 @@ import { useMetaMask } from "@/hooks/useMetamask";
 import { useEffect, useState } from "react";
 import { Protocols, Topics } from "@/utils/utils";
 import { useRouter } from "next/navigation";
+import { fetchTopSixProtocols } from "@/app/_actions/queries";
 
 type Props = {
     setShowWallet: (showWallet: boolean) => void;
@@ -16,6 +17,7 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
 
     const { connectMetaMask, connected, protocols, setSelectedCategory } = useMetaMask();
     const [searchQuery, setSearchQuery] = useState<string>("");
+    const [topSixProtocols, setTopSixProtocols] = useState<Protocol[]>([]);
     const router = useRouter();
 
     const filterProtocols = protocols.filter(protocol => protocol.protocol_name.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -24,6 +26,11 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
         if (connected) {
             setShowWallet(false);
         }
+        const getTopSixProtocols = async () => {
+            const data = await fetchTopSixProtocols();
+            setTopSixProtocols(data);
+        }
+        getTopSixProtocols();
     }, [connected])
 
     return (
@@ -114,30 +121,28 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
                 </div>
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
                     {
-                        Protocols.map((protocol, index) => {
+                        topSixProtocols.map((protocol, index) => {
                             return (
-                                <div onClick={() => router.push(`/protocol/${protocol.name}`)} key={index} className="flex flex-row border-[#B2F1A8] border-[1px] rounded-md max-w-[27rem] shadow-[0px_2px_6px_#B2F1A8] hover:cursor-pointer">
+                                <div onClick={() => router.push(`/protocol/${protocol.protocol_name}`)} key={index} className="flex flex-row border-[#B2F1A8] border-[1px] rounded-md max-w-[27rem] shadow-[0px_2px_6px_#B2F1A8] hover:cursor-pointer">
                                     <div className="bg-[white] w-36 flex justify-center items-center rounded-md">
-                                        <Image className="object-contain" src={`/protocols/${protocol.image}`} width={80} height={80} alt={`${protocol.name} Logo`} />
+                                        <Image className="object-contain" src={`/protocols/${protocol.image_url}`} width={80} height={80} alt={`${protocol.protocol_name} Logo`} />
                                     </div>
                                     <div className="flex flex-col p-4">
-                                        <div className="text-md">{protocol.name}</div>
+                                        <div className="text-md">{protocol.protocol_name}</div>
                                         <div className="text-sm">
-                                            {protocol.description}
+                                            Algoritmic, autonomous interest rate protocol
                                         </div>
                                         <div className="flex flex-row gap-2">
                                             <div className="flex flex-row gap-1">
-                                                <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
-                                                <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
-                                                <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
-                                                <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
-                                                <Image src="/ratingStar.svg" width={20} height={20} alt="Rating" />
+                                                {Array.from({ length: Math.round(protocol.avg_rating) }, (_, i) => (
+                                                    <Image src={`/stars/star_${Math.round(protocol.avg_rating)}.svg`} width={20} height={20} alt="Rating" />
+                                                ))}
                                             </div>
                                             <div>
-                                                4.9
+                                                {protocol.avg_rating}
                                             </div>
                                             <div>
-                                                (32 Reviews)
+                                                {protocol.review_count} reviews
                                             </div>
                                         </div>
                                     </div>
