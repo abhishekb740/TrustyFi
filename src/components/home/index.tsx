@@ -4,7 +4,7 @@ import Image from "next/image";
 import { IoIosSearch } from "react-icons/io";
 import { useMetaMask } from "@/hooks/useMetamask";
 import { useEffect, useState } from "react";
-import { Protocols, Topics } from "@/utils/utils";
+import { Topics } from "@/utils/utils";
 import { useRouter } from "next/navigation";
 import { fetchTopSixProtocols } from "@/app/_actions/queries";
 
@@ -141,8 +141,8 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
                                             <div>
                                                 {protocol.avg_rating}
                                             </div>
-                                            <div>
-                                                {protocol.review_count} reviews
+                                            <div className="ml-2">
+                                                ({protocol.review_count} reviews)
                                             </div>
                                         </div>
                                     </div>
