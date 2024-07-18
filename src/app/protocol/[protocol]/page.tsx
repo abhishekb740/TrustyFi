@@ -7,7 +7,6 @@ import { useMetaMask } from '@/hooks/useMetamask';
 import ProtocolSkeleton from '@/components/skeletons/protocol';
 import ReviewsSkeleton from '@/components/skeletons/reviews';
 import formatUrl from '@/utils/utils';
-import { generateProfilePic } from '@/utils/utils';
 
 type Props = {
     params: {

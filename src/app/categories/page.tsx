@@ -93,7 +93,7 @@ export default function Categories() {
             <div className="mt-16 overflow-hidden w-full">
                 <div className="flex flex-row animate-marquee gap-4 md:gap-10">
                     {
-                        [...Topics, ...Topics].map((topic, index) => {
+                        [...Topics, ...Topics, ...Topics, ...Topics].map((topic, index) => {
                             return (
                                 <div
                                     key={index}
