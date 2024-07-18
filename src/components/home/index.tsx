@@ -135,7 +135,7 @@ export default function Hero({ setShowWallet, showWallet }: Props) {
                                         <div className="flex flex-row gap-2">
                                             <div className="flex flex-row gap-1">
                                                 {Array.from({ length: Math.round(protocol.avg_rating) }, (_, i) => (
-                                                    <Image src={`/stars/star_${Math.round(protocol.avg_rating)}.svg`} width={20} height={20} alt="Rating" />
+                                                    <Image key={i} src={`/stars/star_${Math.round(protocol.avg_rating)}.svg`} width={20} height={20} alt="Rating" />
                                                 ))}
                                             </div>
                                             <div>
