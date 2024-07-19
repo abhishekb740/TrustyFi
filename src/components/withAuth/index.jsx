@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { useMetaMask } from "@/hooks/useMetamask";
 import Notification from "../notification";
 
-const WithAuth = (WrappedComponent) => {
-  return (props) => {
+const withAuth = (WrappedComponent) => {
+  const WithAuthComponent = (props) => {
     const { connected } = useMetaMask();
     const router = useRouter();
     const [showNotification, setShowNotification] = useState(false);
@@ -15,7 +15,7 @@ const WithAuth = (WrappedComponent) => {
         setShowNotification(true);
         const timer = setTimeout(() => {
           router.push("/");
-        }, 1000); // Redirect after the notification is displayed
+        }, 800);
 
         return () => clearTimeout(timer);
       }
@@ -33,6 +33,10 @@ const WithAuth = (WrappedComponent) => {
       </>
     );
   };
+
+  WithAuthComponent.displayName = `WithAuth(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
+
+  return WithAuthComponent;
 };
 
-export default WithAuth;
+export default withAuth;

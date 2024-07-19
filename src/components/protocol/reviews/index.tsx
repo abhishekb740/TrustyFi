@@ -335,21 +335,21 @@ export default function Reviews({ protocol_id, avg_rating, description, x, teleg
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4 gap-12 items-center">
-                        <div className="flex flex-col gap-2 items-center">
+                    <div className="flex flex-col rounded-md border border-[#B2F1A8] p-8 gap-12">
+                        <div className="flex flex-col gap-2 items-start">
                             <div className="text-3xl font-bold">
                                 Bio
                             </div>
-                            <div className='text-center mt-2'>
+                            <div className='mt-2'>
                                 {description}
                             </div>
                         </div>
-                        <div className="flex flex-col gap-2 items-center">
+                        <div className="flex flex-col gap-2">
                             <div className="text-3xl font-bold">
-                                Social
+                                Socials
                             </div>
                             <div className='mt-4'>
-                                <div className="flex flex-row gap-6 items-center">
+                                <div className="flex flex-row gap-6">
                                     <a href={`https://${x}`} target="_blank" rel="noopener noreferrer">
                                         <FaXTwitter size={20} />
                                     </a>
@@ -384,9 +384,6 @@ export default function Reviews({ protocol_id, avg_rating, description, x, teleg
                                         <div>
                                             {formatDate(review.updated_at)}
                                         </div>
-                                    </div>
-                                    <div>
-                                        {review.Protocols?.protocol_name}
                                     </div>
                                     <div>
                                         {review.description}
