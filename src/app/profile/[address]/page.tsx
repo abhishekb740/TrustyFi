@@ -5,13 +5,15 @@ import { useEffect, useState } from 'react';
 import { fetchUserReviews } from '@/app/_actions/queries';
 import SkeletonLoader from '@/components/skeletons/profile';
 import { useMetaMask } from '@/hooks/useMetamask';
+import WithAuth from "@/components/withAuth";
+
 type Props = {
     params: {
         address: string;
     }
 }
 
-export default function Profile({ params }: Props) {
+function Profile({ params }: Props) {
     const { setProfilePic, profilePic } = useMetaMask();
     const [reviews, setReviews] = useState<Review[]>([]);
     const [avgScore, setAvgScore] = useState<number>(0);
@@ -101,3 +103,5 @@ export default function Profile({ params }: Props) {
         </div>
     )
 }
+
+export default WithAuth(Profile);

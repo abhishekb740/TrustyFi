@@ -7,6 +7,7 @@ import { useMetaMask } from '@/hooks/useMetamask';
 import ProtocolSkeleton from '@/components/skeletons/protocol';
 import ReviewsSkeleton from '@/components/skeletons/reviews';
 import formatUrl from '@/utils/utils';
+import WithAuth from "@/components/withAuth";
 
 type Props = {
     params: {
@@ -14,7 +15,7 @@ type Props = {
     }
 }
 
-export default function Protocol({ params }: Props) {
+function Protocol({ params }: Props) {
     const [writeReview, setWriteReview] = useState(false);
     const [protocolDetails, setProtocolDetails] = useState<Protocol>();
     const [userReview, setUserReview] = useState<Review>();
@@ -103,3 +104,5 @@ export default function Protocol({ params }: Props) {
         </div>
     );
 }
+
+export default WithAuth(Protocol);

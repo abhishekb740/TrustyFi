@@ -7,8 +7,9 @@ import { useState, useEffect } from 'react';
 import CategoriesSkeleton from "@/components/skeletons/categories";
 import { FaXTwitter, FaTelegram, FaDiscord   } from "react-icons/fa6";
 import { useMetaMask } from "@/hooks/useMetamask";
+import WithAuth from "@/components/withAuth";
 
-export default function Categories() {
+function Categories() {
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [minRating, setMinRating] = useState<number>(0);
     const [minReviews, setMinReviews] = useState<number>(0);
@@ -246,3 +247,5 @@ export default function Categories() {
         </div>
     )
 }
+
+export default WithAuth(Categories);

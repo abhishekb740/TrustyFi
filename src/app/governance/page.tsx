@@ -1,6 +1,18 @@
+"use client";
+import { useEffect } from "react";
 import { IoInformationCircleSharp } from "react-icons/io5";
+import { useMetaMask } from "@/hooks/useMetamask";
+import WithAuth from "@/components/withAuth";
 
-export default function Governance() {
+function Governance() {
+    const { connected } = useMetaMask();
+
+    useEffect(() => {
+        if(!connected) {
+            window.location.href = "/";
+        }
+    }, [])
+
     return (
         <div className="flex flex-row justify-center mt-24">
             <div className="p-4 rounded-full flex flex-row justify-center items-center gap-1 border border-[#B2F1A8]">
@@ -14,3 +26,5 @@ export default function Governance() {
         </div>
     );
 }
+
+export default WithAuth(Governance);
