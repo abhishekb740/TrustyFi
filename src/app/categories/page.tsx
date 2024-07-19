@@ -16,7 +16,6 @@ function Categories() {
     const [sortOption, setSortOption] = useState<string>("alphabetical");
     const [isAscending, setIsAscending] = useState<boolean>(true);
     const { protocols, loading, categories, selectedCategory, setSelectedCategory } = useMetaMask();
-    console.log(protocols);
 
     const router = useRouter();
 

@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Trustify",
   description: "",
-  icons: ['/TrustifyLogo.png']
+  icons: ['/TrustifyLogo.svg']
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

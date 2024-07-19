@@ -86,7 +86,6 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     const chainId = await window.ethereum.request({
       method: "eth_chainId",
     });
-    console.log(chainId)
     const network = ethers.providers.getNetwork(parseInt(chainId, 16));
     setWallet({ accounts: [accounts[0]], balance, chainId, network: network.name });
 
