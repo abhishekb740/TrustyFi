@@ -58,15 +58,15 @@ function Protocol({ params }: Props) {
         <div className="flex flex-col" style={{ fontFamily: 'Montserrat' }}>
             <Notification message="Review submitted successfully" show={showNotification} onClose={() => { setShowNotification(false) }} isSuccess={true} />
             <div className="sticky top-0 z-10 bg-[#1E1E1E]">
-                <div className='flex flex-row items-center py-10 justify-evenly border-b-[1px] border-[#B2F1A8]'>
-                    <div className="flex flex-row gap-6">
+                <div className='flex flex-col md:flex-row items-center py-10 justify-evenly border-b-[1px] border-[#B2F1A8]'>
+                    <div className="flex flex-col md:flex-row gap-6">
                         <Image src={`/protocols/${protocolDetails?.image_url}`} alt="uniswap logo" width={100} height={100} className="bg-white rounded-lg" />
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-2 text-center md:text-left">
                             <div className="text-2xl">{protocolDetails?.protocol_name}</div>
                             <div>
                                 Algoritmic, autonomous interest rate protocol
                             </div>
-                            <div className='flex flex-row gap-1'>
+                            <div className='flex flex-row gap-1 justify-center md:justify-start'>
                                 {Array.from({ length: protocolDetails?.avg_rating ?? 0 }, (_, i) => (
                                     <Image key={i} src={`/stars/star_${Math.round(protocolDetails?.avg_rating ?? 0)}.svg`} width={20} height={20} alt="Rating" />
                                 ))}
@@ -76,11 +76,11 @@ function Protocol({ params }: Props) {
                             </div>
                         </div>
                     </div>
-                    <div className='flex flex-row gap-8 w-full max-w-md'>
+                    <div className='flex flex-col md:flex-row gap-8 w-full max-w-lg mt-6 md:mt-0'>
                         <a href={protocolDetails?.website_url ?? "#"}
                             target="_blank"
                             rel="noopener noreferrer" className='flex flex-row flex-1 py-2 px-4 gap-8 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg' >
-                            <div className='flex flex-row items-center'>
+                            <div className='flex flex-row items-center flex-shrink-0'>
                                 <Image src="/redirect.svg" width={35} height={35} alt="Rating" />
                             </div>
                             <div className='flex flex-col gap-1'>
@@ -108,6 +108,7 @@ function Protocol({ params }: Props) {
             </div>
             {writeReview ? <WriteReview toggleWriteReview={toggleWriteReview} protocol_id={protocolDetails?.id ?? 0} existingReview={userReview} /> : <Reviews x={protocolDetails?.x ?? ""} telegram={protocolDetails?.telegram ?? ""} discord={protocolDetails?.discord ?? ""} description={protocolDetails?.protocol_description ?? ""} avg_rating={protocolDetails?.avg_rating === null ? 0 : Number(protocolDetails?.avg_rating?.toFixed(2))} protocol_id={protocolDetails?.id ?? 0} />}
         </div>
+
     );
 }
 
