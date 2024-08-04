@@ -58,7 +58,7 @@ export default function Navbar({ setShowWallet, showWallet }: Props) {
                 <div className='lg:hidden flex items-center' onClick={handleToggleMenu}>
                     <AiOutlineMenu size={24} />
                 </div>
-                <div className={`absolute z-20 top-[5rem] right-0 lg:static lg:flex flex-col lg:flex-row gap-4 ${menuOpen ? 'flex' : 'hidden'} lg:flex`}>
+                <div className={`absolute z-20 top-[5rem] right-0 lg:static lg:flex flex-col lg:flex-row gap-4 ${menuOpen ? 'flex' : 'hidden'} lg:flex bg-[#1E1E1E] p-2`}>
                     <button className='border shadow-[0_0_5px_#B2F1A8] rounded-md py-1 px-3' onClick={() => handleButtonClick("/governance")}>Governance</button>
                     <button className='border shadow-[0_0_5px_#B2F1A8] rounded-md py-1 px-3' onClick={() => handleButtonClick("/categories")}>Categories</button>
                     <button className='border shadow-[0_0_5px_#B2F1A8] rounded-md py-1 px-3' onClick={() => handleButtonClick("/stake")}>Stake</button>
