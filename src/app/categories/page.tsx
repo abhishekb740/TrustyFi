@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from 'react';
 import CategoriesSkeleton from "@/components/skeletons/categories";
-import { FaXTwitter, FaTelegram, FaDiscord   } from "react-icons/fa6";
+import { FaXTwitter, FaTelegram, FaDiscord } from "react-icons/fa6";
 import { useMetaMask } from "@/hooks/useMetamask";
 import WithAuth from "@/components/withAuth";
 
@@ -112,8 +112,8 @@ function Categories() {
                     }
                 </div>
             </div>
-            <div className="flex flex-row mt-16 justify-around px-8 w-full">
-                <div className="flex flex-col w-1/3 gap-8">
+            <div className="flex md:flex-row flex-col mt-16 md:justify-around px-8 w-full">
+                <div className="flex flex-col md:w-1/3 w-full gap-8">
                     <div className="flex flex-col rounded-md border border-[#B2F1A8] p-4 gap-3">
                         <div className="flex flex-col gap-4">
                             <label className="font-semibold text-lg">Categories</label>
@@ -189,29 +189,29 @@ function Categories() {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col min-w-[50%] gap-12 h-screen scroll-auto scrollbar p-2">
+                <div className="flex flex-col min-w-[50%] gap-12 h-screen scroll-auto scrollbar p-2 mt-8 md:mt-0">
                     {sortedProtocols.map((protocol, index) => {
                         return (
-                            <div key={index} className="flex flex-col gap-4 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg p-8">
-                                <div className="flex flex-row gap-6 hover:cursor-pointer" onClick={() => router.push(`/protocol/${protocol.protocol_name}`)}>
+                            <div key={index} className="flex flex-col gap-4 border border-[#B2F1A8] shadow-[0_0_4px_#B2F1A8] rounded-lg p-4 md:p-8">
+                                <div className="flex flex-col md:flex-row gap-4 md:gap-6 hover:cursor-pointer" onClick={() => router.push(`/protocol/${protocol.protocol_name}`)}>
                                     <Image src={`/protocols/${protocol.image_url}`} alt="protocol logo" width={100} height={100} className="bg-white rounded-lg" />
                                     <div className="flex flex-col gap-2">
-                                        <div className="text-2xl">{protocol.protocol_name}</div>
-                                        <div className='flex flex-row gap-1'>
-                                            {Array.from({ length: Math.round(protocol.avg_rating ?? 0)}, (_, i) => (
+                                        <div className="text-xl md:text-2xl">{protocol.protocol_name}</div>
+                                        <div className='flex flex-row gap-1 items-center'>
+                                            {Array.from({ length: Math.round(protocol.avg_rating ?? 0) }, (_, i) => (
                                                 <Image key={i} src={`/stars/star_${Math.round(protocol.avg_rating)}.svg`} width={20} height={20} alt="Rating" />
                                             ))}
-                                            <div className="ml-2">
+                                            <div className="ml-2 text-sm md:text-base">
                                                 {protocol.avg_rating?.toFixed(2)} ({protocol.review_count} reviews)
                                             </div>
                                         </div>
-                                        <div>
+                                        <div className="text-sm md:text-base">
                                             Algoritmic, autonomous interest rate protocol
                                         </div>
                                     </div>
                                 </div>
                                 <div className="border-b-[1px] border-b-[#B2F1A8] "></div>
-                                <div className="flex flex-row justify-between">
+                                <div className="flex md:flex-row flex-col justify-between">
                                     <div className="flex flex-row gap-6 items-center">
                                         <a href={`https://${protocol.x}`} target="_blank" rel="noopener noreferrer">
                                             <FaXTwitter size={20} />
@@ -223,14 +223,14 @@ function Categories() {
                                             <FaDiscord size={20} />
                                         </a>
                                     </div>
-                                    <div className="flex flex-row gap-4">
+                                    <div className="flex flex-row gap-4 overflow-x-auto scrollbar md:mt-0 mt-4">
                                         {protocol.ProtocolCategories?.map((protocolCategory, index) => {
                                             return (
                                                 <div key={index} className="flex flex-row gap-2 border-[2px] border-[#B2F1A8] rounded-tl-lg rounded-bl-3xl py-1 px-4 rounded-tr-2xl rounded-br-2xl whitespace-nowrap">
                                                     <div className="flex-shrink-0">
                                                         <Image src="/star.svg" width={20} height={20} alt="star Logo" />
                                                     </div>
-                                                    <div className="flex-shrink-0">
+                                                    <div className="flex-shrink-0 text-sm md:text-base">
                                                         {protocolCategory.Categories.category_name}
                                                     </div>
                                                 </div>
