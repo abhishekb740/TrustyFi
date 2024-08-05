@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { MetaMaskContextProvider } from "@/hooks/useMetamask";
 import ClientLayout from "@/components/clientLayout";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +18,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <MetaMaskContextProvider>
         <body className={inter.className}>
-          <ClientLayout>{children}</ClientLayout>
+          <ClientLayout>
+            {children}
+            <Analytics />
+          </ClientLayout>
         </body>
       </MetaMaskContextProvider>
     </html>
